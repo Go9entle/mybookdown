@@ -18,7 +18,7 @@ usage-website
 causal
 causal-intro
 causal-def
-markov过程-markov
+Markov
 过程中的状态概念
 通过股票价格的例子理解markov性
 markov过程的正式定义
