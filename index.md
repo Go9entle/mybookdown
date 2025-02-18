@@ -1,7 +1,7 @@
 ---
 title: "中国人民大学统计学院研究生课程笔记"
 author: "郭镇涛"
-date: "2025年2月18日"
+date: "2025-2-18"
 description: "这是用R的bookdown功能制作的课堂笔记。"
 documentclass: book
 classoption: oneside
