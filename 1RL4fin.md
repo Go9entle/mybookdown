@@ -1,12 +1,13 @@
-# Markov过程 {#Markov}
+#强化学习在金融中的应用
+## Markov过程 {#Markov}
 
 本书的主题是“序列不确定下的序列决策”，在本章中将暂时忽略“序列决策”方面而只关注”序列不确定性“。
 
-## 过程中的状态概念
+### 过程中的状态概念
 
 $S_t$是过程在时间$t$时的状态。特别地，我们对于下一时刻的状态$S_{t+1}$的概率感兴趣，如果已知现在的状态$S_t$和过去的状态$S_0,S_1,...,S_{t-1}$，我们对$P\{S_{t+1}|S_t,S_{t-1},...,S_0\}$感兴趣。
 
-## 通过股票价格的例子理解Markov性
+### 通过股票价格的例子理解Markov性
 
 为了帮助理解，我们假设股票价格只取整数值，并且零或负股票价格是可以接受的。我们将时间$t$的股票价格表示为$X_t$.假设从时间$t$ 到下一个时间步骤 $t + 1$,股票价格可以上涨$1$或下跌$1$,即$X_{t+1}$的唯一两个结果是$X_t + 1$或$X_t − 1$.要了解股票价格随时间的随机演变，我们只需要量化上涨的概率 $P[X_{t+1} =X_t+ 1]$.我们将考虑股票价格演变的 3 个不同过程。
 
@@ -118,7 +119,7 @@ $S_t$是过程在时间$t$时的状态。特别地，我们对于下一时刻的
    $$
    重要的是与前面两个过程不同，股票价格$X_t$实际上并不是过程3中状态$S_t$的一部分，这是因为$U_t,D_t$共同包含了捕捉$X_t$的足够信息，因为$X_t=X_0+U_t-D_t.$
 
-## Markov过程的正式定义
+### Markov过程的正式定义
 
 书中的定义和定理将由限制在离散时间和可数状态集合。
 
@@ -142,4 +143,69 @@ P:(\mathcal{S}-\mathcal{T})\times\mathcal{S}\rightarrow[0,1]
 $$
 定义为$P(s',s)=P[S_{t+1}=s'|S_t=s]$使得$\sum_{s'\in S}P(s,s')=1,\text{for all}s\in\mathcal{S-T}.$​
 
-注意上述规范中$P$的参数没有时间索引$t$（因此称为时间齐次）。此外注意到一个非时间齐次的Markov过程可以通过将所有状态和时间索引$t$来结合转换为齐次Markov过程。这意味着一个非时间齐次的Markov过程的原始状态空间是$\mathcal{S}$那么对应的时间齐次Markov过程的状态空间是$\mathbb{Z}_{\geq0}\times\mathcal{S}.$
+注意上述规范中$P$的参数没有时间索引$t$（因此称为时间齐次）。此外注意到一个非时间齐次的Markov过程可以通过将所有状态和时间索引$t$来结合转换为齐次Markov过程。这意味着如果一个非时间齐次的Markov过程的原始状态空间是$\mathcal{S}$，那么对应的时间齐次Markov过程的状态空间是$\mathbb{Z}_{\geq0}\times\mathcal{S}.$
+
+### Markov过程的稳态分布
+>**Def 3.7.1**
+>对于状态空间$\mathcal{S}=\mathbb{N}$的离散、时间齐次的Markov过程及其转移概率函数$P:\mathbb{N}\times\mathbb{N}\rightarrow [0,1]$,稳态分布是一个概率分布函数$\pi:\mathbb{N}\rightarrow [0,1]$,满足
+>$$
+>\pi(s')=\sum_{s\in\mathbb{N}}\pi(s)\cdot P(s,s'),\text{ for all }s'\in\mathbb{N}
+>$$
+
+稳态分布$\pi$的直观理解是，在特定条件下如果我们让Markov过程无限运行，那么在长期内，状态在特定步出现频率（概率）由分布$\pi$给出，该分布与时间步无关。
+
+如果将稳态分布的定义专门化为有限状态、离散时间、时间齐次的Markov过程，状态空间为$S=\{s_1,...,s_2\}=\mathbb{N},$那么我们可以将稳态分布$\pi$​表示为
+$$
+\pi(s_j)=\sum_{i=1}^n\pi(s_i)\cdot P(s_i,s_j),\text{ for al }j=1,2,...,n
+$$
+下面使用粗体符号表示向量和矩阵。故$\boldsymbol{\pi}$是一个长度为$n$的列向量，$\boldsymbol{\mathcal{P}}$是$n\times n$的转移概率矩阵，其中行是原状态，列为目标状态，每行的和为1。那么上述定义的表述就可以简洁地表示为：
+$$
+\boldsymbol{\pi}^T=\boldsymbol{\pi}^T\cdot\boldsymbol{\mathcal{P}},\text{ or }\boldsymbol{\mathcal{P}}^T\cdot\boldsymbol{\pi}=\boldsymbol{\pi}
+$$
+后一个式子可以说明$\boldsymbol{\pi}$是矩阵$\boldsymbol{\mathcal{P}}$​的特征值为1对应的特征向量。
+
+### Markov奖励过程的形式主义
+
+我们之所以讲述Markov过程是因为希望通过为Markov过程添加增量特性来逐步进入Markov决策过程，也就是强化学习的算法框架。现在开始讲述介于二者之间的中间框架即Markov奖励过程。基本上我们只是为每次从一个状态转移到下一个状态时引入一个数值奖励的概念。这些奖励是随机的，我们需要做的就是在进行状态转移时指定这些奖励的概率分布。
+
+Markov奖励过程的主要目的是计算如果让过程无限运行（期望从每个非终止状态获得的奖励总和）我们将累积多少奖励，考虑到未来的奖励需要适当地折现。
+
+>**Def 3.8.1**
+>
+>Markov奖励过程是一个Markov过程以及一个时间索引序列的奖励随机变量$R_t\in\mathcal{D},\mathcal{D}$是$\mathbb{R}$中一个可数子集，$t=1,2,...,$满足Markov性质：
+>$$
+>P[(R_{t+1},S_{t+1})|S_{t},S_{t-1},...,S_0]=P[(R_{t+1},S_{t+1})|S_t]\text{ for all }t\geq0
+>$$
+
+我们将$P[(R_{t+1},S_{t+1})|S_t]$称为Markov Reward Process在时间$t$地转移概率。由于我们通常假设Markov的时间齐次性，我们将假设MRP具有时间齐次性，即$P[(R_{t+1},S_{t+1})|S_t]$与$t$​无关。
+
+由时间齐次性的假设，MRP的转移概率可以表示为转移概率函数
+$$
+\mathcal{P}_R:\mathcal{N\times D\times S}\rightarrow[0,1]
+$$
+定义为
+$$
+\begin{aligned}
+&\mathcal{P}_R(s,r,s')=P[(R_{t+1}=r,S_{t+1}=s')|S_t=s]\text{ for }t=0,1,2,...,\\
+&\text{for all }s\in\mathcal{N},r\in\mathcal{D},s'\in\mathcal{S},\text{ s.t. }\sum_{s'\in\mathcal{S}}\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,r,s')=1,\text{ for all }s\in \mathcal{N} 
+
+\end{aligned}
+$$
+当涉及模拟时我们需要单独指定起始状态的概率分布。
+
+现在可以扩展更多理论。给定奖励转移函数$\mathcal{P}_R$，我们可以得到
+
+- 隐式Markov过程的概率转移函数$P:\mathbb{N}\times S\rightarrow [0,1]$可以定义为
+  $$
+  \mathcal{P}(s,s')=\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,r,s')
+  $$
+
+- 奖励转移函数$\mathcal{R}_T:\mathcal{N\times S}\rightarrow \mathbb{R}$定义为
+  $$
+  \mathcal{R}_T(s,s')=\mathbb{E}[R_{t+1}|S_{t+1}=s',S_t=s]=\sum_{r\in\mathcal{D}}\frac{\mathcal{P}_R(s,r,s')}{\mathcal{P}(s,s')}=\sum_{r\in\mathcal{D}}\frac{\mathcal{P}_R(s,r,s')}{\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,r,s')}\cdot r
+  $$
+
+我们在实践中遇到的大多数MRP奖励规范可以直接表示为奖励转移函数$\mathcal{R}_T$.最后我们想强调的是，可以将$\mathcal{P}_R$或$\mathcal{R}_T$转换为一种更紧凑的奖励函数。该函数足以执行涉及MRP的关键计算，这个奖励函数$\mathcal{R}:\mathcal{N}\rightarrow \mathbb{R}$定义为
+$$
+\mathcal{R}(s)=\mathbb{E}[R_{t+1}|S_t=s]=\sum_{s'\in\mathcal{S}}\mathcal{P}(s,s')\cdot\mathcal{R}_T(s,s')=\sum_{s'\in\mathcal{S}}\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,r,s')\cdot r
+$$

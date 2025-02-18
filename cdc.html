@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Optimal strategies for collective defined contribution plans when the stock and labor markets are co-integrated（股票和劳动力市场协同整合时集体确定缴款计划的最优策略） | 我的研究生课程笔记</title>
+  <meta name="description" content="这是用R的bookdown功能制作的课堂笔记。" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Optimal strategies for collective defined contribution plans when the stock and labor markets are co-integrated（股票和劳动力市场协同整合时集体确定缴款计划的最优策略） | 我的研究生课程笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="这是用R的bookdown功能制作的课堂笔记。" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Optimal strategies for collective defined contribution plans when the stock and labor markets are co-integrated（股票和劳动力市场协同整合时集体确定缴款计划的最优策略） | 我的研究生课程笔记" />
+  
+  <meta name="twitter:description" content="这是用R的bookdown功能制作的课堂笔记。" />
+  
+
+<meta name="author" content="郭镇涛" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="usage.html"/>
+<link rel="next" href="causal.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX","output/SVG"],
+  extensions: ["tex2jax.js","MathMenu.js","MathZoom.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+  }
+});
+</script>
+<script type="text/javascript"
+   src="../../../MathJax/MathJax.js">
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>写在前面</a></li>
+<li class="chapter" data-level="1" data-path="why.html"><a href="why.html"><i class="fa fa-check"></i><b>1</b> 为什么要写课程笔记</a></li>
+<li class="chapter" data-level="2" data-path="aboutme.html"><a href="aboutme.html"><i class="fa fa-check"></i><b>2</b> 介绍涛哥</a></li>
+<li class="chapter" data-level="3" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>3</b> 中文图书Bookdown模板的基本用法</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="usage.html"><a href="usage.html#usage-ins"><i class="fa fa-check"></i><b>3.1</b> 安装设置</a></li>
+<li class="chapter" data-level="3.2" data-path="usage.html"><a href="usage.html#usage-writing"><i class="fa fa-check"></i><b>3.2</b> 编写自己的内容</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="usage.html"><a href="usage.html#usage-writing-struct"><i class="fa fa-check"></i><b>3.2.1</b> 文档结构</a></li>
+<li class="chapter" data-level="3.2.2" data-path="usage.html"><a href="usage.html#usage-writing-fig"><i class="fa fa-check"></i><b>3.2.2</b> 图形自动编号</a></li>
+<li class="chapter" data-level="3.2.3" data-path="usage.html"><a href="usage.html#usage-writing-tab"><i class="fa fa-check"></i><b>3.2.3</b> 表格自动编号</a></li>
+<li class="chapter" data-level="3.2.4" data-path="usage.html"><a href="usage.html#usage-writing-math"><i class="fa fa-check"></i><b>3.2.4</b> 数学公式编号</a></li>
+<li class="chapter" data-level="3.2.5" data-path="usage.html"><a href="usage.html#文献引用与文献列表"><i class="fa fa-check"></i><b>3.2.5</b> 文献引用与文献列表</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="usage.html"><a href="usage.html#usage-output"><i class="fa fa-check"></i><b>3.3</b> 转换</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="usage.html"><a href="usage.html#usage-gitbook"><i class="fa fa-check"></i><b>3.3.1</b> 转换为网页</a></li>
+<li class="chapter" data-level="3.3.2" data-path="usage.html"><a href="usage.html#usage-pdfbook"><i class="fa fa-check"></i><b>3.3.2</b> 生成PDF</a></li>
+<li class="chapter" data-level="3.3.3" data-path="usage.html"><a href="usage.html#usage-website"><i class="fa fa-check"></i><b>3.3.3</b> 上传到网站</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cdc.html"><a href="cdc.html"><i class="fa fa-check"></i><b>4</b> Optimal strategies for collective defined contribution plans when the stock and labor markets are co-integrated（股票和劳动力市场协同整合时集体确定缴款计划的最优策略）</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cdc.html"><a href="cdc.html#introduction"><i class="fa fa-check"></i><b>4.1</b> 1. Introduction</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="cdc.html"><a href="cdc.html#相关工作"><i class="fa fa-check"></i><b>4.1.1</b> 1.1 相关工作</a></li>
+<li class="chapter" data-level="4.1.2" data-path="cdc.html"><a href="cdc.html#主要区别"><i class="fa fa-check"></i><b>4.1.2</b> 2.1 主要区别</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="cdc.html"><a href="cdc.html#模型的公式化"><i class="fa fa-check"></i><b>4.2</b> 2 模型的公式化</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="cdc.html"><a href="cdc.html#金融市场"><i class="fa fa-check"></i><b>4.2.1</b> 2.1 金融市场</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cdc.html"><a href="cdc.html#劳动收入"><i class="fa fa-check"></i><b>4.2.2</b> 2.2 劳动收入</a></li>
+<li class="chapter" data-level="4.2.3" data-path="cdc.html"><a href="cdc.html#养老金系统"><i class="fa fa-check"></i><b>4.2.3</b> 2.3 养老金系统</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="cdc.html"><a href="cdc.html#养老金基金计划的最优策略"><i class="fa fa-check"></i><b>4.3</b> 3 养老金基金计划的最优策略</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="cdc.html"><a href="cdc.html#具有特质性冲击的最优策略"><i class="fa fa-check"></i><b>4.3.1</b> 3.1 具有特质性冲击的最优策略</a></li>
+<li class="chapter" data-level="4.3.2" data-path="cdc.html"><a href="cdc.html#无特质性冲击时的最优策略"><i class="fa fa-check"></i><b>4.3.2</b> 3.2 无特质性冲击时的最优策略</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="cdc.html"><a href="cdc.html#数值分析"><i class="fa fa-check"></i><b>4.4</b> 4 数值分析</a></li>
+<li class="chapter" data-level="4.5" data-path="cdc.html"><a href="cdc.html#总结"><i class="fa fa-check"></i><b>4.5</b> 5 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="causal.html"><a href="causal.html"><i class="fa fa-check"></i><b>5</b> 格兰格因果性</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="causal.html"><a href="causal.html#causal-intro"><i class="fa fa-check"></i><b>5.1</b> 介绍</a></li>
+<li class="chapter" data-level="5.2" data-path="causal.html"><a href="causal.html#causal-def"><i class="fa fa-check"></i><b>5.2</b> 格兰格因果性的定义</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="causal.html"><a href="causal.html#过程中的状态概念"><i class="fa fa-check"></i><b>5.2.1</b> 过程中的状态概念</a></li>
+<li class="chapter" data-level="5.2.2" data-path="causal.html"><a href="causal.html#通过股票价格的例子理解markov性"><i class="fa fa-check"></i><b>5.2.2</b> 通过股票价格的例子理解Markov性</a></li>
+<li class="chapter" data-level="5.2.3" data-path="causal.html"><a href="causal.html#markov过程的正式定义"><i class="fa fa-check"></i><b>5.2.3</b> Markov过程的正式定义</a></li>
+<li class="chapter" data-level="5.2.4" data-path="causal.html"><a href="causal.html#markov过程的稳态分布"><i class="fa fa-check"></i><b>5.2.4</b> Markov过程的稳态分布</a></li>
+<li class="chapter" data-level="5.2.5" data-path="causal.html"><a href="causal.html#markov奖励过程的形式主义"><i class="fa fa-check"></i><b>5.2.5</b> Markov奖励过程的形式主义</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">我的研究生课程笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cdc" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Optimal strategies for collective defined contribution plans when the stock and labor markets are co-integrated（股票和劳动力市场协同整合时集体确定缴款计划的最优策略）<a href="cdc.html#cdc" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>[toc]</p>
+<div id="introduction" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> 1. Introduction<a href="cdc.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="相关工作" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> 1.1 相关工作<a href="cdc.html#相关工作" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在集体确定缴费（Collective Defined Contribution）养老金计划中，基金的资产集中由金融机构管理，福利取决于基金的财务状况。<em>Gollier 2008</em> 认为后代有义务参与养老金计划，集体养老金计划通过强制参与能够实现代际之间的风险转移，相应的风险由当前和未来的几代人共同承担从而改善福利。由于CDC养老金计划在精算研究中的成功，这种类型的养老金设计引起研究人员的极大关注。<em>Bovenberg et al. 2007</em> 讨论了集体养老金计划与传统计划相比的成本和收益。<em>Cui et al. 2011</em> 展示了集体计划和没有风险分担的最佳个人计划之间的福利比较。<em>Wang et al. 2018</em> 研究目标福利计划的最佳投资策略和调整后的福利支付策略，以最小化福利风险和代际转移组合。<em>He et al. 2020</em> 展示了DB-PAYGO养老金制度中不稳定缴费和不连续风险的成本，<em>Wang et al. 2021</em> 考虑具有违约风险和模型不确定性的目标福利计划（TBP）的最优投资和福利支付问题。文献假设劳动收入过程遵循几何布朗运动，然而劳动收入可能与金融市场有关，应该考虑收入与股票市场之间的关系。<em>Mayer et al. 1974</em> 首先实证研究了总劳动收入与资产价格之间的联系，<em>Baxter et al. 1997</em> 指出劳动收入与股息是协整的，他们还提出在没有协整的情况下，劳动收入和GDP的资本在长期内（的比例）可能会变为0或1。此外，<em>Benzoni et al. 2007</em> 在投资组合选择问题中引入了劳动力和股票市场之间的协整，他们通过分析数据表明劳动收入和股息流之间的高度相关性是令人信服的。<em>Geanakoplos et al. 2011</em> 假设平均劳动收入和股票市场存在长期正相关性，并提出了研究这种相关性的重要性。</p>
+<p>本文研究了一个CDC养老金计划中的随机最优问题，在此模型中假定缴费率是固定的，福利支付取决于最终的薪资水平。本文提出的主要假设是</p>
+<ul>
+<li>养老金基金可以投资于一种风险资产和一种无风险资产组成的金融市场。</li>
+<li>将劳动收入过程描述为几何随机游走，其中的漂移项依赖于当前股息与当前劳动收入的比率，其中股息过程遵循几何布朗运动。劳动收入被假定为总劳动收入与成员特质性冲击（shocks）的乘积，其恒定增长率是未知的，我们通过一个连续时间的二状态隐马尔科夫链对特质性冲击进行建模。</li>
+<li>养老金成员分为在职和退休。在职成员依然在职并向养老金基金缴费而退休成员从养老金基金中获得福利。每个参与者在年龄<span class="math inline">\(a_0\)</span>时加入养老金计划并在年龄<span class="math inline">\(a_1\)</span>​时退休。</li>
+</ul>
+<p>在处理具有常数相对风险厌恶(CRRA)效用函数的最优投资问题时，传统的猜解不易用于求解相关的HJB方程，因此我们在模型不确定性的框架下进行研究选用的效用函数是绝对风险厌恶（CARA）的指数效用，假设基金经理的目标是寻找最优的投资策略（投资到风险资产的比例<span class="math inline">\((\pi^*(t))\)</span>）和福利政策<span class="math inline">\((b^*(t))\)</span>，以最大化社会福利和终端盈余财富。通过求解HJB方程得到了最优资产配置和福利支付政策的显式解。</p>
+</div>
+<div id="主要区别" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> 2.1 主要区别<a href="cdc.html#主要区别" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>与现有的CDC基金方案最优设计相比：</p>
+<ul>
+<li><p>本文考虑了劳动和股市之间的协整关系。在现实中，劳动收入与金融市场密切相关。劳动收入的随机性和金融市场的回报是基金经理面临的不确定性来源。因此，本文通过假设劳动收入和股息的对数差值遵循均值回归过程，建立了两者之间的真实关系。劳动收入和风险资产的价格趋势具有协整性，意味着它们在长期内具有相同的趋势。当协整关系较强时，退休收入的波动性大于基金组合回报的波动性。我们的模型通过考虑劳动市场和股市之间的关系，更加贴近现实的金融市场。</p></li>
+<li><p>此外，本文还考虑了个体性劳动收入冲击的不确定性。因此，除了让劳动收入冲击的对数遵循算术布朗运动，我们的模型进一步提出劳动冲击的增长率可能随时间随机变化。我们通过一个连续时间二态隐马尔可夫链来建模这种不确定性，这增加了解HJB方程的数学难度。</p></li>
+</ul>
+<p>本文其余部分的组织结构如下：第2节介绍了资产和劳动收入的公式化以及相关假设；第3节推导了最优投资策略和福利替代率的显式表达式，并展示了一个应用实例；第4节通过数值实例来说明我们的结果；第5节提供了结论性意见。</p>
+</div>
+</div>
+<div id="模型的公式化" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 2 模型的公式化<a href="cdc.html#模型的公式化" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>设<span class="math inline">\(T&gt;0\)</span>为有限时间区间，定义三个标准布朗运动<span class="math inline">\(Z_D=\{Z_D(t),t\geq0\},Z_1=\{ Z_1(t),t\geq0 \},Z_L=\{Z_L(t),t\geq0  \}\)</span>.它们定义在概率空间<span class="math inline">\((\Omega,\mathcal{F},\mathbb{P})\)</span>上，令<span class="math inline">\(\mathbb{F}=\{\mathcal{F}_t,t\geq0\}\)</span>是由布朗运动生成的扩展过滤(Augmented Filration)。假设三个标准布朗运动都是独立的。本文假设在一个过滤完备的概率空间中，对于<span class="math inline">\(p\geq1,\)</span>定义
+<span class="math display">\[
+\begin{align}
+&amp;L^p_{\mathcal{F}_t}(\Omega;\mathbb{R})=\left\{ X:\Omega\rightarrow\mathbb{R}\big\vert X(t)是\mathcal{F}_t可测的，\mathbb{E}[|X(t)|^p]&lt;\infty \right\},\\
+&amp;L^2_\mathbb{F}(s,t;\mathbb{R})=\left\{ X:[s,t]\times \Omega\rightarrow\mathbb{R}\big|X(t)是\mathbb{F}适应的，\mathbb{E}\left[ \int_s^t|X(\nu)|^2d\nu \right]&lt;\infty \right\},\\
+&amp;L^p_\mathbb{F}(\Omega;L^2(s,t;\mathbb{R}))=\left\{ X:[s,t]\times\Omega\rightarrow \mathbb{R}\big|X(t)是\mathbb{F}适应的，\mathbb{E}\left[\left( \int_s^t|X(\nu)|^2d\nu\right)^p \right]&lt;\infty  \right\},\\
+&amp;L^p_{\mathbb{F}}(\Omega;C([s,t];\mathbb{R}))=\left\{ X:[s,t]\times\Omega\rightarrow\mathbb{R}\big|X(t)是有界的\mathbb{F}适应且有连续路径，\mathbb{E}\left[ \sup_{\nu\in[s,t]}|X(\nu)|^p \right]&lt;\infty \right\}.
+\end{align}
+\]</span></p>
+<div id="金融市场" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 2.1 金融市场<a href="cdc.html#金融市场" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在本文的模型中我们假设基金经理可以在时间区间<span class="math inline">\([0,T]\)</span>内对有一种无风险资产和一种风险资产组成的金融市场进行投资。风险资产向投资者支付持续的股息流，令<span class="math inline">\(D(t)\)</span>表示风险资产在时间<span class="math inline">\(t\)</span>的股息过程。股息的动态过程表示为：
+<span class="math display">\[
+\begin{cases}
+\frac{dD(t)}{D(t)}=g_Ddt+\sigma dZ_D(t),\quad t\in[0,T]\\
+D(0)=d_0&gt;0
+\end{cases}
+\]</span>
+其中<span class="math inline">\(g_D,\sigma\)</span>分别是股息的增长率和波动率。令定价核<span class="math inline">\(M(t)\)</span>的动态表示为：
+<span class="math display">\[
+\frac{dM(t)}{M(t)}=-rdt-\lambda_m dZ_D(t)
+\]</span>
+其中<span class="math inline">\(r&gt;0\)</span>表示常数的无风险利率，<span class="math inline">\(\lambda_m\)</span>表示常数的风险价格。</p>
+<blockquote>
+<p>[!Note]</p>
+<p>定价核(pricing kernel, AKA Stochastic Discount Factor, SDF)是一个用来将未来现金流折现到当前时刻的工具，反映了时间和不确定性对未来现金流的影响，通常用于描述金融资产价格的动态和资产的风险溢价。</p>
+</blockquote>
+<p>令<span class="math inline">\(X(t)\)</span>为风险资产的价格过程。资产价格可以通过以下方式描述，即股息的贴现总和：
+<span class="math display">\[
+X(t)=\int^\infty_t\mathbb{E}_t\left[ \frac{M(s)}{M(t)}D(s) \right]ds.
+\]</span>
+因此，我们可以推导出<span class="math inline">\(D(t)\)</span>和<span class="math inline">\(X(t)\)</span>成正比，即
+<span class="math display">\[
+X(t)=\frac{D(t)}{r+\lambda_m\sigma-g_D},
+\]</span>
+推导如下图</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/SDF.9gwo4u7a45.jpg" alt="xtdt" style="zoom:65%;" /></p>
+<p>于是风险资产的动态过程服从下面的几何布朗运动：
+<span class="math display">\[
+\begin{cases}
+\frac{dX(t)}{X(t)}=g_Ddt+\sigma dZ_D(t),\quad t\in[0,T],\\
+X(0)=x_0&gt;0.
+\end{cases}
+\]</span>
+令<span class="math inline">\(S(t)\)</span>为超额盈余过程，随着时间<span class="math inline">\(t\)</span>变化可以描述为
+<span class="math display">\[
+\begin{cases}
+\frac{dS(t)}{S(t)}=\frac{dX(t)+D(t)dt}{X(t)}=\mu dt+\sigma dZ_D(t),\quad t\in[0,T],\\
+S(0)=s_0&gt;0.
+\end{cases}\tag{2.1}\label{2.1}
+\]</span>
+其中期望回报由定价核的定义得到<span class="math inline">\(\mu=r+\lambda_m\sigma.\)</span></p>
+<blockquote>
+<p>[!Tip]</p>
+<p>超额盈余过程<span class="math inline">\(S(t)\)</span>描述了单位风险资产的回报率，是由风险资产的变化量和单位时间内股息流的值在资产价格<span class="math inline">\(X(t)\)</span>的基础上计算超额盈余。</p>
+</blockquote>
+<p>无风险资产<span class="math inline">\(S_0(t)\)</span>的动态过程如下
+<span class="math display">\[
+\begin{cases}
+\frac{dS_0(t)}{S_0(t)}=rdt,\\
+S_0(0)=s_{00}&gt;0.
+\end{cases}\label{2.2}\tag{2.2}
+\]</span></p>
+</div>
+<div id="劳动收入" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> 2.2 劳动收入<a href="cdc.html#劳动收入" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>参考<em>Benzoni et al. 2007</em> 的工作，假设劳动收入<span class="math inline">\(L(t)\)</span>是总劳动收入<span class="math inline">\(L_1(t)\)</span>和成员的个体性冲击<span class="math inline">\(L_2(t)\)</span>的乘积，在对数化模型中有
+<span class="math display">\[
+l(t)=l_1(t)+l_2(t),\label{2.3}\tag{2.3}
+\]</span>
+文章通过让总劳动收入与股市之间的对数差值服从均值回归过程，来模拟总劳动收入和股市的协整性。令差值<span class="math inline">\(y(t)\)</span>满足
+<span class="math display">\[
+y(t)=\log L_1(t)-\log D(t)-\lambda,\label{2.4}\tag{2.4}
+\]</span>
+其中正的常数<span class="math inline">\(\lambda\)</span>是总劳动收入与股息的长期对数比率。差值<span class="math inline">\(y(t)\)</span>的动态过程由下面的方程描述
+<span class="math display">\[
+\begin{cases}
+dy(t)=-ky(t)dt+v_LdZ_L(t)-v_DdZ_D(t),\quad t\in[0,T],\\
+y(0)=y_0.
+\end{cases}
+\]</span>
+其中<span class="math inline">\(k\)</span>决定了变量<span class="math inline">\(y(t)\)</span>向长期均值回归的速度并捕捉了总劳动收入与股息之间的协整性（即当<span class="math inline">\(k=0\)</span>时二者不存在协整性）。<span class="math inline">\(v_L,v_D\)</span>分别是条件波动率，<span class="math inline">\(Z_L(t)\)</span>是与总劳动收入不确定性相关的SBM.</p>
+<p>特质性冲击的对数过程由下面的式子描述
+<span class="math display">\[
+\begin{cases}
+dl_2(t)=\left( \alpha(t)-\frac{v_1^2}{2} \right)dt+v_1dZ_1(t),\quad t\in[0,T],\\
+l_2(0)=l_{20}.
+\end{cases}
+\]</span>
+其中<span class="math inline">\(\alpha(t)\)</span>是增长率,<span class="math inline">\(v_1\)</span>是相应的波动率，<span class="math inline">\(Z_1(t)\)</span>是与<span class="math inline">\(Z_L(t),Z_D(t)\)</span>相互独立的SBM.</p>
+</div>
+<div id="养老金系统" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> 2.3 养老金系统<a href="cdc.html#养老金系统" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>本文考虑的养老金保险计划中，成员分为两组，在职成员是指向养老基金缴纳费用的工作成员，而退休成员从养老基金中获取福利。所有成员假设从<span class="math inline">\(a_0\)</span>开始加入计划，直到退休年龄<span class="math inline">\(a_1\)</span>为止，且死亡年龄为<span class="math inline">\(a_2.\)</span>我们还假设生存函数<span class="math inline">\(s(x),\)</span>且<span class="math inline">\(s(a_0)=1\)</span>​.</p>
+<p>用<span class="math inline">\(n(t)\)</span>表示在时间<span class="math inline">\(t\)</span>时年龄为<span class="math inline">\(a_0\)</span>的新成员加入养老金计划的密度。<span class="math inline">\(n(t)\)</span>是一个非负函数表示新成员加入养老金计划的密度不可能为负。然后在时间<span class="math inline">\(t\)</span>时年龄为<span class="math inline">\(x\)</span>的人数为
+<span class="math display">\[
+n(t-(x-a_0))s(x),\quad t&gt;0.
+\]</span>
+其中<span class="math inline">\(t-(x-a_0)\)</span>可能为负，这意味着年龄为<span class="math inline">\(x\)</span>的个体是在<span class="math inline">\(x-a_0\)</span>年前加入计划的。当年龄为<span class="math inline">\(x\)</span>的个体尚未加入养老金计划时，<span class="math inline">\(n(t-(x-a_0))=0.\)</span></p>
+<p>劳动力市场中在职成员和退休成员的总人数分别用<span class="math inline">\(M_1(t),M_2(t)\)</span>表示：
+<span class="math display">\[
+M_1(t)=\int_{a_0}^{a_1}n(t-(x-a_0))s(x)dx,\\
+M_2(t)=\int_{a_1}^{a_2}n(t-(x-a_0))s(x)dx.
+\]</span>
+在职成员的数量决定了总的缴费率，假设<span class="math inline">\(C_0\)</span>时时间<span class="math inline">\(0\)</span>时的即时缴费率，<span class="math inline">\(\eta_1\)</span>是缴费的指数增长率，因此养老基金在时间<span class="math inline">\(t\)</span>时的总缴费率为:
+<span class="math display">\[
+C(t)=\int_{a_0}^{a_1}n(t-x+a_0)s(x)C_0e^{\eta_1t}dx.
+\]</span>
+退休成员的数量决定了养老基金的总福利、薪资结构以及初始年度养老金的支付率。初始养老金支付率被假定为退休时最终薪资的一定比例。对于在时间<span class="math inline">\(t\)</span>退休的成员，初始养老金的支付额为<span class="math inline">\(b(t)L(t),\)</span>其中<span class="math inline">\(b(t)\)</span>是替代率可以视为控制变量。对于在时间<span class="math inline">\(t\)</span>,年龄为<span class="math inline">\(x\)</span>的成员(即已经退休<span class="math inline">\(x-a_1\)</span>年)，最终薪资是<span class="math inline">\(x-a_1\)</span>年前的薪水。与<em>Wang et al. 2018</em> 中的工作类似，为了确定<span class="math inline">\(x\)</span>岁的退休成员在时间<span class="math inline">\(t\)</span>的年度养老金支付率，引入一个新的量<span class="math inline">\(FL(x,t)\)</span>表示该成员在退休<span class="math inline">\(x-a_1\)</span>年后的假定薪资，这个量定义为
+<span class="math display">\[
+FL(x,t)=L(t)e^{-\eta_0(x-a_1)},\; t\geq0,\; x\geq a_1.
+\]</span>
+其中<span class="math inline">\(L(t)\)</span>表示在时间<span class="math inline">\(t\)</span>退休成员的薪资，假定薪资通过指数增长率<span class="math inline">\(\eta_0\)</span>进行确定性地向后推算。这个方法与成员退休时的实际薪资不同，尤其是在<span class="math inline">\(\eta_0&gt;0,x&gt;a_1\)</span>时，实际薪资与假定薪资之间的差异随着年龄增大而增大。设对假定的薪资应用一个调整因子，因此时间<span class="math inline">\(t\)</span>时年龄为<span class="math inline">\(x\)</span>的成员的养老金支付为：
+<span class="math display">\[
+B(x,t)=b(t)L(t)e^{-\eta_0(x-a_1)}.
+\]</span>
+所有退休成员在时间<span class="math inline">\(t\)</span>时的实际总退休福利（涵盖年龄<span class="math inline">\(x\)</span>从<span class="math inline">\(a_1\sim a_2\)</span>的退休成员）可以通过下式得到
+<span class="math display">\[
+B(t)=\int_{a_1}^{a_2}n(t-x+a_0)s(x)B(x,t)dx\overset{d}{=}F(t)b(t)L(t),
+\]</span>
+其中<span class="math inline">\(F(t)\)</span>是一个正的函数，定义为
+<span class="math display">\[
+F(t)=\int_{a_1}^{a_2}n(t-x+a_0)s(x)e^{-\eta_0(x-a_1)}dx.
+\]</span>
+为了增加养老金的福利，基金经理将在缴费和福利之间的盈余部分进行动态投资。在本文的模型中，金融市场由一个风险资产和一个无风险资产组成，设<span class="math inline">\(\pi(t)\)</span>是时间<span class="math inline">\(t\)</span>投资于风险资产的比例。则养老金基金的财富过程为
+<span class="math display">\[
+\begin{cases}
+dW(t)=\pi(t)W(t)\frac{dX(t)+D(t)dt}{X(t)}+(1-\pi(t))W(t)\frac{dS_0(t)}{S_0(t)}+C(t)dt-B(t)dt,\\
+w(0)=w_0&gt;0.\tag{2.5}\label{2.5}
+\end{cases}
+\]</span></p>
+<blockquote>
+<p>[!Note]</p>
+<ul>
+<li><span class="math inline">\(W(t)\)</span>是养老金基金的财富过程</li>
+<li><span class="math inline">\(\pi(t)\)</span>是投资于风险资产的比例</li>
+<li><span class="math inline">\(X(t)\)</span>是风险资产的价格过程</li>
+<li><span class="math inline">\(D(t)\)</span>是风险资产的股息支付</li>
+<li><span class="math inline">\(S_0(t)\)</span>是无风险资产的价格过程</li>
+<li><span class="math inline">\(C(t)\)</span>是缴费项</li>
+<li><span class="math inline">\(B(t)\)</span>是福利支付项</li>
+</ul>
+</blockquote>
+<p>接下来我们定义可接受的策略和本文研究的主要问题。</p>
+<blockquote>
+<p><strong>Definition 2.1</strong></p>
+<p>对于任何固定<span class="math inline">\(t\in[0,T],\)</span>策略对<span class="math inline">\((\pi(t),b(t))\)</span>被称为可接受的，如果它满足以下条件：</p>
+<ul>
+<li>投资策略和初始福利支付政策<span class="math inline">\((\pi(t),b(t))\)</span>是<span class="math inline">\(\mathcal{F}_t\)</span>适应的，以使得SED<span class="math inline">\((\ref{3.4})\)</span>存在唯一解<span class="math inline">\(W_{\pi,b}(t).\)</span></li>
+<li><span class="math inline">\(\pi(t)\in L_{\mathbb{F}}^2(0,T;\mathbb{R}^+)\)</span>且<span class="math inline">\(b(t)\in L_{\mathbb{F}}^2(0,T;\mathbb{R}^+)\)</span>对所有<span class="math inline">\(t&gt;0\)</span>成立。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>Problem 2.1</strong></p>
+<p>对于初始状态<span class="math inline">\((t,W_t),\)</span>养老金基金经理的目标函数是最大化：
+<span class="math display">\[
+J(t,w,l,y)=\mathbb{E}_{\pi,b}\left[ \int_t^Te^{-rs}U(b(s)F(s)L(s))ds+\lambda_1e^{-rT}U(W(T)) \right],\tag{2.6}\label{2.6}
+\]</span>
+其中<span class="math inline">\(\lambda_1\)</span>是一个非负常数表示对终期财富带来的效用的权重。<span class="math inline">\(\mathbb{E}_{\pi,b}\)</span>是在概率测度<span class="math inline">\(\mathbb{P}\)</span>下给定<span class="math inline">\(W(t)=w,L(t)=l,y(t)=y\)</span>时的条件期望。于是这个问题的价值函数就是
+<span class="math display">\[
+V(t,w,l,y)=\sup_{(\pi,b)\in\mathcal{A}}J(t,w,l,y),
+\]</span>
+其中<span class="math inline">\(\mathcal{A}\)</span>是一组控制对的集合。</p>
+</blockquote>
+</div>
+</div>
+<div id="养老金基金计划的最优策略" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 3 养老金基金计划的最优策略<a href="cdc.html#养老金基金计划的最优策略" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本节通过标准的动态规划方法研究这个随机最优控制问题。当劳动市场和股票市场是协整关系时得出了最优控制的显式表达式。本文考虑两种劳动收入过程的情况，具有未知增长率的特质性冲击以及不考虑特质性冲击。</p>
+<div id="具有特质性冲击的最优策略" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> 3.1 具有特质性冲击的最优策略<a href="cdc.html#具有特质性冲击的最优策略" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>这一小节中假设员工面临关于劳动收入的不确定性，通过考虑具有未知增长率的特质性冲击来捕捉这种不确定性。本文使用一个连续时间的二状态的隐马尔科夫链来描述劳动收入冲击的内在不确定性和动态特性。具体来说，<span class="math inline">\(\alpha(t)\)</span>是未知的增长率，使用连续时间的二状态隐马尔可夫链在<span class="math inline">\((\Omega,\mathcal{F},\mathbb{P})\)</span>上建模，并在<span class="math inline">\(\alpha_1,\alpha_2\)</span>之间变化，其中<span class="math inline">\(\alpha_1&gt;\alpha_2.\)</span>增长率<span class="math inline">\(\alpha(t)\)</span>可能取高值<span class="math inline">\(\alpha_1\)</span>或低值<span class="math inline">\(\alpha_2.\)</span>在一个小时间间隔<span class="math inline">\(\Delta t\)</span>内，增长率<span class="math inline">\(\alpha(t)\)</span>在时刻<span class="math inline">\(t\)</span>取<span class="math inline">\(\alpha_1\)</span>的概率是<span class="math inline">\(1-p_1\Delta t\)</span>,保持<span class="math inline">\(\alpha_2\)</span>的概率为<span class="math inline">\(1-p_2\Delta t\)</span>，其中<span class="math inline">\(p_1,p_2\)</span>是二状态隐马尔科夫链的转移强度，从<span class="math inline">\(\alpha_1\)</span>转移到<span class="math inline">\(\alpha_2\)</span>的概率为<span class="math inline">\(p_1\Delta t,\)</span>从<span class="math inline">\(\alpha_2\)</span>转移到<span class="math inline">\(\alpha_1\)</span>的概率为<span class="math inline">\(p_2\Delta t.\)</span>对于任何的<span class="math inline">\(t\)</span>设<span class="math inline">\(P(t)\)</span>为条件概率，表示给定观测信息<span class="math inline">\(\mathcal{F}_t,\)</span>增长率<span class="math inline">\(\alpha(t)\)</span>取<span class="math inline">\(\alpha_1\)</span>的概率，
+<span class="math display">\[
+P(t)=\mathbb{P}(\alpha(t)=\alpha_1|\mathcal{F}_t).
+\]</span>
+对数化特质性冲击的预期增长率<span class="math inline">\(\mu_0(t)\)</span>是两种可能增长率的加权平均值，给定为
+<span class="math display">\[
+\mu_0(t)=P(t)\alpha_1+(1-P(t))\alpha_2=\alpha_2+\beta P(t),
+\label{31}\tag{3.1}
+\]</span>
+其中<span class="math inline">\(\beta=\alpha_1-\alpha_2.\)</span>对于一个小时间间隔<span class="math inline">\(\Delta t,\)</span>对数特质性劳动冲击的总变化是<span class="math inline">\(l_2(t+\Delta t)-l_2(t),\)</span>其预期变化为<span class="math inline">\(\mu_0(t)\Delta t-\frac{v_1^2}{2}\)</span>.参考<em>Wang et al. 2009</em> 中的处理方法，对相应波动率进行归一化得到
+<span class="math display">\[
+dZ_1(t)=\frac{1}{v_1\Delta t}\left(l_2(t+\Delta t)-l_2(t)-\mu_0(t)\Delta t-\frac{v_1^2}{2}\right).
+\tag{3.2}\label{3.2}
+\]</span>
+将式子<span class="math inline">\((\ref{3.2})\)</span>带入式子<span class="math inline">\((\ref{31})\)</span>就得到
+<span class="math display">\[
+dl_2(t)=(\alpha_2+\beta P(t)-\frac{v_1^2}{2})dt+v_1dZ_1(t).
+\]</span>
+&gt; [!Warning]
+&gt;
+&gt; 感觉上式有点问题，预期变化应该为<span class="math inline">\((\mu_0(t)-\frac{v_1^2}{2})\Delta t\)</span>
+&gt;
+&gt; 归一化之后得到
+&gt; <span class="math display">\[
+&gt; \frac{dZ_1(t)}{dt}=\frac{1}{v_1\Delta t}\left(l_2(t+\Delta t)-l_2(t)-(\mu_0(t)-\frac{v_1^2}{2})\Delta t\right).
+&gt; \]</span>
+&gt; 才能得到<span class="math inline">\(l_2(t)\)</span>的动态过程。</p>
+<p>应用 <em>Statistics of Random Process</em> 中的结果，我们还可以得到<span class="math inline">\(P(t)\)</span>的动态过程 :question:
+<span class="math display">\[
+dP(t)=(p_2-(p_1+p_2)P(t))dt+v_1^{-1}\beta P(t)(1-P(t))dZ_1(t).
+\]</span>
+由式<span class="math inline">\((\ref{2.3}),(\ref{2.4})\)</span>可知对数劳动收入可以写作
+<span class="math display">\[
+l(t)=y(t)+d(t)+\lambda+l_2(t),
+\]</span>
+其中<span class="math inline">\(d(t)=\log D(t)\)</span>且其动态过程可以写作
+<span class="math display">\[
+\begin{cases}
+d\,d(t)=(g_D-\frac{\sigma^2}{2})dt+\sigma dZ_D(t),\quad t\in[0,T],\\
+d(0)=d_0.
+\end{cases}
+\]</span>
+应用Ito公式，对数化劳动收入就导出为 :question:
+<span class="math display">\[
+d\,l(t)=[-ky(t)+g_D-\frac{\sigma^2}{2}+\lambda+\beta P(t)+\alpha_2-\frac{v_1^2}{2}]dt\\
++(\sigma-v_D)dZ_D(t)+v_LdZ_L(t)+v_1dZ_1(t).
+\]</span>
+使用Ito公式就可得到
+<span class="math display">\[
+\begin{cases}
+&amp;\frac{dL(t)}{L(t)}&amp;=[-ky(t)+g_D-\frac{\sigma^2}{2}+\lambda+\beta P(t)+\alpha_2+\frac{v_L^2}{2}+\frac{1}{2}(\sigma-v_D)^2]dt\\
+&amp; &amp;+(\sigma-v_D)dZ_D(t)+v_LdZ_L(t)+v_1dZ_1(t),\quad t\in[0,T].\\
+&amp;L(0)&amp;=l_0.\label{3.3}\tag{3.3}
+\end{cases}
+\]</span>
+结合式子<span class="math inline">\((\ref{2.1}),(\ref{2.2})\)</span>就可以重写
+<span class="math display">\[
+\begin{cases}
+\frac{dW(t)}{W(t)}=[(\mu-r)\pi+r+\frac{C(t)}{W(t)}-\frac{F(t)L(t)b(t)}{W(t)}]dt+\pi\sigma dZ_D(t),\\
+W(0)=w_0&gt;0,\tag{3.4}\label{3.4}
+\end{cases}
+\]</span>
+其中<span class="math inline">\(L(t),P(t)\)</span>的动态过程也已经给出。</p>
+<p>随后我们用<span class="math inline">\(P\)</span>表示<span class="math inline">\(P(t)\)</span>,<span class="math inline">\(L(t)\)</span>记作<span class="math inline">\(l,W(t)\)</span>记作<span class="math inline">\(w,\)</span>稍作符号上的简化，对于初始状态<span class="math inline">\((t,W_t)\)</span>,基金经理的目标是最大化以下的目标函数
+<span class="math display">\[
+J(t,w,l,y,P)=\mathbb{E}_{\pi,b}\left[ \int_t^Te^{-rs}U(b(s)F(s)L(s))ds+\lambda_1e^{-rT}U(W(T))\right],\label{3.6}\tag{3.6}
+\]</span>
+该问题的价值函数由下面的公式给出
+<span class="math display">\[
+V(t,w,l,y,P)=\sup_{(\pi,b)\in\mathcal{A}}J(t,w,l,y,P),\tag{3.7}\label{3.7}
+\]</span>
+其中<span class="math inline">\(\mathcal{A}\)</span>是控制对的集合。假设效用函数表达式如下
+<span class="math display">\[
+U(w)=-\frac{1}{\gamma}e^{-\gamma w},
+\]</span>
+其中<span class="math inline">\(\gamma&gt;0\)</span>是常数的绝对风险厌恶系数。基金经理的目标是最大化福利和最终的剩余财富。为了简便起见，我们定义
+<span class="math display">\[
+\begin{align}
+C^{1,2,2,2,2}&amp;([0,T]\times\mathbb{R}^+\times\mathbb{R}^+\times\mathbb{R}^+\times\mathbb{R}^+)\\
+=&amp;\{V(t,w,l,y,P)|V(t,\cdot,\cdot,\cdot,\cdot) \text{ is once continuously differentiable on }[0,T],\\
+&amp;V(\cdot,w,l,y,P)\text{ is twice continuously differentiable for }\\
+&amp;w\in \mathbb{R}^+,l\in\mathbb{R}^+,y\in\mathbb{R}^+,P\in\mathbb{R}^+.\}
+\end{align}
+\]</span>
+使用标准方法即可得到下面的HJB方程满足$V(t,w,l,y,P)C^{1,2,2,2,2} $</p>
+<p>下面是推导过程及结果</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/bianfenfa.2ks0knnzzn.jpg" alt="变分" style="zoom:45%;" /><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/HJB20250124.45s5qh438.jpg" alt="hjb" style="zoom:50%;" /></p>
+<p>上面最后一个式子记为<span class="math inline">\((3.8)\)</span>,再加上边界条件
+<span class="math display">\[
+V(T,w,l,y,P)=-e^{-rT}\frac{\lambda_1}{\gamma}e^{-\gamma w}.\tag{3.9}\label{3.9}
+\]</span></p>
+<p>下面的定理可以阐述这个随机控制问题的结果</p>
+<blockquote>
+<p><strong>Theorem 3.1</strong></p>
+<p>对于任意的<span class="math inline">\(t\in[0,T],\)</span>最优投资策略和福利调整策略分别由下式给出
+<span class="math display">\[
+\begin{align}
+&amp;\pi^*(t,w,l,y,P)=\frac{\mu-r}{\gamma f_1(t)\sigma^2 w},\tag{3.10}\label{3.10}\\
+&amp;b^*(t,w,l,y,P)=\frac{\ln \lambda_1+\ln f_1(t)-\gamma f_1(t)w-\gamma f_2(t)-\gamma f_5(P)}{-\gamma F(t)l},\label{3.11}\tag{3.11}
+\end{align}
+\]</span>
+且最终相应的价值函数就是
+<span class="math display">\[
+V(t,w,l,y,P)=-\frac{\lambda_1}{\gamma}e^{-\gamma[f_1(t)w+f_2(t)+f_5(P)]-rt},
+\]</span>
+其中
+<span class="math display">\[
+\begin{align}
+f_1(t)&amp;=\left[ e^{-\int_t^Trds}+\int_t^Te^{-\int_t^srdu}ds \right]^{-1},\\
+f_2(t)&amp;=\int_t^Te^{-\int_t^sf_1(u)du}\times\left[ f_1(s)\left( C(s)-\frac{1-\ln f_1(s)-\ln\lambda_1}{\gamma} \right)+\frac{1}{2}\frac{(\mu-r)^2}{\gamma\sigma^2}+\frac{r}{\gamma} \right]ds-f_5(P(T)).
+\end{align}
+\]</span>
+<span class="math inline">\(f_5(P)\)</span>满足下面的常微分方程，其中<span class="math inline">\(0&lt;P&lt;1,\)</span>
+<span class="math display">\[
+f_1(t)f_5(P)=f_5&#39;(P)[p_2-(p_1+p_2)P]-\frac{1}{2v_1^2}[\gamma f&#39;_5(P)-f&#39;&#39;_5(P)]P^2(1-P)^2\beta^2,
+\]</span>
+其边界条件是
+<span class="math display">\[
+\begin{cases}
+f_1(t)f_5(0)=p_2f&#39;_5(0),\\
+f_(t)f_5(1)=-p_1f&#39;_5(1).
+\end{cases}
+\]</span></p>
+</blockquote>
+<blockquote>
+<p><strong>Proof.</strong></p>
+<p>由HJB方程<span class="math inline">\((3.8)\)</span>可以导出两个控制的一阶条件为
+<span class="math display">\[
+\begin{align}
+&amp;0=wV_w(\mu-r)+w^2V_{ww}\sigma^2\pi+wlV_{wl}\sigma(\sigma-v_D)-wV_{wy}\sigma v_D,\\
+&amp;0=-V_{w}F(t)l+F(t)le^{-rt}e^{-\gamma F(t)lb}.
+\end{align}
+\]</span>
+因此最优投资策略和福利调整策略由下式给出
+<span class="math display">\[
+\begin{align}
+&amp;\pi^*=\frac{V_w\sigma v_D-V_w(\mu-r)-lV_{wl}\sigma(\sigma-v_D)}{wV_{ww}\sigma^2},\\
+&amp;b^*=\frac{\ln V_w+rt}{-\gamma F(t)l}.
+\end{align}
+\tag{3.13}\label{3.13}
+\]</span>
+猜测解的形式为
+<span class="math display">\[
+V(t,w,l,y,P)=-\frac{\lambda_1}{\gamma}\exp\{ -\gamma[f_1(t)w+f_2(t)+f_3(t,l)+f_4(t)y+f_5(P)]-rt \},
+\]</span>
+且有边界条件<span class="math inline">\(f_1(T)=1,f_2(T)=-f_5(P(T)),f_3(T)=f_4(T)=0.\)</span></p>
+<p>于是我们有下面的一系列式子
+<span class="math display">\[
+\begin{align}
+&amp;V_t=-\gamma [f_{1t}w+f_{2t}+f_{3t}(t,l)+f_{4t}y+\frac{r}{\gamma}]V,\\
+&amp;V_w=-\gamma f_1V,\quad V_{ww}=\gamma^2f_1^2V,\\
+&amp;V_l=-\gamma f_{3l}V,\quad V_{ll}=\gamma^2f_{3l}^2V-\gamma f_{3ll}V,\\
+&amp;V_y=-\gamma f_4V,\quad V_{yy}=0,\\
+&amp;V_P=-\gamma f_{5P}V,\quad V_{PP}=\gamma^2 f_{5P}V-\gamma f_{5PP}V,\\
+&amp;V_{wl}=\gamma^2 f_1f_{3l}V,\quad V_{wy}=\gamma^2f_1f_4V,\\
+&amp;V_{ly}=\gamma^2f_{3l}f_4V,\quad V_{lP}=\gamma^2f_{3l}f_{5P}V.
+\end{align}\label{3.14}\tag{3.14}
+\]</span>
+将<span class="math inline">\((\ref{3.13}),(\ref{3.14})\)</span>代入HJB方程<span class="math inline">\((3.8)\)</span>​​，得</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/assumeV0124.4jo76ce5ha.webp" alt="assumeV" style="zoom:60%;" /></p>
+<p>假设<span class="math inline">\(f_3(t,l)=f_3(t)\ln l,\)</span>​比较变量的系数可得下面的ODEs</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/odes0124.3uuxmbodn3.webp" alt="odes" style="zoom:60%;" /></p>
+<p>通过ODEs我们可以得到<span class="math inline">\(V\)</span>的表达式从而最优投资策略和福利策略就可以得到。</p>
+<p>遵循 <em>Controlled Markov Processes and Viscosity Solutions, 2nd ed.</em> 中的标准方法，假设<span class="math inline">\(\hat{V}\in C^{1,2,2,2,2}\)</span>是(3.8)的解且满足边界条件<span class="math inline">\((\ref{3.9})\)</span>,于是对于任意固定的<span class="math inline">\(t\in[0,T]\)</span>,对于可行的控制对<span class="math inline">\((\pi^*(t),b^*(t))\)</span>,都有
+<span class="math display">\[
+\hat{V}(t,w,l,y,P)\geq J(t,w,l,y,P).
+\]</span>
+如果存在可行控制对<span class="math inline">\((\pi^*(t),b^*(t))\)</span>使得(3.8)式取等号，则
+<span class="math display">\[
+\hat{V}(t,w,l,y,P)= J(t,w,l,y,P).
+\]</span>
+如果我们令<span class="math inline">\(V=\hat{V},\)</span>则我们的假设就成立，相应的控制对是可行的，于是最优的投资策略和福利率就可以得到了。<span class="math inline">\(\square\)</span></p>
+</blockquote>
+<blockquote>
+<p>[!Note]</p>
+<ul>
+<li>值得注意的是，最优投资策略<span class="math inline">\(\pi^*(t)\)</span>与劳动收入<span class="math inline">\(L(t)\)</span>无关,这意味着投资决策不受退休成员薪资模型的影响，表明投资策略在劳动收入变化的情况下仍能保持一致。福利调整策略<span class="math inline">\(b^*(t)\)</span>​则依赖于劳动收入，影响退休福利的值，这是因为福利支付水平依赖于最终的薪资水平。</li>
+<li>注意给定最优投资策略<span class="math inline">\((\ref{3.10})\)</span>依赖于时间<span class="math inline">\(t\)</span>的财富过程<span class="math inline">\(W.\)</span>风险资产的回报率通常高于无风险利率，即<span class="math inline">\(\mu&gt;r.(\ref{3.10})\)</span>显示投资于风险资产的最优配置策略是正的，这意味着随着预期回报率的增加，基金经理会进行更大的投资。</li>
+</ul>
+</blockquote>
+</div>
+<div id="无特质性冲击时的最优策略" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> 3.2 无特质性冲击时的最优策略<a href="cdc.html#无特质性冲击时的最优策略" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>本小节考虑一种特殊情形：劳动收入与股票在没有特质性冲击的情况下是协整的。通过让劳动与股市之间的对数劳动-股息比率遵循均值回归过程来建模劳动收入和股市之间的长期关系。令<span class="math inline">\(\overline{L}(t)\)</span>为劳动收入过程，则对数劳动与对数股息之间的差值为<span class="math inline">\(\overline{l}(t).\)</span></p>
+<p>令<span class="math inline">\(\overline{\pi}(t)\)</span>为投资于风险资产的比例，<span class="math inline">\(\overline{b}(t)\)</span>为此情况下的福利策略，则财富过程可以变为
+<span class="math display">\[
+\begin{cases}
+\frac{d\overline{W}(t)}{\overline{W}(t)}=\left[ (\mu-r)\overline{\pi}+r+\frac{C(t)}{\overline{W}(t)}-\frac{F(t)\overline{L}(t)\overline{b}(t)}{\overline{W}(t)} \right]dt+\overline{\pi}(t)\sigma dZ_D(t),\\
+\overline{W}(0)=\overline{w}_0&gt;0,
+\end{cases}\label{3.22}\tag{3.22}
+\]</span>
+其中
+<span class="math display">\[
+\begin{align}
+\frac{d\overline{L}(t)}{dt}&amp;=\left[ -k\overline{y}(t)+g_D+\overline{\lambda}-\frac{\sigma^2}{2}+\frac{(\sigma-v_D)^2}{2} \right]dt+(\sigma-v_D)dZ_D(t),\\
+\frac{d\overline{y}(t)}{\overline{y}(t)}&amp;=-k\overline{y}(t)dt-v_DdZ_D(t).
+\end{align}
+\]</span>
+有如下对SDE<span class="math inline">\((\ref{3.22})\)</span>对应的可行策略的定义。</p>
+<blockquote>
+<p><strong>Definition 3.4</strong></p>
+<p>对于任意的<span class="math inline">\(t\in[0,T],\)</span>策略对<span class="math inline">\((\overline{\pi}(t),\overline{b}(t))\)</span>被称为可行的，如果策略对是<span class="math inline">\(\mathcal{F}_t\)</span>适应的且满足如下条件：
+<span class="math display">\[
+\mathbb{E}\left[ \int^T_t[\overline{b}^2(s)]ds \right]&lt;\infin,\\
+\mathbb{E}\left[ \int^T_t[\overline{\pi}^2(s)]ds \right]&lt;\infin,
+\]</span>
+且SDE<span class="math inline">\((\ref{3.22})\)</span>有唯一解。</p>
+</blockquote>
+<p>基金经理的目标是最大化以下的期望效用
+<span class="math display">\[
+\bar{J}(t,\bar{w},\bar{l},\bar{y})=\mathbb{E}_{\bar{\pi},\bar{b}}\left[ \int_t^Te^{-rs}U(\bar{b}(s)F(s)\bar{L}(s))ds+\lambda_1e^{-rT}U(\bar{W}(T)) \right],
+\]</span>
+其中<span class="math inline">\(\lambda_1\)</span>是一个非负常数，表示终端财富效用的权重。然后，问题的价值函数由以下公式给出
+<span class="math display">\[
+\bar{V}(t,\bar{w},\bar{l},\bar{y})=\sup_{\bar{\pi},\bar{b}}\bar{J}(t,\bar{w},\bar{l},\bar{y}),
+\]</span>
+效用函数为
+<span class="math display">\[
+U(\bar{w})=-\frac{1}{\gamma_1}e^{-\gamma_1\bar{w}},
+\]</span>
+其中<span class="math inline">\(\gamma_1&gt;0\)</span>​是基金经理的常数绝对风险厌恶系数。</p>
+<p>可以列出相应的HJB方程</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/Hjb2.9nzvvmfg9v.webp" alt="hjb2" style="zoom:40%;" /></p>
+<p>最优投资策略和福利调整策略由下面的定理导出。</p>
+<blockquote>
+<p><strong>Theorem 3.5</strong></p>
+<p>对于任意的<span class="math inline">\(t\in[0,T],\)</span>最优投资问策略和福利调整政策由下式给出
+<span class="math display">\[
+\begin{align}
+\bar{\pi}^*(t,\bar{w},\bar{l},\bar{y})&amp;=\frac{\mu-r}{\gamma_1\bar{g}_1(t)\sigma^2\bar{w}},\\
+\bar{b}^*(t,\bar{w},\bar{l},\bar{y})&amp;=\frac{\ln \lambda_1+\ln\bar{g}_1(t)-\gamma_1\bar{g}_1(t)\bar{w}-\gamma_1\bar{g}_2(t)}{-\gamma_1F(t)\bar{l}},
+\end{align}
+\]</span>
+相应的边界条件为
+<span class="math display">\[
+\bar{V}(t,\bar{w},\bar{l},\bar{y})=-\frac{\lambda_1}{\gamma_1}e^{-\gamma_1[\bar{g}_1(t)\bar{w}+\bar{g}_2(t)]-rt},
+\]</span>
+其中
+<span class="math display">\[
+\begin{align}
+\bar{g_1}(t)&amp;=\left[ e^{-\int_t^Trds}+\int_t^Te^{-\int_t^s rdu}ds \right]^{-1},\\
+\bar{g}_2(t)&amp;=\int_t^Te^{-\int_t^s\bar{g}_1(u)du}\times\left[ \bar{g}_1(s)\left( C(s)-\frac{1-\ln \bar{g}_1(s)-\ln \lambda_1}{\gamma_1} \right)+\frac{(\mu-r)^2}{2\gamma_1\sigma^2}+\frac{r}{\gamma_1} \right]ds.
+\end{align}
+\]</span></p>
+</blockquote>
+<blockquote>
+<p>[!Note]</p>
+<p>比较两种情况下获得的最优投资和福利替代政策。我们发现最优的投资策略是保持不变的，不存在模型的模糊性。这是因为最优投资策略与劳动收入无关。劳动收入过程不影响投资策略。然而增长率的不确定性影响福利调整政策，两种情况下福利支付策略是不同的。</p>
+</blockquote>
+</div>
+</div>
+<div id="数值分析" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> 4 数值分析<a href="cdc.html#数值分析" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本节探究金融市场中的参数对于最优投资分配和福利策略的影响。</p>
+<p>首先假设<span class="math inline">\(\mu_1(x)=A+Bc^x\)</span>是年龄<span class="math inline">\(x\)</span>岁时的死亡力(Force of Mortality)，于是存活函数就可以写为
+<span class="math display">\[
+\begin{align}
+s(x)&amp;=e^{-\int_0^{x-a_0}\mu(a_0+s)ds}\\
+&amp;=e^{-A(x-a_0)-\frac{B}{\ln c}(c^x-c^{a_0})},\;a_0\leq x\leq a_1.
+\end{align}
+\]</span>
+基础参数设置为<span class="math inline">\(A=0.00022,B=2.7\times10^{-6},c=1.124,a_0=30,a_1=65,a_2=100,n=10,\eta_0=0.01\)</span>.结合函数<span class="math inline">\(s(x),F(t)\)</span>的表达式
+<span class="math display">\[
+F(t)=\int_{a_1}^{a_2}n(t-x+a_0)s(x)e^{-\eta_0(x-a_1)}dx,
+\]</span>
+可以得出累积的福利因子<span class="math inline">\(F=188.8688\)</span>​​.</p>
+<p>用R语言程序计算如下</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="cdc.html#cb8-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fl">0.00022</span></span>
+<span id="cb8-2"><a href="cdc.html#cb8-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">2.7e-6</span></span>
+<span id="cb8-3"><a href="cdc.html#cb8-3" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">1.124</span></span>
+<span id="cb8-4"><a href="cdc.html#cb8-4" tabindex="-1"></a>a_0 <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb8-5"><a href="cdc.html#cb8-5" tabindex="-1"></a>a_1 <span class="ot">&lt;-</span> <span class="dv">65</span></span>
+<span id="cb8-6"><a href="cdc.html#cb8-6" tabindex="-1"></a>a_2 <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb8-7"><a href="cdc.html#cb8-7" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb8-8"><a href="cdc.html#cb8-8" tabindex="-1"></a>eta_0 <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb8-9"><a href="cdc.html#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="cdc.html#cb8-10" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb8-11"><a href="cdc.html#cb8-11" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span>A <span class="sc">*</span> (x <span class="sc">-</span> a_0) <span class="sc">+</span> (B <span class="sc">/</span> <span class="fu">log</span>(c)) <span class="sc">*</span> (c<span class="sc">^</span>x <span class="sc">-</span> c<span class="sc">^</span>a_0))</span>
+<span id="cb8-12"><a href="cdc.html#cb8-12" tabindex="-1"></a>}</span>
+<span id="cb8-13"><a href="cdc.html#cb8-13" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="cdc.html#cb8-14" tabindex="-1"></a>integrand <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb8-15"><a href="cdc.html#cb8-15" tabindex="-1"></a>  n <span class="sc">*</span> <span class="fu">s</span>(x) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>eta_0 <span class="sc">*</span> (x <span class="sc">-</span> a_1))</span>
+<span id="cb8-16"><a href="cdc.html#cb8-16" tabindex="-1"></a>}</span>
+<span id="cb8-17"><a href="cdc.html#cb8-17" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="cdc.html#cb8-18" tabindex="-1"></a><span class="co"># 计算积分 F</span></span>
+<span id="cb8-19"><a href="cdc.html#cb8-19" tabindex="-1"></a>F <span class="ot">&lt;-</span> <span class="fu">integrate</span>(integrand, <span class="at">lower =</span> a_1, <span class="at">upper =</span> a_2)</span>
+<span id="cb8-20"><a href="cdc.html#cb8-20" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="cdc.html#cb8-21" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;积分 F 的值为:&quot;</span>, F<span class="sc">$</span>value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb8-22"><a href="cdc.html#cb8-22" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="cdc.html#cb8-23" tabindex="-1"></a><span class="co"># 输出结果为</span></span>
+<span id="cb8-24"><a href="cdc.html#cb8-24" tabindex="-1"></a><span class="do">## 积分 F 的值为: 188.8688 </span></span></code></pre></div>
+<p>又有参数<span class="math inline">\(\eta_1=0.02,\lambda=0.3,g_D=0.01,w_0=150,y_0=0,\lambda_m=1,\lambda_1=0.3,\gamma=0.3,C_0=0.1\)</span>无风险利率<span class="math inline">\(r=0.01,\)</span>关键的协整系数的参数<span class="math inline">\(k=0.15,v_D=0.16,\sigma=0.16.\)</span></p>
+<p>:question:</p>
+<p>基于<em>Benzoni et al. 2007</em> 的工作，使用<span class="math inline">\(\mathbb{E}_t[\bar{y}_s],\mathbb{E}_t[\bar{L}_s],s\in[t,T]\)</span>的解析解。为了模拟<span class="math inline">\(\bar{y}(t),\bar{L}(t)\)</span>的值，假设劳动收入服从正态分布，于是有
+<span class="math display">\[
+\mathbb{E}_t[\bar{L}(s)]=e^{\mathbb{E}_t[\bar{l}(s)]+\frac{1}{2}Var_t[\bar{l}(s)]},
+\]</span>
+其中
+$$
+<span class="math display">\[\begin{align}
+\mathbb{E}_t[\bar{l}(s)]&amp;=\bar{l}_0-\bar{y}_0(1-e^{-ks})+(g_D-\bar{\lambda}-\frac{\sigma^2}{2})s,\\
+Var_t[\bar{l}(s)]&amp;=v_D^2[s-\frac{1}{2k}(3-e^{-ks})(1-e^{-kt})]+(\sigma-v_D)^2s+2[v_D(\sigma-v_D)(s-\frac{1}{k}(1-e^{-ks}))].
+
+\end{align}\]</span>
+$$
+<img src="https://github.com/Go9entle/picx-images-hosting/raw/master/image.8z6mh1xqoq.png" alt="4.4" style="zoom:80%;" /></p>
+<p>图4.4展示了劳动收入的确定性模式<span class="math inline">\(\bar{L}(t)\)</span>随时间<span class="math inline">\(t\)</span>​变化的情况，显然劳动收入随时间呈上升趋势。</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/image.eslzoptqk.png" alt="4.5" style="zoom:80%;" /></p>
+<p>图4.5展示了在参数<span class="math inline">\(k\)</span>控制的不同协整条件下均值回归系数对薪资和福利支付比率的影响。该参数衡量劳动收入回归其平均值的快慢，提供了对收入稳定性或波动性的洞察。从图4.5.1中我们看到，对于任何固定时间，劳动收入随着𝑘的增加而增加。这是因为当𝑘增加时，劳动收入变得更具“股票特性”。参数𝑘决定了变量<span class="math inline">\(\bar{𝑦}(𝑡)\)</span>向长期均值的回归速度，并且捕捉了与劳动收入和股息相关的协整时间尺度。此外，协整意味着长期依赖性，因此，劳动收入在不同的协整水平下在短期内不会发生变化。图4.5.2显示了福利调整支付率和𝑘增长减少。较低的福利支付比率<span class="math inline">\(\bar{b}^∗(𝑡)\)</span>意味着更多的钱留在基金中。劳动收入的增加导致福利替代支付比率的增长下降，这反映了养老金制度对退休收入的支付比例。</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/image.231ywvjd7k.png" alt="4.6" style="zoom:80%;" /></p>
+<p>图4.6展示了在每个时间点最优值<span class="math inline">\(\bar{𝜋}^∗(𝑡)\)</span>和<span class="math inline">\(\bar{𝑏}^∗(𝑡)\)</span>的变化。从图4.6.1可以观察到，最优投资配置<span class="math inline">\(\bar{𝜋}^∗(𝑡)\)</span>减少，这意味着在给定的时期内，投资于风险资产的比例较低。这似乎符合投资智慧，年轻的决策者通常会在风险资产上投资较多。此外，从图4.6.2可以看到，福利调整支付比率<span class="math inline">\(\bar{𝑏}^∗(𝑡)\)</span>​呈上升趋势，这表明随着时间的推移，基金经理提供的支付比例在增加。</p>
+<p>接下来研究风险厌恶参数<span class="math inline">\(\gamma_1\)</span>对最优投资和福利策略的影响。</p>
+<p><img src="https://github.com/Go9entle/picx-images-hosting/raw/master/image.8adcx1fzoa.png" alt="4.7" style="zoom:80%;" /></p>
+<p>图4.7展示了风险厌恶对最优策略的影响。在图4.7.1中观察到<span class="math inline">\(\bar{\pi}^*(t)\)</span>随风险厌恶系数增加而减少，意味着投资风险资产比例越来越少，风险厌恶系数增加导致基金经理会更谨慎进行投资。图4.7.2中我们看到最优福利调整比率几乎不随着不同的<span class="math inline">\(\gamma_1\)</span>变化，这表明养老金成员收到的收益几乎不会受到投资者风险偏好水平的影响。</p>
+</div>
+<div id="总结" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> 5 总结<a href="cdc.html#总结" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本文聚焦于一个持续时间内的集体定义缴款（CDC）养老金基金方案，其中股票与劳动收入是协整的。我们假设成员的特质性冲击的增长率未知，并通过一个连续时间的二态隐藏马尔可夫链来建模。利用标准的HJB方程，我们得到了最优投资策略和福利调整政策的闭式解。此外，我们还提供了数值实例，展示了参数如何影响最优策略。具体来说，我们发现信念水平<span class="math inline">\(𝑃\)</span>会影响福利支付比率。基金经理对成员劳动收入未来增长率的信心越大，成员将更可能分配更高的福利支付比率。</p>
+<p>如果考虑人力资本，扩展我们的模型可能会很有趣。当引入人力资本时，基金经理的最优投资策略可能会随着协整水平的变化而发生变化。在长期内，劳动收入在协整关系稳固时表现出“股票特性”，这减少了基金经理投资于风险资产的兴趣。因此，我们需要更复杂的技术来获得平衡策略的显式表达式。此外，研究在常数相对风险厌恶（CRRA）效用函数下的最优问题将具有重要意义。CRRA模型考虑到个体在财富相对变化的情况下的风险偏好，而不是绝对财富量，这增加了显著的复杂性，并反映了经济决策中的更现实的情景。</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="usage.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="causal.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CBook.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
