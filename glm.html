@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | 我的研究生课程笔记</title>
+  <title>2 广义线性模型 | 我的研究生课程笔记</title>
   <meta name="description" content="这是用R的bookdown功能制作的课堂笔记。" />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | 我的研究生课程笔记" />
+  <meta property="og:title" content="2 广义线性模型 | 我的研究生课程笔记" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="这是用R的bookdown功能制作的课堂笔记。" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | 我的研究生课程笔记" />
+  <meta name="twitter:title" content="2 广义线性模型 | 我的研究生课程笔记" />
   
   <meta name="twitter:description" content="这是用R的bookdown功能制作的课堂笔记。" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="usage.html"/>
-
+<link rel="prev" href="rlforfin.html"/>
+<link rel="next" href="cdc.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -252,13 +252,74 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered hasAnchor">
-<h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="glm" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> 广义线性模型<a href="glm.html#glm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="glmexp" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 广义线性模型的指数族分布<a href="glm.html#glmexp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>假设我们观察到数据<span class="math inline">\(\{y_i\}\)</span>是独立随机变量<span class="math inline">\(\{Y_i\}\)</span>的一个值，广义线性模型由以下成分组成：</p>
+<ul>
+<li><p>随机成分
+<span class="math display">\[
+Y_i\sim f(y_i|\theta_i,\phi),
+\]</span>
+其中<span class="math inline">\(f(\cdot)\)</span>是指数分布族的概率密度函数或概率质量函数。</p></li>
+<li><p>链接函数<span class="math inline">\(g(\cdot)\)</span>满足
+<span class="math display">\[
+\eta_i=g(\mu_i),
+\]</span>
+其中<span class="math inline">\(\mu_i=E(Y_i)\)</span>.</p></li>
+<li><p>线性预测器成分
+<span class="math display">\[
+\eta_i=x_i^T\beta.
+\]</span></p></li>
+</ul>
+<p><strong>指数族</strong></p>
+<p>一族概率密度函数或概率质量函数被称为指数族，如果满足形式
+<span class="math display">\[
+f(y|\theta)=a(\theta)b(y)\exp\left( \sum_{i=1}^kw_i(\theta)t_i(y) \right),y\in A,
+\]</span>
+其中我们假设：</p>
+<ul>
+<li><span class="math inline">\(A\)</span>不依赖于某个<span class="math inline">\(k\)</span>维向量<span class="math inline">\(\boldsymbol{\theta}\)</span>​.</li>
+<li><span class="math inline">\(a(\theta)&gt;0\)</span>是不依赖于<span class="math inline">\(y\)</span>的实值函数。</li>
+<li><span class="math inline">\(w_i(\theta),i=1,...,k\)</span>是不依赖于<span class="math inline">\(y\)</span>的实值函数。</li>
+<li><span class="math inline">\(b(y)\geq0\)</span>是不依赖于<span class="math inline">\(\theta\)</span>的实值函数。</li>
+<li><span class="math inline">\(t_i(y),i=1,2,...,k\)</span>是不依赖于<span class="math inline">\(\theta\)</span>的实值函数</li>
+</ul>
+<p><strong>典型形式</strong></p>
+<p>与其说<span class="math inline">\(\theta\)</span>是参数不如令<span class="math inline">\(\eta_i=w_i(\theta)\)</span>称为典型或自然参数，概率密度或质量函数就会变为
+<span class="math display">\[
+f(y|\boldsymbol{\eta})=a^*(\boldsymbol{\eta})b(y)\exp\left( \sum_{i=1}^k\eta_it_i(y) \right),y\in A.
+\]</span>
+这种方程的形式不是唯一的。</p>
+<p><strong>指数族的示例</strong></p>
+<p>所有这些分布都是指数族：</p>
+<ul>
+<li>正态分布</li>
+<li>Gamma分布</li>
+<li>Beta分布</li>
+<li>逆高斯分布</li>
+<li>二项分布</li>
+<li>Poisson分布</li>
+<li>负二项分布</li>
+</ul>
+<p><strong>示例</strong></p>
+<ul>
+<li><p>正态分布：
+<span class="math display">\[
+f(y|\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left( -\frac{(y-\mu)^2}{2\sigma^2} \right).
+\]</span></p></li>
+<li><p>二项分布
+<span class="math display">\[
+f(y|p)=\binom{m}{y}p^y(1-p)^{m-y}.
+\]</span></p></li>
+</ul>
+<p><strong>反例</strong><br />
+<span class="math display">\[
+f(y|\theta)=\theta^{-1}\exp(1-(y/\theta)),0&lt;\theta&lt;y&lt;\infty
+\]</span>
+不是一个指数族。</p>
 
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div class="csl-entry">
-Wichmann, B. A., and I. D. Hill. 1982. <span>“Algorithm as 183: An Efficient and Portable Pseudo-Random Number Generator.”</span> <em>Applied Statistics</em> 31: 188–190. Remarks: 34, 198 and 35, 89.
-</div>
 </div>
 </div>
             </section>
@@ -266,8 +327,8 @@ Wichmann, B. A., and I. D. Hill. 1982. <span>“Algorithm as 183: An Efficient a
           </div>
         </div>
       </div>
-<a href="usage.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="rlforfin.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cdc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
