@@ -273,45 +273,45 @@ P[S_{t+1}|S_t,S_{t-1},...,S_0]=P[S_{t+1}|S_t]\text{ for all }t\geq 0.
 \]</span>
 这就被成为Markov性。</p>
 <p>书中还给出了相应的代码</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="rlforfin.html#cb1-1" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
-<span id="cb1-2"><a href="rlforfin.html#cb1-2" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="rlforfin.html#cb1-3" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="rlforfin.html#cb1-4" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb1-5"><a href="rlforfin.html#cb1-5" tabindex="-1"></a><span class="kw">class</span> Process1:</span>
-<span id="cb1-6"><a href="rlforfin.html#cb1-6" tabindex="-1"></a>    <span class="at">@dataclass</span></span>
-<span id="cb1-7"><a href="rlforfin.html#cb1-7" tabindex="-1"></a>    <span class="kw">class</span> State:</span>
-<span id="cb1-8"><a href="rlforfin.html#cb1-8" tabindex="-1"></a>        price: <span class="bu">int</span></span>
-<span id="cb1-9"><a href="rlforfin.html#cb1-9" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="rlforfin.html#cb1-10" tabindex="-1"></a>    level_param: <span class="bu">int</span>  <span class="co"># level to which price mean-reverts</span></span>
-<span id="cb1-11"><a href="rlforfin.html#cb1-11" tabindex="-1"></a>    alpha1: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.25</span>  <span class="co"># strength of mean-reversion (non-negative value)</span></span>
-<span id="cb1-12"><a href="rlforfin.html#cb1-12" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="rlforfin.html#cb1-13" tabindex="-1"></a>    <span class="kw">def</span> up_prob(<span class="va">self</span>, state: State) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb1-14"><a href="rlforfin.html#cb1-14" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1.</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(<span class="op">-</span><span class="va">self</span>.alpha1<span class="op">*</span>(<span class="va">self</span>.level_param<span class="op">-</span>state.price)))</span>
-<span id="cb1-15"><a href="rlforfin.html#cb1-15" tabindex="-1"></a>    <span class="kw">def</span> next_state(<span class="va">self</span>, state:State) <span class="op">-&gt;</span> State:</span>
-<span id="cb1-16"><a href="rlforfin.html#cb1-16" tabindex="-1"></a>        up_move: <span class="bu">int</span> <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, <span class="va">self</span>.up_prob(state),<span class="dv">1</span>)[<span class="dv">0</span>] <span class="co">#生成随机移动 up_move = 0 or 1</span></span>
-<span id="cb1-17"><a href="rlforfin.html#cb1-17" tabindex="-1"></a>        <span class="cf">return</span> Process1.State(price<span class="op">=</span>state.price <span class="op">+</span> up_move <span class="op">*</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span>) <span class="co"># 若up_move = 1, 则价格上升1，若为0价格下降1</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="rlforfin.html#cb2-1" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb2-2"><a href="rlforfin.html#cb2-2" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="rlforfin.html#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="rlforfin.html#cb2-4" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb2-5"><a href="rlforfin.html#cb2-5" tabindex="-1"></a><span class="kw">class</span> Process1:</span>
+<span id="cb2-6"><a href="rlforfin.html#cb2-6" tabindex="-1"></a>    <span class="at">@dataclass</span></span>
+<span id="cb2-7"><a href="rlforfin.html#cb2-7" tabindex="-1"></a>    <span class="kw">class</span> State:</span>
+<span id="cb2-8"><a href="rlforfin.html#cb2-8" tabindex="-1"></a>        price: <span class="bu">int</span></span>
+<span id="cb2-9"><a href="rlforfin.html#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="rlforfin.html#cb2-10" tabindex="-1"></a>    level_param: <span class="bu">int</span>  <span class="co"># level to which price mean-reverts</span></span>
+<span id="cb2-11"><a href="rlforfin.html#cb2-11" tabindex="-1"></a>    alpha1: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.25</span>  <span class="co"># strength of mean-reversion (non-negative value)</span></span>
+<span id="cb2-12"><a href="rlforfin.html#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="rlforfin.html#cb2-13" tabindex="-1"></a>    <span class="kw">def</span> up_prob(<span class="va">self</span>, state: State) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb2-14"><a href="rlforfin.html#cb2-14" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1.</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(<span class="op">-</span><span class="va">self</span>.alpha1<span class="op">*</span>(<span class="va">self</span>.level_param<span class="op">-</span>state.price)))</span>
+<span id="cb2-15"><a href="rlforfin.html#cb2-15" tabindex="-1"></a>    <span class="kw">def</span> next_state(<span class="va">self</span>, state:State) <span class="op">-&gt;</span> State:</span>
+<span id="cb2-16"><a href="rlforfin.html#cb2-16" tabindex="-1"></a>        up_move: <span class="bu">int</span> <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, <span class="va">self</span>.up_prob(state),<span class="dv">1</span>)[<span class="dv">0</span>] <span class="co">#生成随机移动 up_move = 0 or 1</span></span>
+<span id="cb2-17"><a href="rlforfin.html#cb2-17" tabindex="-1"></a>        <span class="cf">return</span> Process1.State(price<span class="op">=</span>state.price <span class="op">+</span> up_move <span class="op">*</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span>) <span class="co"># 若up_move = 1, 则价格上升1，若为0价格下降1</span></span></code></pre></div>
 <p>接下来，我们使用 Python 的生成器功能（使用<code>yield</code>）编写一个简单的模拟器，如下所示：</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="rlforfin.html#cb2-1" tabindex="-1"></a><span class="kw">def</span> simulation(process, start_state):</span>
-<span id="cb2-2"><a href="rlforfin.html#cb2-2" tabindex="-1"></a>    state <span class="op">=</span> start_state</span>
-<span id="cb2-3"><a href="rlforfin.html#cb2-3" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb2-4"><a href="rlforfin.html#cb2-4" tabindex="-1"></a>        <span class="cf">yield</span> state</span>
-<span id="cb2-5"><a href="rlforfin.html#cb2-5" tabindex="-1"></a>        state <span class="op">=</span> process.next_state(state)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="rlforfin.html#cb3-1" tabindex="-1"></a><span class="kw">def</span> simulation(process, start_state):</span>
+<span id="cb3-2"><a href="rlforfin.html#cb3-2" tabindex="-1"></a>    state <span class="op">=</span> start_state</span>
+<span id="cb3-3"><a href="rlforfin.html#cb3-3" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb3-4"><a href="rlforfin.html#cb3-4" tabindex="-1"></a>        <span class="cf">yield</span> state</span>
+<span id="cb3-5"><a href="rlforfin.html#cb3-5" tabindex="-1"></a>        state <span class="op">=</span> process.next_state(state)</span></code></pre></div>
 <p>现在我们可以使用此模拟器函数生成采样轨迹。在下面的代码中，我们从 <code>start_price</code>的价格<span class="math inline">\(X_0\)</span>​开始，在<code>time_steps</code>时间步长内生成<code>num_traces</code>个采样轨迹。使用 Python 的生成器功能，我们可以使用<code>itertools.islice</code>函数“懒惰地”执行此操作。</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="rlforfin.html#cb3-1" tabindex="-1"></a><span class="im">import</span> itertools</span>
-<span id="cb3-2"><a href="rlforfin.html#cb3-2" tabindex="-1"></a><span class="kw">def</span> process1_price_traces(</span>
-<span id="cb3-3"><a href="rlforfin.html#cb3-3" tabindex="-1"></a> start_price: <span class="bu">int</span>,</span>
-<span id="cb3-4"><a href="rlforfin.html#cb3-4" tabindex="-1"></a>    level_param: <span class="bu">int</span>,</span>
-<span id="cb3-5"><a href="rlforfin.html#cb3-5" tabindex="-1"></a>    alpha1: <span class="bu">float</span>,</span>
-<span id="cb3-6"><a href="rlforfin.html#cb3-6" tabindex="-1"></a>    time_steps: <span class="bu">int</span>,</span>
-<span id="cb3-7"><a href="rlforfin.html#cb3-7" tabindex="-1"></a>    num_traces: <span class="bu">int</span></span>
-<span id="cb3-8"><a href="rlforfin.html#cb3-8" tabindex="-1"></a>) <span class="op">-&gt;</span> np.ndarray:</span>
-<span id="cb3-9"><a href="rlforfin.html#cb3-9" tabindex="-1"></a>    process <span class="op">=</span> Process1(level_param<span class="op">=</span>level_param, alpha1<span class="op">=</span>alpha1)</span>
-<span id="cb3-10"><a href="rlforfin.html#cb3-10" tabindex="-1"></a>    start_state <span class="op">=</span> Process1.State(price<span class="op">=</span>start.price)</span>
-<span id="cb3-11"><a href="rlforfin.html#cb3-11" tabindex="-1"></a>    <span class="cf">return</span> np.vstack([</span>
-<span id="cb3-12"><a href="rlforfin.html#cb3-12" tabindex="-1"></a>        np.fromiter((s.price <span class="cf">for</span> s <span class="kw">in</span> itertools.islice(</span>
-<span id="cb3-13"><a href="rlforfin.html#cb3-13" tabindex="-1"></a>         simulation(process, start_state),</span>
-<span id="cb3-14"><a href="rlforfin.html#cb3-14" tabindex="-1"></a>            time_steps <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb3-15"><a href="rlforfin.html#cb3-15" tabindex="-1"></a>     )), <span class="bu">float</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_traces)])</span></code></pre></div></li>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="rlforfin.html#cb4-1" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb4-2"><a href="rlforfin.html#cb4-2" tabindex="-1"></a><span class="kw">def</span> process1_price_traces(</span>
+<span id="cb4-3"><a href="rlforfin.html#cb4-3" tabindex="-1"></a> start_price: <span class="bu">int</span>,</span>
+<span id="cb4-4"><a href="rlforfin.html#cb4-4" tabindex="-1"></a>    level_param: <span class="bu">int</span>,</span>
+<span id="cb4-5"><a href="rlforfin.html#cb4-5" tabindex="-1"></a>    alpha1: <span class="bu">float</span>,</span>
+<span id="cb4-6"><a href="rlforfin.html#cb4-6" tabindex="-1"></a>    time_steps: <span class="bu">int</span>,</span>
+<span id="cb4-7"><a href="rlforfin.html#cb4-7" tabindex="-1"></a>    num_traces: <span class="bu">int</span></span>
+<span id="cb4-8"><a href="rlforfin.html#cb4-8" tabindex="-1"></a>) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb4-9"><a href="rlforfin.html#cb4-9" tabindex="-1"></a>    process <span class="op">=</span> Process1(level_param<span class="op">=</span>level_param, alpha1<span class="op">=</span>alpha1)</span>
+<span id="cb4-10"><a href="rlforfin.html#cb4-10" tabindex="-1"></a>    start_state <span class="op">=</span> Process1.State(price<span class="op">=</span>start.price)</span>
+<span id="cb4-11"><a href="rlforfin.html#cb4-11" tabindex="-1"></a>    <span class="cf">return</span> np.vstack([</span>
+<span id="cb4-12"><a href="rlforfin.html#cb4-12" tabindex="-1"></a>        np.fromiter((s.price <span class="cf">for</span> s <span class="kw">in</span> itertools.islice(</span>
+<span id="cb4-13"><a href="rlforfin.html#cb4-13" tabindex="-1"></a>         simulation(process, start_state),</span>
+<span id="cb4-14"><a href="rlforfin.html#cb4-14" tabindex="-1"></a>            time_steps <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb4-15"><a href="rlforfin.html#cb4-15" tabindex="-1"></a>     )), <span class="bu">float</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_traces)])</span></code></pre></div></li>
 <li><p><span class="math display">\[
 P[X_{t+1}=X_t+1]=\begin{cases}
 0.5(1-\alpha_2(X_t-X_{t-1}))&amp;\text{  if }t&gt;0\\

@@ -273,8 +273,9 @@ Bookdown的详细用法参见<a href="https://bookdown.org/yihui/bookdown/" clas
 本笔记的部署参考了北京大学李东风老师的的<a href="http://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/index.html">《统计软件教程》</a>，
 将bookdown部署到GitHub page上参考了<a href="https://developer.aliyun.com/article/1227300">R沟通|部署 bookdown 文件到 GitHub 上</a></p>
 <p>需要注意的是李老师文件中的日期为中文格式，在部署到GitHub Pages上会报错，建议改为”YYYY-MM-DD”形式。</p>
-<p>一些常用功能的示例在<code>0101-usage.Rmd</code>文件中，
-用户可以在编辑器中打开此文件参考其中的做法。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">render_book</span>(<span class="st">&quot;index.Rmd&quot;</span>, </span>
+<span id="cb1-2"><a href="index.html#cb1-2" tabindex="-1"></a>  <span class="at">output_format=</span><span class="st">&quot;bookdown::gitbook&quot;</span>, <span class="at">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
+<p>上述命令编译为gitbook页面。</p>
 <p>Bookdown如果输出为网页，
 其中的数学公式需要MathJax程序库的支持，
 用如下数学公式测试浏览器中数学公式显示是否正常：</p>
@@ -292,7 +293,8 @@ Bookdown的详细用法参见<a href="https://bookdown.org/yihui/bookdown/" clas
 </div>
 <div id="aboutme" class="section level2 hasAnchor" number="0.2">
 <h2><span class="header-section-number">0.2</span> 介绍涛哥<a href="index.html#aboutme" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>涛哥，AKA gogentle, 9ZT, … 出生并成长于山东省日照市东港区。<br />
+<p>涛哥，AKA gogentle, 9ZT, GZT…<br />
+出生并成长于山东省日照市东港区。<br />
 小学毕业于山东省日照市实验小学（2008-2014），<br />
 初中毕业于山东省日照市北京路中学（2014-2017），<br />
 高中毕业于山东省日照实验高级中学（2017-2020），<br />
