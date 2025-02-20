@@ -1,7 +1,7 @@
 ---
 title: "我的研究生课程笔记"
 author: "gogentle"
-date: "二月, 2025"
+date: "{{ site.time | date: '%B, %Y' }}"
 description: "这是用R的bookdown功能制作的课堂笔记。"
 documentclass: book
 classoption: oneside
