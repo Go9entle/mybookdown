@@ -1,11 +1,8 @@
-exm:unnamed-chunk-1
 exm:causal-exaxylag1
 exm:causal-exaxylag2
 fig:u-w-f-ex01
 tab:u-w-tab-ex01
 eq:var-mat-def
-why
-aboutme
 rlforfin
 Markov
 过程中的状态概念

@@ -1,3 +1,5 @@
+# (PART) 课程笔记 {-} 
+
 # 强化学习在金融中的应用 {#rlforfin}
 ## Markov过程 {#Markov}
 
@@ -183,7 +185,7 @@ Markov奖励过程的主要目的是计算如果让过程无限运行（期望�
 $$
 \mathcal{P}_R:\mathcal{N\times D\times S}\rightarrow[0,1]
 $$
-定义为
+定义为  
 $$
 \begin{aligned}
 &\mathcal{P}_R(s,r,s')=P[(R_{t+1}=r,S_{t+1}=s')|S_t=s]\text{ for }t=0,1,2,...,\\
