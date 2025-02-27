@@ -63,7 +63,7 @@ plot(1:10, main="程序生成的测试图形")
 ```
 
 <div class="figure">
-<img src="0101-usage_files/figure-html/u-w-f-ex01-1.png" alt="图形说明文字" width="672" />
+<img src="0998-usage_files/figure-html/u-w-f-ex01-1.png" alt="图形说明文字" width="672" />
 <p class="caption">(\#fig:u-w-f-ex01)图形说明文字</p>
 </div>
 

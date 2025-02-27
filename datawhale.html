@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Datawhale Quant | GOGENTLE’s NOTEBOOK</title>
+  <meta name="description" content="这是用R的bookdown功能制作的课堂笔记。" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Datawhale Quant | GOGENTLE’s NOTEBOOK" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="这是用R的bookdown功能制作的课堂笔记。" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Datawhale Quant | GOGENTLE’s NOTEBOOK" />
+  
+  <meta name="twitter:description" content="这是用R的bookdown功能制作的课堂笔记。" />
+  
+
+<meta name="author" content="gogentle" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mulreinsurance.html"/>
+<link rel="next" href="causal.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX","output/SVG"],
+  extensions: ["tex2jax.js","MathMenu.js","MathZoom.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+  }
+});
+</script>
+<script type="text/javascript"
+   src="../../../MathJax/MathJax.js">
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GZT FOR REAL</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>写在前面</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#为什么要写课程笔记"><i class="fa fa-check"></i>为什么要写课程笔记</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="关于涛哥.html"><a href="关于涛哥.html"><i class="fa fa-check"></i>关于涛哥</a></li>
+<li class="part"><span><b>I 课程笔记</b></span></li>
+<li class="chapter" data-level="1" data-path="rlforfin.html"><a href="rlforfin.html"><i class="fa fa-check"></i><b>1</b> 强化学习在金融中的应用</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rlforfin.html"><a href="rlforfin.html#Markov"><i class="fa fa-check"></i><b>1.1</b> Markov过程</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="rlforfin.html"><a href="rlforfin.html#过程中的状态概念"><i class="fa fa-check"></i><b>1.1.1</b> 过程中的状态概念</a></li>
+<li class="chapter" data-level="1.1.2" data-path="rlforfin.html"><a href="rlforfin.html#通过股票价格的例子理解markov性"><i class="fa fa-check"></i><b>1.1.2</b> 通过股票价格的例子理解Markov性</a></li>
+<li class="chapter" data-level="1.1.3" data-path="rlforfin.html"><a href="rlforfin.html#markov过程的正式定义"><i class="fa fa-check"></i><b>1.1.3</b> Markov过程的正式定义</a></li>
+<li class="chapter" data-level="1.1.4" data-path="rlforfin.html"><a href="rlforfin.html#markov过程的稳态分布"><i class="fa fa-check"></i><b>1.1.4</b> Markov过程的稳态分布</a></li>
+<li class="chapter" data-level="1.1.5" data-path="rlforfin.html"><a href="rlforfin.html#markov奖励过程的形式主义"><i class="fa fa-check"></i><b>1.1.5</b> Markov奖励过程的形式主义</a></li>
+<li class="chapter" data-level="1.1.6" data-path="rlforfin.html"><a href="rlforfin.html#markov奖励过程的价值函数"><i class="fa fa-check"></i><b>1.1.6</b> Markov奖励过程的价值函数</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="rlforfin.html"><a href="rlforfin.html#MDP"><i class="fa fa-check"></i><b>1.2</b> Markov决策过程</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="rlforfin.html"><a href="rlforfin.html#不确定性下的序列决策难题"><i class="fa fa-check"></i><b>1.2.1</b> 不确定性下的序列决策难题</a></li>
+<li class="chapter" data-level="1.2.2" data-path="rlforfin.html"><a href="rlforfin.html#markov决策过程的正式定义"><i class="fa fa-check"></i><b>1.2.2</b> Markov决策过程的正式定义</a></li>
+<li class="chapter" data-level="1.2.3" data-path="rlforfin.html"><a href="rlforfin.html#策略"><i class="fa fa-check"></i><b>1.2.3</b> 策略</a></li>
+<li class="chapter" data-level="1.2.4" data-path="rlforfin.html"><a href="rlforfin.html#markov决策过程策略-markov奖励过程"><i class="fa fa-check"></i><b>1.2.4</b> [Markov决策过程，策略]:= Markov奖励过程</a></li>
+<li class="chapter" data-level="1.2.5" data-path="rlforfin.html"><a href="rlforfin.html#固定策略下的mdp价值函数"><i class="fa fa-check"></i><b>1.2.5</b> 固定策略下的MDP价值函数</a></li>
+<li class="chapter" data-level="1.2.6" data-path="rlforfin.html"><a href="rlforfin.html#最优价值函数和最优策略"><i class="fa fa-check"></i><b>1.2.6</b> 最优价值函数和最优策略</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rlforfin.html"><a href="rlforfin.html#dynamicprogram"><i class="fa fa-check"></i><b>1.3</b> 动态规划算法</a></li>
+<li class="chapter" data-level="1.4" data-path="rlforfin.html"><a href="rlforfin.html#dynassall"><i class="fa fa-check"></i><b>1.4</b> 动态资产配置和消费</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rlforfin.html"><a href="rlforfin.html#个人财务的优化"><i class="fa fa-check"></i><b>1.4.1</b> 个人财务的优化</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题及其解决"><i class="fa fa-check"></i><b>1.4.2</b> Merton投资组合问题及其解决</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>2</b> 广义线性模型</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="glm.html"><a href="glm.html#glmexp"><i class="fa fa-check"></i><b>2.1</b> 广义线性模型的指数族分布</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="RFWLFR.html"><a href="RFWLFR.html"><i class="fa fa-check"></i><b>3</b> Random forest weighted local Frechet regression with random objects</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr2"><i class="fa fa-check"></i><b>3.1</b> 提出的方法</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr21"><i class="fa fa-check"></i><b>3.1.1</b> 预备知识</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="qrm.html"><a href="qrm.html"><i class="fa fa-check"></i><b>4</b> 量化风险管理</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="qrm.html"><a href="qrm.html#rmconcept"><i class="fa fa-check"></i><b>4.1</b> 风险管理的基本概念</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="qrm.html"><a href="qrm.html#建模价值和价值变动"><i class="fa fa-check"></i><b>4.1.1</b> 建模价值和价值变动</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="stochastic.html"><a href="stochastic.html"><i class="fa fa-check"></i><b>5</b> 随机分析</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="stochastic.html"><a href="stochastic.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="stochastic.html"><a href="stochastic.html#最优停时optimal-stopping"><i class="fa fa-check"></i><b>5.1.1</b> 1.4 最优停时（Optimal Stopping）</a></li>
+<li class="chapter" data-level="5.1.2" data-path="stochastic.html"><a href="stochastic.html#随机控制stochastic-control"><i class="fa fa-check"></i><b>5.1.2</b> 1.5 随机控制（Stochastic Control）</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stochastic.html"><a href="stochastic.html#预备知识"><i class="fa fa-check"></i><b>5.2</b> 预备知识</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stochastic.html"><a href="stochastic.html#概率空间-随机变量-随机过程"><i class="fa fa-check"></i><b>5.2.1</b> 概率空间 随机变量 随机过程</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stochastic.html"><a href="stochastic.html#布朗运动brownian-motion"><i class="fa fa-check"></i><b>5.2.2</b> 布朗运动（Brownian Motion）</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 语言基础</b></span></li>
+<li class="chapter" data-level="6" data-path="english.html"><a href="english.html"><i class="fa fa-check"></i><b>6</b> 英语</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="english.html"><a href="english.html#week2"><i class="fa fa-check"></i><b>6.1</b> week2</a></li>
+</ul></li>
+<li class="part"><span><b>III 讨论班报告</b></span></li>
+<li class="chapter" data-level="7" data-path="cdc.html"><a href="cdc.html"><i class="fa fa-check"></i><b>7</b> Optimal strategies for collective defined contribution plans when the stock and labor markets are co-integrated（股票和劳动力市场协同整合时集体确定缴款计划的最优策略）</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="cdc.html"><a href="cdc.html#introduction-1"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="cdc.html"><a href="cdc.html#相关工作"><i class="fa fa-check"></i><b>7.1.1</b> 相关工作</a></li>
+<li class="chapter" data-level="7.1.2" data-path="cdc.html"><a href="cdc.html#主要区别"><i class="fa fa-check"></i><b>7.1.2</b> 主要区别</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="cdc.html"><a href="cdc.html#模型的公式化"><i class="fa fa-check"></i><b>7.2</b> 模型的公式化</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="cdc.html"><a href="cdc.html#金融市场"><i class="fa fa-check"></i><b>7.2.1</b> 金融市场</a></li>
+<li class="chapter" data-level="7.2.2" data-path="cdc.html"><a href="cdc.html#劳动收入"><i class="fa fa-check"></i><b>7.2.2</b> 劳动收入</a></li>
+<li class="chapter" data-level="7.2.3" data-path="cdc.html"><a href="cdc.html#养老金系统"><i class="fa fa-check"></i><b>7.2.3</b> 养老金系统</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="cdc.html"><a href="cdc.html#养老金基金计划的最优策略"><i class="fa fa-check"></i><b>7.3</b> 养老金基金计划的最优策略</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="cdc.html"><a href="cdc.html#具有特质性冲击的最优策略"><i class="fa fa-check"></i><b>7.3.1</b> 具有特质性冲击的最优策略</a></li>
+<li class="chapter" data-level="7.3.2" data-path="cdc.html"><a href="cdc.html#无特质性冲击时的最优策略"><i class="fa fa-check"></i><b>7.3.2</b> 无特质性冲击时的最优策略</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="cdc.html"><a href="cdc.html#数值分析"><i class="fa fa-check"></i><b>7.4</b> 数值分析</a></li>
+<li class="chapter" data-level="7.5" data-path="cdc.html"><a href="cdc.html#总结"><i class="fa fa-check"></i><b>7.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="mulreinsurance.html"><a href="mulreinsurance.html"><i class="fa fa-check"></i><b>8</b> 最优多维再保险与多元风险厌恶效用</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#OMR"><i class="fa fa-check"></i><b>8.1</b> 共同冲击依赖结构下的最优多维再保险政策</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#common-shock-model"><i class="fa fa-check"></i><b>8.1.1</b> Common shock model</a></li>
+<li class="chapter" data-level="8.1.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#hjb-equation"><i class="fa fa-check"></i><b>8.1.2</b> HJB equation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#mrau"><i class="fa fa-check"></i><b>8.2</b> 应用于ESG投资的多元风险厌恶效用</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#setting-and-theoretical-results"><i class="fa fa-check"></i><b>8.2.1</b> Setting and theoretical results</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV 课外学习笔记</b></span></li>
+<li class="chapter" data-level="9" data-path="datawhale.html"><a href="datawhale.html"><i class="fa fa-check"></i><b>9</b> Datawhale Quant</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="datawhale.html"><a href="datawhale.html#investquant"><i class="fa fa-check"></i><b>9.1</b> 投资与量化投资</a></li>
+<li class="chapter" data-level="9.2" data-path="datawhale.html"><a href="datawhale.html#finmarket"><i class="fa fa-check"></i><b>9.2</b> 金融市场的基本概念</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="datawhale.html"><a href="datawhale.html#monetaryfin"><i class="fa fa-check"></i><b>9.2.1</b> 货币金融学</a></li>
+<li class="chapter" data-level="9.2.2" data-path="datawhale.html"><a href="datawhale.html#investfin"><i class="fa fa-check"></i><b>9.2.2</b> 投资学</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="datawhale.html"><a href="datawhale.html#stockdataget"><i class="fa fa-check"></i><b>9.3</b> 股票数据获取</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="datawhale.html"><a href="datawhale.html#股票数据常见指标介绍"><i class="fa fa-check"></i><b>9.3.1</b> 股票数据常见指标介绍</a></li>
+<li class="chapter" data-level="9.3.2" data-path="datawhale.html"><a href="datawhale.html#baostock的基础数据获取"><i class="fa fa-check"></i><b>9.3.2</b> Baostock的基础数据获取</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="datawhale.html"><a href="datawhale.html#quantselect"><i class="fa fa-check"></i><b>9.4</b> 量化选股策略</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="datawhale.html"><a href="datawhale.html#fctsctm"><i class="fa fa-check"></i><b>9.4.1</b> 因子选股模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="causal.html"><a href="causal.html"><i class="fa fa-check"></i><b>10</b> 格兰格因果性</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="causal.html"><a href="causal.html#causal-intro"><i class="fa fa-check"></i><b>10.1</b> 介绍</a></li>
+<li class="chapter" data-level="10.2" data-path="causal.html"><a href="causal.html#causal-def"><i class="fa fa-check"></i><b>10.2</b> 格兰格因果性的定义</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>11</b> 中文图书Bookdown模板的基本用法</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="usage.html"><a href="usage.html#usage-ins"><i class="fa fa-check"></i><b>11.1</b> 安装设置</a></li>
+<li class="chapter" data-level="11.2" data-path="usage.html"><a href="usage.html#usage-writing"><i class="fa fa-check"></i><b>11.2</b> 编写自己的内容</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="usage.html"><a href="usage.html#usage-writing-struct"><i class="fa fa-check"></i><b>11.2.1</b> 文档结构</a></li>
+<li class="chapter" data-level="11.2.2" data-path="usage.html"><a href="usage.html#usage-writing-fig"><i class="fa fa-check"></i><b>11.2.2</b> 图形自动编号</a></li>
+<li class="chapter" data-level="11.2.3" data-path="usage.html"><a href="usage.html#usage-writing-tab"><i class="fa fa-check"></i><b>11.2.3</b> 表格自动编号</a></li>
+<li class="chapter" data-level="11.2.4" data-path="usage.html"><a href="usage.html#usage-writing-math"><i class="fa fa-check"></i><b>11.2.4</b> 数学公式编号</a></li>
+<li class="chapter" data-level="11.2.5" data-path="usage.html"><a href="usage.html#文献引用与文献列表"><i class="fa fa-check"></i><b>11.2.5</b> 文献引用与文献列表</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="usage.html"><a href="usage.html#usage-output"><i class="fa fa-check"></i><b>11.3</b> 转换</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="usage.html"><a href="usage.html#usage-gitbook"><i class="fa fa-check"></i><b>11.3.1</b> 转换为网页</a></li>
+<li class="chapter" data-level="11.3.2" data-path="usage.html"><a href="usage.html#usage-pdfbook"><i class="fa fa-check"></i><b>11.3.2</b> 生成PDF</a></li>
+<li class="chapter" data-level="11.3.3" data-path="usage.html"><a href="usage.html#usage-website"><i class="fa fa-check"></i><b>11.3.3</b> 上传到网站</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://go9entle.github.io" target="_blank">Proudly Presented by GZT</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GOGENTLE’s NOTEBOOK</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="datawhale" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Datawhale Quant<a href="datawhale.html#datawhale" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>本篇笔记基于(Datawhale 量化开源课程)[<a href="https://datawhalechina.github.io/whale-quant/#/" class="uri">https://datawhalechina.github.io/whale-quant/#/</a>]整理而成。</p>
+<div id="investquant" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> 投资与量化投资<a href="datawhale.html#investquant" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>量化投资的一般流程</strong></p>
+<ul>
+<li>策略设计：基于金融理论、历史数据或其他分析方法，构建量化投资策略的想法</li>
+<li>回测验证：使用历史数据对策略进行回测，检验策略的有效性和可行性，以及找到优化策略的方法。</li>
+<li>模拟盘验证：使用虚拟账户和投资进行模拟交易，检验策略在实际市场中的表现，调整和优化策略。</li>
+<li>实盘交易：经过验证和优化，将策略投入实际交易中执行。</li>
+</ul>
+</div>
+<div id="finmarket" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> 金融市场的基本概念<a href="datawhale.html#finmarket" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="monetaryfin" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> 货币金融学<a href="datawhale.html#monetaryfin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>概述</strong></p>
+<ol style="list-style-type: decimal">
+<li>金融市场：资金从剩余方转向短缺方的市场。资金供求双方通过金融市场进行资金融通，实现金融资源有效配置，提高经济效率。</li>
+<li>债券市场：
+<ol style="list-style-type: decimal">
+<li>含义：发放和买卖债券的场所。</li>
+<li>债券就是“借款的欠条”，借款人承诺在未来定期支付一定比例的利息，并在到期偿还本金的一种有价证券。</li>
+</ol></li>
+<li>股票市场：
+<ol style="list-style-type: decimal">
+<li>含义：已经发行的股票进行买卖、转让和流通的场所。</li>
+<li>股票是“所有权的凭证“，持有股票者拥有索取公司一定收益、资产的权力。</li>
+</ol></li>
+<li>货币与通货膨胀
+<ol style="list-style-type: decimal">
+<li>通货膨胀：指物价水平（一个经济中商品和服务的平均价格的持续性上涨，可以以CPI(消费者物价指数)、PPI(生产者物价指数)指标加以衡量。</li>
+</ol></li>
+<li>货币政策与财政政策
+<ol style="list-style-type: decimal">
+<li>货币政策是一个国家的中央银行（美国是美联储）用以管理该国货币和利率的政策。</li>
+</ol></li>
+<li>外汇市场
+<ol style="list-style-type: decimal">
+<li>汇率是以一种货币表示的另一种货币的价格。报告汇率时，常用单位外币兑换多少本币来计算。</li>
+</ol></li>
+</ol>
+<p><strong>金融体系</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>直接融资和间接融资</p>
+<ol style="list-style-type: decimal">
+<li>直接融资：借款方在金融市场上，直接卖出有价证券（如股票）给贷款方，直接获得资金。</li>
+<li>间接融资：存在金融中介机构（如银行）。中介机构向借款方发放贷款，向贷款方借入资金。</li>
+</ol></li>
+<li><p>金融市场的结构</p>
+<ol style="list-style-type: decimal">
+<li>通过筹集资金资金的方式来划分：债券市场和股票市场。</li>
+<li>通过层次结构来划分：以及市场和二级市场。
+<ol style="list-style-type: decimal">
+<li>一级市场：发行市场或初级市场。是借贷人首次出售证券时形成的市场。</li>
+<li>二级市场：证券流通市场或次级市场。是对已发行证券进行买卖、转让、流通的市场。</li>
+</ol></li>
+<li>通过交易证券的期限划分：货币市场（交易一年内到期的短期债务工具）和资本市场（交易一年后到期的长期债务工具）</li>
+</ol></li>
+<li><p>金融市场工具</p>
+<ol style="list-style-type: decimal">
+<li>货币市场工具：距离到期日不到一年，风险较低（如短期国债）。</li>
+<li>资本市场工具：距离到期日一年以上，风险较高（如股票、公司债券）。</li>
+</ol></li>
+<li><p>金融中介机构</p>
+<ol style="list-style-type: decimal">
+<li>分为：存款机构（商业银行等）、契约型储蓄机构（保险公司等）、投资中介机构（共同基金等）</li>
+<li>功能：降低交易成分；分担风险；减少信息不对称问题</li>
+</ol></li>
+</ol>
+<p><strong>利率的风险结构</strong></p>
+<ol style="list-style-type: decimal">
+<li>违约风险：借款人无力支付利息或本金的风险。国债一般被认为是无违约风险的。</li>
+<li>风险溢价：指到期期限相同的有违约风险债券与无违约风险债券之间的利差。也即，为了让贷款人愿意承担本金或利息收不回来的风险，期限相同情况下，有违约风险的债券需要提供更高的收益率。</li>
+<li>具有违约风险的债券的风险溢价总为正；且风险溢价随着违约风险的上升而增加。</li>
+<li>流动性：指以较低成本迅速转化为现金的能力。流动性越差的债券越不好变现，因此越不受欢迎。这需要流动性较差的债券提供更高的收益率（与风险溢价同理），产生的利差称为流动性溢价。</li>
+<li>所得税因素：税率越高的债券税前利率一般越高；存在税收优惠的债券利率一般相对低。</li>
+</ol>
+</div>
+<div id="investfin" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> 投资学<a href="datawhale.html#investfin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="金融市场与投资环境" class="section level4 hasAnchor" number="9.2.2.1">
+<h4><span class="header-section-number">9.2.2.1</span> 金融市场与投资环境<a href="datawhale.html#金融市场与投资环境" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>金融资产</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>实物资产：取决于该社会经济的生产能力，为经济创造净利润，如土地、建筑物、机器以及可用于生产产品和提供服务的知识。</p></li>
+<li><p>金融资产：对实物资产的索取权</p></li>
+</ol>
+<p>金融资产主要分为四大类：</p>
+<ul>
+<li>固定收益型或债务型证券</li>
+<li>普通股或权益型证券</li>
+<li>基金</li>
+<li>衍生产品（期货、期权、互换）</li>
+</ul>
+<p><strong>债券市场的意义</strong></p>
+<p>债券市场具有直接融资的功能，具有交易流动性（非单纯货币流动性，被央行利用，如QE），是重要的投资标的（大类资产配置中重要一员），债券市场是市场利率的均衡价格产生中心。</p>
+<ul>
+<li>普通债券：普通股证券代表了证券持有者对公司的权益或所有权，证券持有者的收益并不固定, 权益投资的绩效取决于公司运营的成败。</li>
+<li>衍生证券：其收益取决于其他资产（股票和债券）的价格，通常用来规避风险。</li>
+</ul>
+<p><strong>投资过程</strong></p>
+<ul>
+<li>资产配置：对投资大类的选择</li>
+<li>证券选择：在每一资产大类中选择特定的证券，证券分析包括对证券进行估价和决定使投资组合集中在那些最具吸引力的资产上。</li>
+</ul>
+<p><strong>市场参与者</strong></p>
+<ul>
+<li>公司——净借款者</li>
+<li>家庭——净储蓄者</li>
+<li>政府——既可能是借款者又可能是储蓄者</li>
+<li>金融中介：集中资金进行投资。包含：投资公司（公募、私募、财务公司）、商业银行、保险公司</li>
+<li>投资银行</li>
+<li>风险投资与私募股权</li>
+</ul>
+<p><strong>主要市场</strong></p>
+<p>主要分为债券市场、外汇市场、贵金属市场、大宗商品市场和股票市场</p>
+</div>
+</div>
+</div>
+<div id="stockdataget" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> 股票数据获取<a href="datawhale.html#stockdataget" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>股票数据根据信息来源和分析方法的不同可以分为技术面数据和基本面数据。</p>
+<p><strong>技术面数据</strong></p>
+<p>技术面数据是通过股票的历史价格和交易量等市场数据进行计算和分析得出的指标。它的核心观点是市场行为会在价格上留下痕迹，通过这些痕迹可以预测未来的价格走势。技术面数据主要关注股票价格的变动和市场趋势，常用的技术指标包括移动平均线、相对强弱指标、MACD指标等。技术面分析认为市场上已有的信息都会反映在股票价格中，因此通过分析股票价格图表和技术指标，可以尽可能准确地判断价格的走势和市场趋势。</p>
+<p><strong>基本面数据</strong></p>
+<p>基本面数据是通过分析公司的财务状况、业绩表现、竞争力等基本信息得出的评估。基本面分析认为股票的价格是与公司的基本面因素相关的，包括公司的营业收入、盈利能力、资产负债情况、市场份额、竞争优势等。基本面分析的目标是评估公司的内在价值，并基于这些评估来判断股票的投资潜力。常用的基本面指标包括市盈率、市净率、股息率等。基本面数据通常需要通过公司公开的财务报告和公告来获取。</p>
+<div id="股票数据常见指标介绍" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> 股票数据常见指标介绍<a href="datawhale.html#股票数据常见指标介绍" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="技术面数据常见指标" class="section level4 hasAnchor" number="9.3.1.1">
+<h4><span class="header-section-number">9.3.1.1</span> 技术面数据常见指标<a href="datawhale.html#技术面数据常见指标" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li><p>移动平均线（Moving Average, MA）</p>
+<p>移动平均线是通过计算一段时间内的股票平均价格来平滑价格波动。常见的移动平均线有简单移动平均线（SMA）和指数移动平均线（EMA）。</p>
+<ul>
+<li>简单移动平均线是通过将一段时间内的股票收盘价相加，然后除以时间段的天数来计算的。简单移动平均线可以平滑价格波动，显示出长期趋势。</li>
+<li>指数移动平均线对近期价格给予更高的权重，反映了市场更近期的变化。计算指数移动平均线时，当前价格会根据选定的时间段和权重系数，与之前的移动平均线值相结合。</li>
+</ul>
+<p>移动平均线的应用主要包括以下几个方面：</p>
+<ul>
+<li>确定趋势：投资者可以使用不同期限的移动平均线来确定趋势的强度和方向。较短期的移动平均线（如5日或10日）反映了近期的价格走势，较长期的移动平均线（如50日或200日）则更能反映长期趋势。</li>
+<li>交叉信号：移动平均线的交叉可以提供买入或卖出的信号。例如，当短期移动平均线从下方穿过长期移动平均线时，被称为“黄金交叉”，可能暗示着价格上涨的趋势。相反，当短期移动平均线从上方穿过长期移动平均线时，被称为“死亡交叉”，可能暗示着价格下跌的趋势。</li>
+<li>支撑与阻力线：移动平均线经常被用作支撑和阻力线的参考。当股票价格接近或穿过移动平均线时，可能会在此处遇到阻力或支撑，进而影响价格的反弹或下跌。</li>
+</ul></li>
+<li><p>相对强弱指数（Relative Strength Index, RSI）</p>
+<p>RSI是一种用于衡量股票价格变动强度和速度的技术指标，可以帮助投资者判断股票市场的超买和超卖情况，以及价格的反转和确认信号。</p>
+<p>RSI的计算基于一定时期内股票价格的平均涨跌，通常情况下取值在<span class="math inline">\([0,100]\)</span>.</p>
+<p>RSI指标计算常用参数为14，计算步骤如下:</p>
+<ol style="list-style-type: decimal">
+<li>首先，计算14个交易周期内涨幅和跌幅的平均值。</li>
+<li>计算涨幅平均值与跌幅平均值的相对强弱比率（Relative Strength, RS）。 <span class="math inline">\(\text{RS} = \frac{\text{14个交易周期内涨幅平均值}}{\text{14个交易周期内跌幅平均值}}\)</span>​。</li>
+<li>计算相对强弱指数RSI:<span class="math inline">\(\text{RSI}=100-\left( \frac{100}{1+\text{RS}} \right)\)</span>.</li>
+</ol>
+<p>RSI的数值解读如下：</p>
+<ul>
+<li><span class="math inline">\(\text{RSI}\in(0,30]\)</span>: 表示股票市场被超卖，可能存在价格反弹的机会。</li>
+<li><span class="math inline">\(\text{RSI}\in(70,100)\)</span>: 表示股票市场被超买，可能存在价格下跌的机会。</li>
+<li><span class="math inline">\(\text{RSI}\in[30,70)\)</span>: 表示股票市场相对平稳，没有明显的超买或超卖信号。</li>
+</ul>
+<p>投资者通常会关注RSI的超买和超卖区域，并结合其他技术指标和价格走势来辅助判断市场趋势和交易信号。例如，当RSI进入超买区域并且价格形成拐头下跌时，可能暗示进一步的价格下跌。相反，当RSI进入超卖区域并且价格形成拐头上涨时，可能暗示价格反弹或反转的机会。</p></li>
+<li><p>随机指标（Stochastic Oscillator）<br />
+随机指标用于判断股票价格的超买和超卖情况，以及价格反转的可能性。它可以帮助投资者确定适合买入或卖出股票的时机。</p></li>
+<li><p>MACD指标（Moving Average Convergence Divergence）</p>
+<p>MACD 指标是股票技术分析中常用的趋势追踪和买卖信号指标。它通过比较两条移动平均线的差异，来判断股票价格的趋势以及价格的买卖信号。</p>
+<p>MACD指标由以下几个元素组成</p>
+<ol style="list-style-type: decimal">
+<li>DIF线（Difference Line）：是短期指数移动平均线（如12日EMA）减去长期指数移动平均线（如26日EMA）得到的差值线。DIF线可以较为敏感地反映价格的短期波动</li>
+<li>DEA线（Signal Line）：是对DIF线进行平滑处理，一般使用DIF线的9日移动平均线得到。DEA 线可以平滑 DIF 线的波动，更好地体现价格的中期趋势。</li>
+<li>MACD 柱（MACD Histogram）：是 DIF 线与 DEA 线的差值，可将价格的快速波动变化显示为柱状图。柱状图的红色柱代表 DIF 线在 DEA 线上方，表示价格可能上涨；绿色柱代表 DIF 线在 DEA 线下方，表示价格可能下跌。</li>
+</ol>
+<p>MACD指标的应用主要包括以下几个方面：</p>
+<ol style="list-style-type: decimal">
+<li>趋势判断：当 DIF 线与 DEA 线发生金叉（DIF 线向上穿过 DEA 线）时，表示价格可能出现上涨趋势；当 DIF 线与 DEA 线发生死叉（DIF 线向下穿过 DEA线）时，表示价格可能出现下跌趋势。</li>
+<li>买卖信号：当 MACD 柱由负值转为正值时，被视为买入信号；当 MACD 柱由正值转为负值时，被视为卖出信号。这些转折点可能表示价格快速波动的转变。</li>
+<li>背离信号：观察价格和 MACD 指标的背离情况。例如，当价格创新高而 MACD 指标未能创新高时，可能表示价格上涨动能下降，可能出现价格回调。</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="baostock的基础数据获取" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Baostock的基础数据获取<a href="datawhale.html#baostock的基础数据获取" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><a href="www.baostock.com">证券宝</a>是开源免费的证券数据平台。通过python API获取数据信息，该工具包返回的数据格式为<code>pandas DataFrame</code>类型，方便使用<code>pandas</code>/<code>Numpy</code>/<code>Matplotlib</code>进行数据分析和可视化。本节主要介绍如何利用<code>Baostock</code>获取历史A股K线数据、指数数据以及上证50成分股。</p>
+<p><strong>历史A股K线数据</strong></p>
+<p>日线是股票、期货等市场中的一种技术分析图表，每个数据点代表一天的交易信息。它记录了该品种在一天内的开盘价、最高价、最低价和收盘价等数据，并通过连续的数据点形成一条曲线，以反映该品种价格的走势。</p>
+<p>日线可以帮助投资者识别出股票或期货的价格趋势和支撑阻力位，判断未来价格走势的可能性，从而制定相应的投资策略。除此之外，日线还能够辅助投资者进行风险控制，识别出市场中的买卖信号，更好地把握交易机会。以下是通过调用<code>query_history_k_data_plus()</code>方法来对日线进行数据获取。</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="datawhale.html#cb10-1" tabindex="-1"></a><span class="im">import</span> baostock <span class="im">as</span> bs</span>
+<span id="cb10-2"><a href="datawhale.html#cb10-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-3"><a href="datawhale.html#cb10-3" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb10-4"><a href="datawhale.html#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="datawhale.html#cb10-5" tabindex="-1"></a><span class="co">#### 登陆系统 ####</span></span>
+<span id="cb10-6"><a href="datawhale.html#cb10-6" tabindex="-1"></a>lg <span class="op">=</span> bs.login()</span>
+<span id="cb10-7"><a href="datawhale.html#cb10-7" tabindex="-1"></a><span class="co"># 显示登陆返回信息</span></span>
+<span id="cb10-8"><a href="datawhale.html#cb10-8" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;login respond error_code:&#39;</span><span class="op">+</span>lg.error_code)</span>
+<span id="cb10-9"><a href="datawhale.html#cb10-9" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;login respond  error_msg:&#39;</span><span class="op">+</span>lg.error_msg)</span>
+<span id="cb10-10"><a href="datawhale.html#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="datawhale.html#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="datawhale.html#cb10-12" tabindex="-1"></a><span class="co">#### 获取沪深A股历史K线数据 ####</span></span>
+<span id="cb10-13"><a href="datawhale.html#cb10-13" tabindex="-1"></a><span class="co"># 详细指标参数，参见“历史行情指标参数”章节；“分钟线”参数与“日线”参数不同。“分钟线”不包含指数。</span></span>
+<span id="cb10-14"><a href="datawhale.html#cb10-14" tabindex="-1"></a><span class="co"># 分钟线指标：date,time,code,open,high,low,close,volume,amount,adjustflag</span></span>
+<span id="cb10-15"><a href="datawhale.html#cb10-15" tabindex="-1"></a><span class="co"># 周月线指标：date,code,open,high,low,close,volume,amount,adjustflag,turn,pctChg</span></span>
+<span id="cb10-16"><a href="datawhale.html#cb10-16" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.600000&quot;</span>,</span>
+<span id="cb10-17"><a href="datawhale.html#cb10-17" tabindex="-1"></a>    <span class="st">&quot;date,code,open,high,low,close,preclose,volume,amount,adjustflag,turn,tradestatus,pctChg,isST&quot;</span>,</span>
+<span id="cb10-18"><a href="datawhale.html#cb10-18" tabindex="-1"></a>                                  </span>
+<span id="cb10-19"><a href="datawhale.html#cb10-19" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-07-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-12-31&#39;</span>,</span>
+<span id="cb10-20"><a href="datawhale.html#cb10-20" tabindex="-1"></a>    frequency<span class="op">=</span><span class="st">&quot;d&quot;</span>, adjustflag<span class="op">=</span><span class="st">&quot;3&quot;</span>)</span>
+<span id="cb10-21"><a href="datawhale.html#cb10-21" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="datawhale.html#cb10-22" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond error_code:&#39;</span><span class="op">+</span>rs.error_code)</span>
+<span id="cb10-23"><a href="datawhale.html#cb10-23" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)</span>
+<span id="cb10-24"><a href="datawhale.html#cb10-24" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="datawhale.html#cb10-25" tabindex="-1"></a><span class="co">#### 打印结果集 ####</span></span>
+<span id="cb10-26"><a href="datawhale.html#cb10-26" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
+<span id="cb10-27"><a href="datawhale.html#cb10-27" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
+<span id="cb10-28"><a href="datawhale.html#cb10-28" tabindex="-1"></a>    <span class="co"># 获取一条记录，将记录合并在一起</span></span>
+<span id="cb10-29"><a href="datawhale.html#cb10-29" tabindex="-1"></a>    data_list.append(rs.get_row_data())</span>
+<span id="cb10-30"><a href="datawhale.html#cb10-30" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(data_list, columns<span class="op">=</span>rs.fields)</span>
+<span id="cb10-31"><a href="datawhale.html#cb10-31" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="datawhale.html#cb10-32" tabindex="-1"></a><span class="co">#### 结果集输出到csv文件 ####   </span></span>
+<span id="cb10-33"><a href="datawhale.html#cb10-33" tabindex="-1"></a>result.to_csv(<span class="st">&quot;./history_A_stock_k_data.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-34"><a href="datawhale.html#cb10-34" tabindex="-1"></a>display(result)</span>
+<span id="cb10-35"><a href="datawhale.html#cb10-35" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="datawhale.html#cb10-36" tabindex="-1"></a><span class="co">#### 登出系统 ####</span></span>
+<span id="cb10-37"><a href="datawhale.html#cb10-37" tabindex="-1"></a>bs.logout()</span></code></pre></div>
+<ul>
+<li><p>使用 <code>bs.query_history_k_data_plus()</code> 函数查询指定股票在指定时间范围内的 K 线数据，其中第一个参数为要查询的股票代码，第二个参数为要查询的 K 线数据字段列表，第三个参数为开始日期，第四个参数为结束日期，第五个参数为查询频率，第六个参数为复权类型。该函数返回一个对象 <code>rs</code>，其中包含了查询返回的错误代码和错误信息以及查询结果集。</p></li>
+<li><p>将查询结果集转换成 Pandas DataFrame 格式，并输出到 CSV 文件中。首先创建一个空列表 <code>data_list</code>，然后使用 <code>rs.next()</code> 循环获取查询结果集里的每一行数据，将每一行数据存入 <code>data_list</code> 列表中。最后使用 Pandas 的 <code>DataFrame</code> 函数将 <code>data_list</code> 转换成 <code>DataFrame</code> 格式并输出到 CSV 文件中。</p></li>
+</ul>
+<p>分钟线</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="datawhale.html#cb11-1" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.600000&quot;</span>,</span>
+<span id="cb11-2"><a href="datawhale.html#cb11-2" tabindex="-1"></a>    <span class="st">&quot;date,time,code,open,high,low,close,volume,amount,adjustflag&quot;</span>,</span>
+<span id="cb11-3"><a href="datawhale.html#cb11-3" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-07-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-07-31&#39;</span>,</span>
+<span id="cb11-4"><a href="datawhale.html#cb11-4" tabindex="-1"></a>    frequency<span class="op">=</span><span class="st">&quot;5&quot;</span>, adjustflag<span class="op">=</span><span class="st">&quot;3&quot;</span>)</span></code></pre></div>
+<ul>
+<li><p><code>frequency</code>：这个参数用于指定查询的数据类型。可以选择返回日线、周线、月线或分钟线的K线数据。其中，大写字母表示周期，如”D”代表日线，“W”代表周线，“M”代表月线，数字表示分钟线的周期，如”5”代表5分钟线，“15”代表15分钟线等。指数只支持日线数据。周线数据只能选择每周最后一个交易日查询，月线数据只能选择每月最后一个交易日查询。</p></li>
+<li><p><code>adjustflag</code>：这个参数用于指定查询数据是否需要进行复权处理。如果需要进行复权处理，则可以选择前复权或后复权。复权类型，默认不复权：3；1：后复权；2：前复权。已支持分钟线、日线、周线、月线前后复权。复权是一种调整股票价格的方法，以考虑公司发生的分红和配股等因素，以及股票本身的拆细和合并等因素。复权的目的是消除这些因素对股票价格的影响，使投资者能够更准确地分析股票的真实表现。</p></li>
+<li><p>如果想将换手率转换为浮点数类型，则可以使用列表推导式，并将空字符串转换为0，最终将结果存储在”<code>dataframe</code>“（名为<code>result</code>）中的”<code>turn</code>“列中： <code>result["turn"] = [0 if x == "" else float(x) for x in result["turn"]]</code></p></li>
+</ul>
+<p><strong>返回数据说明</strong></p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="37%" />
+<col width="52%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>参数名称</th>
+<th>参数描述</th>
+<th>算法说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>date</td>
+<td>交易所行情日期</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>code</td>
+<td>证券代码</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>open</td>
+<td>开盘价</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>high</td>
+<td>最高价</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>low</td>
+<td>最低价</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>close</td>
+<td>收盘价</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>preclose</td>
+<td>前收盘价</td>
+<td>见表格下方详细说明</td>
+</tr>
+<tr class="even">
+<td>volume</td>
+<td>成交量（累计 单位：股）</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>amount</td>
+<td>成交额（单位：人民币元）</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>adjustflag</td>
+<td>复权状态(1：后复权， 2：前复权，3：不复权）</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>turn</td>
+<td>换手率</td>
+<td>[指定交易日的成交量(股)/指定交易日的股票的流通股总股数(股)]*100%</td>
+</tr>
+<tr class="even">
+<td>tradestatus</td>
+<td>交易状态(1：正常交易 0：停牌）</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>pctChg</td>
+<td>涨跌幅（百分比）</td>
+<td>日涨跌幅=[(指定交易日的收盘价-指定交易日前收盘价)/指定交易日前收盘价]*100%</td>
+</tr>
+<tr class="even">
+<td>peTTM</td>
+<td>滚动市盈率</td>
+<td>(指定交易日的股票收盘价/指定交易日的每股盈余TTM)=(指定交易日的股票收盘价*截至当日公司总股本)/归属母公司股东净利润TTM</td>
+</tr>
+<tr class="odd">
+<td>pbMRQ</td>
+<td>市净率</td>
+<td>(指定交易日的股票收盘价/指定交易日的每股净资产)=总市值/(最近披露的归属母公司股东的权益-其他权益工具)</td>
+</tr>
+<tr class="even">
+<td>psTTM</td>
+<td>滚动市销率</td>
+<td>(指定交易日的股票收盘价/指定交易日的每股销售额)=(指定交易日的股票收盘价*截至当日公司总股本)/营业总收入TTM</td>
+</tr>
+<tr class="odd">
+<td>pcfNcfTTM</td>
+<td>滚动市现率</td>
+<td>(指定交易日的股票收盘价/指定交易日的每股现金流TTM)=(指定交易日的股票收盘价*截至当日公司总股本)/现金以及现金等价物净增加额TTM</td>
+</tr>
+<tr class="even">
+<td>isST</td>
+<td>是否ST股</td>
+<td>1是，0否</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意“前收盘价”说明：</strong></p>
+<p>当股票在指定交易日发生除权除息时，其前收盘价的计算方法有所不同。一般而言，前收盘价是指前一个交易日的实际收盘价，但当股权登记日与分红现金数量、配送股数和配股价等因素相结合时，前收盘价需要根据一定的计算方法得出。具体来说，需要先计算除息价，然后再计算送红股后的除权价和配股后的除权价，最后得出除权除息价。<span style="color: skyblue;">除权除息价就是指定交易日的前收盘价。</span>该价格由交易所计算并公布，而在首发日，则将首发价格作为前收盘价。</p>
+<p>具体计算方法如下:</p>
+<p>1、<strong><em>计算除息价</em></strong>: 除息价=股息登记日的收盘价-每股所分红利现金额</p>
+<p>2、<strong><em>计算除权价</em></strong>: 送红股后的除权价=股权登记日的收盘价/(1+每股送红股数) 配股后的除权价=(股权登记日的收盘价+配股价*每股配股数)/(1+每股配股数)</p>
+<p>3、<strong><em>计算除权除息价</em></strong> ：除权除息价=(股权登记日的收盘价-每股所分红利现金额+配股价*每股配股数)/(1+每股送红股数+每股配股数)</p>
+</blockquote>
+<p><strong>指数数据</strong></p>
+<p>指数数据是用来表示某个经济或金融市场的整体表现的数字指标，通常由一组代表该市场重要公司股票价格的股票指数构成。指数数据的意义在于让人们更好地了解市场的走势和趋势。它可以显示出市场整体的涨跌情况，帮助投资者评估其投资组合的表现，并作为制定投资决策的参考。此外，指数数据还可以被用来创建各种金融衍生品产品，例如期货和期权等。</p>
+<p>我们可以通过API接口获取不同类型的指数K线数据，包括综合指数（如上证指数、深证综指）、规模指数（如上证50、沪深300）、行业指数（一级行业、二级行业等）、策略指数、成长指数、价值指数、主题指数、基金指数和债券指数。每种指数都有其对应的代码，例如上证指数的代码为sh.000001。下面以沪深指数K线数据为例解释说明。</p>
+<p>沪深指数K线数据是描述中国上海证券交易所和深圳证券交易所股市行情的一种图表表示方法。它通过显示每个交易周期（如日、周或月）的四个价格点：开盘价、最高价、最低价和收盘价，来展示股市的波动情况。</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="datawhale.html#cb12-1" tabindex="-1"></a><span class="co"># 获取指数(综合指数、规模指数、一级行业指数、二级行业指数、策略指数、成长指数、价值指数、主题指数)K线数据</span></span>
+<span id="cb12-2"><a href="datawhale.html#cb12-2" tabindex="-1"></a><span class="co"># 综合指数，例如：sh.000001 上证指数，sz.399106 深证综指 等；</span></span>
+<span id="cb12-3"><a href="datawhale.html#cb12-3" tabindex="-1"></a><span class="co"># 规模指数，例如：sh.000016 上证50，sh.000300 沪深300，sh.000905 中证500，sz.399001 深证成指等；</span></span>
+<span id="cb12-4"><a href="datawhale.html#cb12-4" tabindex="-1"></a><span class="co"># 一级行业指数，例如：sh.000037 上证医药，sz.399433 国证交运 等；</span></span>
+<span id="cb12-5"><a href="datawhale.html#cb12-5" tabindex="-1"></a><span class="co"># 二级行业指数，例如：sh.000952 300地产，sz.399951 300银行 等；</span></span>
+<span id="cb12-6"><a href="datawhale.html#cb12-6" tabindex="-1"></a><span class="co"># 策略指数，例如：sh.000050 50等权，sh.000982 500等权 等；</span></span>
+<span id="cb12-7"><a href="datawhale.html#cb12-7" tabindex="-1"></a><span class="co"># 成长指数，例如：sz.399376 小盘成长 等；</span></span>
+<span id="cb12-8"><a href="datawhale.html#cb12-8" tabindex="-1"></a><span class="co"># 价值指数，例如：sh.000029 180价值 等；</span></span>
+<span id="cb12-9"><a href="datawhale.html#cb12-9" tabindex="-1"></a><span class="co"># 主题指数，例如：sh.000015 红利指数，sh.000063 上证周期 等；</span></span>
+<span id="cb12-10"><a href="datawhale.html#cb12-10" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="datawhale.html#cb12-11" tabindex="-1"></a><span class="co"># 详细指标参数，参见“历史行情指标参数”章节；“周月线”参数与“日线”参数不同。</span></span>
+<span id="cb12-12"><a href="datawhale.html#cb12-12" tabindex="-1"></a><span class="co"># 周月线指标：date,code,open,high,low,close,volume,amount,adjustflag,turn,pctChg</span></span>
+<span id="cb12-13"><a href="datawhale.html#cb12-13" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.000001&quot;</span>,</span>
+<span id="cb12-14"><a href="datawhale.html#cb12-14" tabindex="-1"></a>    <span class="st">&quot;date,code,open,high,low,close,preclose,volume,amount,pctChg&quot;</span>,</span>
+<span id="cb12-15"><a href="datawhale.html#cb12-15" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-01-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-06-30&#39;</span>, frequency<span class="op">=</span><span class="st">&quot;d&quot;</span>)</span>
+<span id="cb12-16"><a href="datawhale.html#cb12-16" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond error_code:&#39;</span><span class="op">+</span>rs.error_code)</span>
+<span id="cb12-17"><a href="datawhale.html#cb12-17" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)</span>
+<span id="cb12-18"><a href="datawhale.html#cb12-18" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="datawhale.html#cb12-19" tabindex="-1"></a><span class="co"># 打印结果集</span></span>
+<span id="cb12-20"><a href="datawhale.html#cb12-20" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
+<span id="cb12-21"><a href="datawhale.html#cb12-21" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
+<span id="cb12-22"><a href="datawhale.html#cb12-22" tabindex="-1"></a>    <span class="co"># 获取一条记录，将记录合并在一起</span></span>
+<span id="cb12-23"><a href="datawhale.html#cb12-23" tabindex="-1"></a>    data_list.append(rs.get_row_data())</span>
+<span id="cb12-24"><a href="datawhale.html#cb12-24" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(data_list, columns<span class="op">=</span>rs.fields)</span>
+<span id="cb12-25"><a href="datawhale.html#cb12-25" tabindex="-1"></a><span class="co"># 结果集输出到csv文件</span></span>
+<span id="cb12-26"><a href="datawhale.html#cb12-26" tabindex="-1"></a>result.to_csv(<span class="st">&quot;./history_Index_k_data.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-27"><a href="datawhale.html#cb12-27" tabindex="-1"></a>display(result)</span></code></pre></div>
+<p><strong>上证50成分股</strong></p>
+<p>上证50成分股指的是上海证券交易所（Shanghai Stock Exchange）挑选出来的50家规模最大、流动性最好的公司，这些公司在中国A股市场中具有较高的影响力和代表性。上证50指数是由这些50家公司的股票组成的指数。这个指数通常被视为中国股市的核心指标之一，因为它覆盖了50家规模大、具有代表性的公司，在市场风险和涨跌幅方面具有重要的参考意义。此外，由于该指数的成分股通常由市值较大、经营稳定的公司组成，因此被认为是一种相对较为稳健的投资方式。</p>
+<p><code>query_sz50_stocks</code>()：这个方法通过API接口获取上证50成分股的信息，更新频率为每周一更新。这个方法返回一个<code>pandas</code>的<code>DataFrame</code>类型，即一个二维表格数据结构，其中包含了上证50成分股的详细信息。</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="datawhale.html#cb13-1" tabindex="-1"></a><span class="co"># 获取上证50成分股</span></span>
+<span id="cb13-2"><a href="datawhale.html#cb13-2" tabindex="-1"></a>rs <span class="op">=</span> bs.query_sz50_stocks()  <span class="co"># 调用 query_sz50_stocks 方法获取上证50成分股信息</span></span>
+<span id="cb13-3"><a href="datawhale.html#cb13-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_sz50 error_code:&#39;</span><span class="op">+</span>rs.error_code)  <span class="co"># 打印方法返回错误码</span></span>
+<span id="cb13-4"><a href="datawhale.html#cb13-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_sz50  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)   <span class="co"># 打印方法返回错误信息</span></span>
+<span id="cb13-5"><a href="datawhale.html#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="datawhale.html#cb13-6" tabindex="-1"></a><span class="co"># 打印结果集</span></span>
+<span id="cb13-7"><a href="datawhale.html#cb13-7" tabindex="-1"></a>sz50_stocks <span class="op">=</span> []   <span class="co"># 创建一个空列表，用于存储查询结果</span></span>
+<span id="cb13-8"><a href="datawhale.html#cb13-8" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
+<span id="cb13-9"><a href="datawhale.html#cb13-9" tabindex="-1"></a>    <span class="co"># 如果查询没有出错且还有数据</span></span>
+<span id="cb13-10"><a href="datawhale.html#cb13-10" tabindex="-1"></a>    sz50_stocks.append(rs.get_row_data())   <span class="co"># 将获取到的数据添加到列表中</span></span>
+<span id="cb13-11"><a href="datawhale.html#cb13-11" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(sz50_stocks, columns<span class="op">=</span>rs.fields)  <span class="co"># 使用 pandas 将数据转换为 DataFrame 格式</span></span>
+<span id="cb13-12"><a href="datawhale.html#cb13-12" tabindex="-1"></a><span class="co"># 结果集输出到csv文件</span></span>
+<span id="cb13-13"><a href="datawhale.html#cb13-13" tabindex="-1"></a>result.to_csv(<span class="st">&quot;D:/sz50_stocks.csv&quot;</span>, encoding<span class="op">=</span><span class="st">&quot;gbk&quot;</span>, index<span class="op">=</span><span class="va">False</span>)  <span class="co"># 将结果保存为 csv 文件</span></span>
+<span id="cb13-14"><a href="datawhale.html#cb13-14" tabindex="-1"></a>display(result)   <span class="co"># 打印结果</span></span></code></pre></div>
+</div>
+</div>
+<div id="quantselect" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> 量化选股策略<a href="datawhale.html#quantselect" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="fctsctm" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> 因子选股模型<a href="datawhale.html#fctsctm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="效用模型与风险模型" class="section level4 hasAnchor" number="9.4.1.1">
+<h4><span class="header-section-number">9.4.1.1</span> 效用模型与风险模型<a href="datawhale.html#效用模型与风险模型" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>效用函数</strong></p>
+<p>效用函数<span class="math inline">\(U(\cdot)\)</span>一般满足两个性质</p>
+<ul>
+<li>若<span class="math inline">\(x\leq y, U(x)\leq U(y)\)</span>.（钱多总比钱少好）</li>
+<li>若<span class="math inline">\(d\geq 0,\)</span>且<span class="math inline">\(x\leq y\)</span>,则<span class="math inline">\(U(x+d)-U(x)\geq U(y+d)-U(y)\)</span>.（给两人同样的钱，较穷的人获得的效用更高）</li>
+</ul>
+<p><strong>期望效用假说</strong></p>
+<p>如果一个投资者的效用函数是<span class="math inline">\(U,\)</span>面对<span class="math inline">\(n\)</span>种选项，并且这些选项的财富值结果可以用随机变量<span class="math inline">\(X_1,..,X_n\)</span>表示，那么该投资者会选择<span class="math inline">\(\mathbb{E}[U(X)]\)</span>最大的那个选项。</p>
+<p><strong>损失厌恶</strong></p>
+<p>假设有个项目，一半的概率失败，一半概率成功。如果失败的话，投资者损失十万元，成功的话投资者获利十万元。根据效用函数的第二个性质，对于大部分人来说，效用是亏损的。在行为经济学中，这个现象叫做损失厌恶。</p>
+<p>转换为数学语言，假设一项投资<span class="math inline">\(A\)</span>的回报可以用随机变量<span class="math inline">\(X\)</span>表示，这项投资的回报预期是<span class="math inline">\(\mathbb{E}[X]\)</span>。再假设一个投资者具备效用函数<span class="math inline">\(U\)</span>，并且现有财富是<span class="math inline">\(x_0\)</span>。那么，该投资者投资于<span class="math inline">\(A\)</span>后的财富值可以用随机变量<span class="math inline">\(x_0+X\)</span>表示，并且他进行该投资的效用是<span class="math inline">\(U(x_0+X)\)</span>，这项投资带给他的额外效用是<span class="math inline">\(U(x_0+X)-U(x_0)\)</span>。因此，投资于<span class="math inline">\(A\)</span>带给投资者的预期效用收益是<span class="math inline">\(\mathbb{E}[U(x_0+X)-U(x_0)]\)</span>。</p>
+<p>若<span class="math inline">\(\mathbb{E}[X]=0,\)</span>则该投资为零收益投资，那么<br />
+<span class="math display">\[
+\mathbb{E}[U(x_0+X)]\leq U(x_0)
+\]</span>
+这是因为大多数投资者的效用函数是凹的，即<span class="math inline">\(U&#39;&#39;(X)\leq0\)</span>，也可以说是
+<span class="math display">\[
+U(\alpha x+(1-\alpha)y)\geq \alpha U(x)+(1-\alpha)U(y)
+\]</span>
+这意味着</p>
+<ul>
+<li>边际效用递减：随着财富增加，每增加一单位财富带来的效用增加逐渐减少；</li>
+<li>风险厌恶：投资者更倾向于确定性收益，而不是具有相同期望值的风险收益。</li>
+</ul>
+<p>则由Jensen不等式<br />
+<span class="math display">\[
+\mathbb{E}[U(x_0+X)]\leq U(\mathbb{E}[x_0+X])
+\]</span>
+又因为<span class="math inline">\(\mathbb{E}[X]=0,\mathbb{E}[x_0+X]=x_0,\)</span>因此<br />
+<span class="math display">\[
+\mathbb{E}[U(x_0+X)]\leq U(x_0).
+\]</span>
+进一步来说，投资的风险就是它的收益不确定性。任何投资的回报<span class="math inline">\(X\)</span>都可以写作预期收益<span class="math inline">\(\mathbb{E}[X]\)</span>和零收益投资<span class="math inline">\(X-\mathbb{E}[X]\)</span>两部分的家和。其中零收益部分带来预期效用下降，于是需要足够大的<span class="math inline">\(\mathbb{E}[X]\)</span>来弥补；这里<span class="math inline">\(\mathbb{E}[X]\)</span>被定义为这项投资的<em>风险溢价</em>（risk premium），只有当风险溢价高于风险带来的效用折损时投资者才愿意进行投资。</p>
+<p><strong>分散风险</strong></p>
+<p>经济学中的风险指的是未来的不确定性；而从概率学的角度来说，一个随机变量的分布越散开，它的确定性就越低。因此，有一个简易的衡量风险的标准，就是收益变量的标准差<span class="math inline">\(\sigma_X\)</span>。一般来讲，在保持<span class="math inline">\(\mathbb{E}[X]\)</span>不变的情况下，我们希望<span class="math inline">\(\sigma_X\)</span>越低越好。</p>
+<p><strong>理智的投资者</strong></p>
+<p>对于一个投资者，如果任意两个投资回报率的随机变量<span class="math inline">\(X\)</span>和<span class="math inline">\(Y\)</span>满足 <span class="math inline">\(\mathbb{E}[X]\geq \mathbb{E}[Y]\)</span>并且<span class="math inline">\(\sigma_X&lt;\sigma_Y\)</span>（也就是说预期收益更大但是风险更小），该投资者会选择X<em>X</em>，那么我们说这个投资者是理智的。</p>
+</div>
+<div id="mpt模型" class="section level4 hasAnchor" number="9.4.1.2">
+<h4><span class="header-section-number">9.4.1.2</span> MPT模型<a href="datawhale.html#mpt模型" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>金融资产配置的目标是将投资资金合理地分配在多种资产上，将风险控制在一定范围内的同时把收益率最大化。其中最著名的理论时<span style="color: orange;">现代资产配置理论</span>（Modern Portfolio Theory, MPT），由Markowitz在1952年提出。MPT的核心思想是以最小化标准差并最大化预期收益为目标来进行资产配置，有时也成为均值—方差分析，是金融经济学一个重要基础理论。</p>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mulreinsurance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="causal.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CBook.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

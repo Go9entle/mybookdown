@@ -1,5 +1,5 @@
 ---
-title: "我的研究生课程笔记"
+title: "GOGENTLE's NOTEBOOK"
 author: "gogentle"
 date: "2025/02/20"
 description: "这是用R的bookdown功能制作的课堂笔记。"
@@ -8,6 +8,7 @@ classoption: oneside
 biblio-style: apa
 bibliography: [mybib.bib]
 link-citations: yes
+site: bookdown::bookdown_site
 ---
 
 
@@ -38,6 +39,13 @@ bookdown::render_book("index.Rmd",
 ```
 上述命令编译为gitbook页面。
 
+
+
+
+``` r
+bookdown::publish_book()
+```
+上述命令将电子书提交到[bookdown](https://bookdown.org),详见[谢益辉](https://bookdown.org/yihui/bookdown/rstudio-connect.html),前提是要将`RStudio`连接到posit账户，详见[posit的connect文档](https://docs.posit.co/connect/user/publishing-rstudio/)，也不要忘记在`YAML`块加入`site: bookdown::bookdown_site`。(并不确定这个是否有用，参考了[这里](https://support.posit.co/hc/en-us/articles/115009036948-Using-Bookdown-in-the-RStudio-IDE-and-RStudio-Connect)。)
 Bookdown如果输出为网页，
 其中的数学公式需要MathJax程序库的支持，
 用如下数学公式测试浏览器中数学公式显示是否正常：
@@ -55,16 +63,19 @@ $$
 ## 为什么要写课程笔记 {-}  
 很遗憾本科期间没有养成多用电脑多上网的习惯，上个学期本来是新的开始却也没有好好听讲，导致没什么收获。这个学期希望通过做笔记的形式多学一点东西，虽然可能也不会有多少收获，聊以填充这略显枯燥的研究生生活吧！
 
-# AboutMe {-}  
+# 关于涛哥 {-}  
 
-gogentle，As known as 涛哥, 9ZT, GZT...存在于21世纪地球村的一个人类，国籍中华人民共和国，出生并成长于山东省日照市东港区。  
+gogentle，As known as 涛哥, 9ZT, GZT...存在于21世纪地球村的一个人类，拥有中华人民共和国国籍，出生并成长于山东省日照市东港区。  
 
 - 幼儿园毕业于日照三小幼儿园（2005-2008）~~中班留级一年~~；  
 - 小学毕业于山东省日照市实验小学（2008-2014）；  
 - 初中毕业于山东省日照市北京路中学（2014-2017）；  
 - 高中毕业于山东省日照实验高级中学（2017-2020）；  
 - 本科毕业于山东大学数学学院（2020-2024），   
-现就读于中国人民大学统计学院，是一名统计学硕士生（2024-）...  
+
+现就读于中国人民大学统计学院，是一名统计学硕士生（2024-） 
+
+----  
 
 * Email: `gzt0912@foxmail.com`
 * Blog: <https://go9entle.github.io>(已经许久没更新)
