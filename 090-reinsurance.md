@@ -113,7 +113,7 @@ $$
 
 ## 应用于ESG投资的多元风险厌恶效用 {#mrau}
 
->论文原文*Optimal multidimensional reinsurance policies under a common shock dependency structure*点击[这里](https://go9entle.github.io/myresearch/MRAU.pdf)查看。
+>论文原文*Multivariate risk aversion utility, application to ESG investments*点击[这里](https://go9entle.github.io/myresearch/MRAU.pdf)查看。
 
 **ESG**(Environmental, social, and governance) 是优先考虑环境问题、社会问题和公司治理的投资原则的简写。考虑ESG的投资有时被称为*负责任的投资*（responsible investing）或者*影响力投资*（impact investing）。
 
@@ -132,7 +132,6 @@ $$
 
 为了简便起见，我们假设有两只股票$S_1,S_2$其动态过程如下：
 
-
 \begin{equation}
 \begin{split}
 \frac{dS_{1,t}}{S_{1,t}}&=(r+\lambda_1\sigma_1^2)dt+\sigma_1dW_{1,t} (\#eq:mrau1)\\
@@ -140,7 +139,6 @@ $$
 &=(r+\lambda_{22}\sigma^2_2)dt+\sigma_2dW_{3,t}
 \end{split}
 \end{equation}
-
 
 其中$W_{1,t},W_{2,t}$是无关的布朗运动，$\rho\in(-1,1),\sigma_i>0,i=1,2;\lambda_1\sigma_1$是与风险因子$W_1$相关的市场风险溢价（Market Risk Premium, MPR），而$\lambda_2\sigma_2$是与风险因子$W_2$相关的市场风险溢价。通过下面的式子可以将$W_1,W_2$的MRP与$W_3$的MRP相联系：
 
@@ -204,7 +202,7 @@ $$
 V(X_{1,0},X_{2,0})=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E}[u(X_{1,T},X_{2,T})]=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E} \left[sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}\right] (\#eq:mrau2)
 $$
 
-::?:: *是否应该写为*
+:?: *是否应该写为*
 
 $$
 V(t,X_1,X_2)=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E}[u(X_{1,T},X_{2,T})]=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E} \left[sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}\right] 
