@@ -15,11 +15,6 @@
 
 考虑一家运营于$n$个相互依赖保险业务线的保险公司。事实上，索赔可能同时发生在多个业务线上，例如，一次车祸可能对汽车和司机造成损害。因此，我们假设有$m$个源，其中每个源的发生会导致一个或多个业务线发生索赔。图\@ref(fig:csm)
 
-
-``` r
-knitr::include_graphics('https://Go9entle.github.io/picx-images-hosting/1740566499491.7snclf65t8.webp')
-```
-
 <div class="figure">
 <img src="https://Go9entle.github.io/picx-images-hosting/1740566499491.7snclf65t8.webp" alt="An example of common shock model with m = 4 sources and n = 3 lines."  />
 <p class="caption">(\#fig:csm)An example of common shock model with m = 4 sources and n = 3 lines.</p>
@@ -134,13 +129,14 @@ $$
 
 \begin{equation}
 \begin{split}
-\frac{dS_{1,t}}{S_{1,t}}&=(r+\lambda_1\sigma_1^2)dt+\sigma_1dW_{1,t} (\#eq:mrau1)\\
+\frac{dS_{1,t}}{S_{1,t}}&=(r+\lambda_1\sigma_1^2)dt+\sigma_1dW_{1,t} \\
 \frac{dS_{2,t}}{S_{2,t}}&=\left(r+\lambda_1\sigma_1\sigma_2\rho+\lambda_2\sigma_2^2\sqrt{1-\rho^2}\right)dt+\sigma_2\left(\rho dW_{1,t}+\sqrt{1-\rho^2}dW_{2,t}\right)\\
-&=(r+\lambda_{22}\sigma^2_2)dt+\sigma_2dW_{3,t}
+&=(r+\lambda_{22}\sigma^2_2)dt+\sigma_2dW_{3,t} 
 \end{split}
+(\#eq:mrau1)
 \end{equation}
 
-其中$W_{1,t},W_{2,t}$是无关的布朗运动，$\rho\in(-1,1),\sigma_i>0,i=1,2;\lambda_1\sigma_1$是与风险因子$W_1$相关的市场风险溢价（Market Risk Premium, MPR），而$\lambda_2\sigma_2$是与风险因子$W_2$相关的市场风险溢价。通过下面的式子可以将$W_1,W_2$的MRP与$W_3$的MRP相联系：
+其中$W_{1,t},W_{2,t}$是无关的布朗运动，$\rho\in(-1,1),\sigma_i>0,i=1,2;\lambda_1\sigma_1$是与风险因子$W_1$相关的单位波动率的市场风险价格（Market Price of Risk, MPR），而$\lambda_2\sigma_2$是与风险因子$W_2$相关的市场风险价格。通过下面的式子可以将$W_1,W_2$的MRP与$W_3$的MRP相联系：
 
 $$
 \lambda_{22}\sigma_2=\lambda_1\sigma_1\rho+\lambda_2\sigma_2\sqrt{1-\rho^2}.
@@ -156,7 +152,7 @@ $$
 \end{align}
 
 
-投资者根据风险的来源,即$W_{1,t},W_{2,t}$表现出不同的偏好，即不同的风险厌恶水平。例如$W_{1,t}$代表绿色股票$S_1$的风险，投资者对该风险的厌恶程度较低，$W_{2,t}$是棕色股票$S_2$相应的与$S_1$不相关的风险吗，投资者对其表现出较高的风险厌恶，以捕捉投资者ESG偏好。
+投资者根据风险的来源,即$W_{1,t},W_{2,t}$表现出不同的偏好，即不同的风险厌恶水平。例如$W_{1,t}$代表绿色股票$S_1$的风险，投资者对该风险的厌恶程度较低，$W_{2,t}$是棕色股票$S_2$相应的与$S_1$不相关的风险，投资者对其表现出较高的风险厌恶，以捕捉投资者ESG偏好。
 
 接下来在构建财富过程和效用函数时，将会把这两种风险来源分开。
 
@@ -199,18 +195,13 @@ $$
 这个问题的价值函数为：
 
 $$
-V(X_{1,0},X_{2,0})=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E}[u(X_{1,T},X_{2,T})]=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E} \left[sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}\right] (\#eq:mrau2)
+V(t,X_{1,0},X_{2,0})=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E}[u(X_{1,T},X_{2,T})]=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E} \left[sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}\right] (\#eq:mrau2)
 $$
 
-:?: *是否应该写为*
-
-$$
-V(t,X_1,X_2)=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E}[u(X_{1,T},X_{2,T})]=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E} \left[sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}\right] 
-$$
 
 在不失一般性的情况下，我们选择初始值 $X_{1,0} = X_0$, $X_{2,0} = 1$。接下来，我们给出论文的主要结果。
 
-**Proposition 1.**  
+**Proposition**  
 假设$0<\alpha_1\leq\alpha_2<1$或者$\alpha_2\leq\alpha_1<0,$则方程\@ref(eq:mrau2)的最优配置和价值函数为：
 
 
@@ -220,6 +211,89 @@ $$
 V(X_{1,t},X_{2,t})&=sign(\alpha_1)\frac{X_t^{\alpha_1}}{\alpha_1\alpha_2}\exp\{b(T-t)\},\\
 \text{where }b&=\frac{1}{2}\left( \frac{\sigma_1^2\lambda_1^2\alpha_1}{1-\alpha_1}+\frac{\sigma_2^2\lambda_2^2\alpha_2}{1-\alpha_2}\right).
 \end{align}
+
+**Proof**
+
+<div class="figure">
+<img src="https://github.com/Go9entle/picx-images-hosting/raw/master/IMG_0750.45tlwttsw.webp" alt="Proof of Proposition"  />
+<p class="caption">(\#fig:unnamed-chunk-1)Proof of Proposition</p>
+</div>
+
+
+**Remark**
+
+
+我们接下来强调一下这一结果和背景中的几个重要方面：
+
+1. 如果$\rho$趋近于1（或 -1），$\pi_2$会趋向于$\infty$，而 $\pi_1$ 会趋向于 $-\infty$（或 $\infty$）。这与$\alpha_1=\alpha_2$ 的情况相同。其背后的逻辑是，在极限情况下，可以创造出比现金账户更优的无风险投资组合。这也解释了协方差矩阵可逆的假设。
+
+2. 该工作可以扩展到 $N$ 个资产，假设风险厌恶结构为 $0 < \alpha_1 \leq ⋯ \leq \alpha_n < 1 $或 $\alpha_n \leq ⋯ \leq \alpha_1< 0，$并且效用函数为：
+
+$$
+   u(X_{1,T}, … , X_{n,T}) =
+   \begin{cases}
+   \text{sign}(\alpha₁) \prod_{i=1}^{N}\frac{ (X_{i,T})^{\alpha_i}}{ \alpha_i}, & N\text{ even} \\
+   \quad\quad\prod_{i=1}^{N} \frac{(X_{i,T})^{\alpha_i}} { \alpha_i}, & N\text{ odd}
+   \end{cases}
+$$
+
+​	对于股票，最方便的表示方法是使用下三角矩阵，以分离独立的风险因子 $W_i,i=1,2,...,N$，这些因子驱动着各个属性 （记为$X_i,i=1,2,...,N$），其方程为：
+
+$$
+   \frac{dS_{i,t}}{S_{i,t}} = \left( r + \sum_{j=1}^{i} \sigma_i \lambda_j \sigma_j \rho_{ij} \right) dt + \sigma_i \left( \sum_{j=1}^{i} \rho_{ij} dW_{j,t} \right)
+$$
+ 	用矩阵表示形式为：
+
+$$
+   dS_t = diag(S_t) \left( (r + diag(\sigma) diag(\lambda) A) dt + diag(\sigma) A dW_t \right)
+$$
+
+​	其中 $S_t,W_t,\lambda$ 和$\sigma$是向量，$A$代表协方差矩阵$\rho=A'A$的下三角分解。这导致了一个方便的自融资条件的表示：
+
+\begin{align}
+   \frac{dX_t}{X_t} &= \sum_{i=1}^{N} \pi_{i,t} \frac{dS_{i,t}}{S_{i,t}} + \left( 1 - \sum_{i=1}^{N} \pi_{i,t} \right) \frac{dB_t}{B_t}\\
+   &=\sum_{i=1}^N\pi_{i,t}\sum_{j=1}^i\sigma_i\rho_{ij}(\lambda_j\sigma_j dt+d W_{j,t})+\frac{dB_t}{B_t}
+\end{align}
+
+​	通过使用 $d\log X_t=rdt+\sum_{j=1}^N d\log X_{j,t}$ₜ，可以表示为各个独立财富（属性）$X_j:j=1,...,N$：
+
+$$
+   \frac{dX_{j,t}}{X_{j,t}} = \bar{\pi}_j (\lambda_j \sigma_j dt + dW_{j,t})
+$$
+
+​	其中 $\bar{\pi}_j = \sum_{i=j}^{N} \pi_{i,t} \sigma_i \rho_{ij}$。
+
+​	该问题现在可以通过 $\bar{\pi} = (\bar{\pi}_1, … , \bar{\pi}_N)' $ 轻松求解，且 $\bar{\pi}_j = \frac{\lambda_j}{(1 - \alpha_j) \sigma_j},j=1,..,N$，然后通过矩阵表示法将其转换回$\pi$，即 $\bar{\pi} = A' diag(\sigma) \pi$。
+
+3. 在存在两组股票的情况下：$S_1,...,S_{N_1}$和$S_{N_1+1},...,S_N$，每组具有不同的风险厌恶系数 $\alpha_A$和$\alpha_B$，分别对应之前提到的符号表示方法，我们可以写出以下方程：
+
+\begin{align}
+   &d \log X_{A,t} = \sum_{j=1}^{N₁} \log X_{j,t}\\
+   &d \log X_{B,t} = \sum_{j=N₁+1}^{N} \log X_{j,t}\\
+   &d \log X_t = r dt + d \log X_{A,t} + d \log X_{B,t}
+\end{align}
+
+​	解决方法将与之前类似，通过分组$\alpha_1=...=\alpha_{N_1}=\alpha_A$ 和$\alpha_{N_1+1}=...=\alpha_N=\alpha_B$。
+
+4. 有趣的是，我们可以重写\@ref(eq:mrau1)使用“棕色股票”作为“绿色股票”的驱动因素，模型为：
+
+\begin{equation}
+\begin{split}
+   \frac{dS_{2,t}}{S_{2,t}}& = (r + \lambda_{22} \sigma_2^2) dt + \sigma_2 dW_{3,t}\\
+   \frac{dS_{1,t}}{S_{1,t}} &= \left( r + \lambda_{22} \sigma_1 \sigma_2 \rho + \lambda_{11} \sigma_1^2 \sqrt{1 - \rho^2} \right) dt + \sigma_1 \left( \rho dW_{3,t} + \sqrt{1 - \rho^2} dW_{4,t} \right)\\
+   &= (r + \lambda_1 \sigma_1^2) dt + \sigma_1 dW_{5,t}\\ 
+\end{split}
+(\#eq:mrau3)
+\end{equation}
+
+​	其中关系为：
+$$
+   \lambda_1 \sigma_1 = \lambda_{22} \sigma_2 \rho + \lambda_{11} \sigma_1 \sqrt{1 - \rho^2}
+$$
+
+​	理论同样成立，但解决方法有所不同。两者的区别在于，投资者如何在风险厌恶的角度解释绿色股票和棕色股票之间的共同/共享风险（相关部分）。模型\@ref(eq:mrau1)将其视为绿色股票的较低风险厌恶，而模型\@ref(eq:mrau3)则假设它与棕色股票的风险厌恶相同（即更高的风险厌恶）。
+
+
 
 
 
