@@ -204,6 +204,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="rlforfin.html"><a href="rlforfin.html#个人财务的优化"><i class="fa fa-check"></i><b>1.4.1</b> 个人财务的优化</a></li>
 <li class="chapter" data-level="1.4.2" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题及其解决"><i class="fa fa-check"></i><b>1.4.2</b> Merton投资组合问题及其解决</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题解的直觉"><i class="fa fa-check"></i><b>1.4.3</b> Merton投资组合问题解的直觉</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rlforfin.html"><a href="rlforfin.html#离散时间资产配置"><i class="fa fa-check"></i><b>1.4.4</b> 离散时间资产配置</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>2</b> 广义线性模型</a>
@@ -215,6 +217,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr2"><i class="fa fa-check"></i><b>3.1</b> 提出的方法</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr21"><i class="fa fa-check"></i><b>3.1.1</b> 预备知识</a></li>
+<li class="chapter" data-level="3.1.2" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr22"><i class="fa fa-check"></i><b>3.1.2</b> Local constant method</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="qrm.html"><a href="qrm.html"><i class="fa fa-check"></i><b>4</b> 量化风险管理</a>
@@ -577,8 +580,8 @@ V(s)=&amp;\mathbb{E}[R_{t+1}|S_t=s]+\gamma\cdot\mathbb{E}[R_{t+2}|S_t=s]+...\\
 <div id="markov决策过程的正式定义" class="section level3 hasAnchor" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> Markov决策过程的正式定义<a href="rlforfin.html#markov决策过程的正式定义" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>与Markov过程和Markov奖励过程的定义类似，为了便于阐述，以下Markov决策过程的定义和理论将针对离散时间、可数状态空间和可数的下一个状态与奖励转移对。</p>
-<div class="theorem">
-<p><span id="thm:unlabeled-div-1" class="theorem"><strong>定理1.1  </strong></span>Markov决策过程包括以下内容：<br />
+<p><strong>定理</strong></p>
+<p>Markov决策过程包括以下内容：<br />
 - 可数状态集合<span class="math inline">\(\mathcal{S}\)</span>（称为状态空间），终止状态集合<span class="math inline">\(\mathcal{T}\subset \mathcal{S}\)</span>,以及可数动作集合<span class="math inline">\(\mathcal{A}\)</span>（称为动作空间）。
 - 时间索引的环境生成随机状态序列<span class="math inline">\(S_t\in\mathcal{S}\)</span>（时间步<span class="math inline">\(t=0,1,2,...\)</span>），时间索引的环境生成奖励随机变量序列<span class="math inline">\(R_t\in\mathcal{D}\)</span>（<span class="math inline">\(\mathcal{D}\)</span>是<span class="math inline">\(\mathbb{R}\)</span>的可数子集），以及时间索引的智能体可控动作序列<span class="math inline">\(A_t\in\mathcal{A}\)</span><br />
 - Markov性<br />
@@ -586,19 +589,18 @@ V(s)=&amp;\mathbb{E}[R_{t+1}|S_t=s]+\gamma\cdot\mathbb{E}[R_{t+2}|S_t=s]+...\\
   P[(R_{t+1},S_{t+1})|(S_t,A_t,S_{t-1},A_{t-1},...,S_0,A_0)]=P[   (R_{t+1},S_{t+1})|(S_t,A_t)]\text{ for all }t\geq 0
   \end{equation*}\]</span>
 - 终止：如果某个时间步<span class="math inline">\(T\)</span>的状态<span class="math inline">\(S_T\in\mathcal{T}\)</span>,则该序列结果在时间步<span class="math inline">\(T\)</span>终止。</p>
-</div>
 <p>在更一般的情况下，如果状态或奖励是不可数的，相同的概念仍然适用，只是数学形式需要更加详细和谨慎。具体来说，我们将使用积分代替求和，使用概率密度函数（用于连续概率分布）代替概率质量函数（用于离散概率分布）。为了符号的简洁性，更重要的是为了核心概念的理解（而不被繁重的数学形式分散注意力），我们选择默认使用离散时间、可数<span class="math inline">\(\mathcal{S}\)</span>、可数<span class="math inline">\(\mathcal{A}\)</span>和可数<span class="math inline">\(\mathcal{D}\)</span>.</p>
 <p>我们将<span class="math inline">\(P[(R_{t+1},S_{t+1})|(S_t,A_t)]\)</span>称为Markov决策过程在时间<span class="math inline">\(t\)</span>的转移概率。</p>
-<p>与Markov过程和MRP一样，我们默认Markov决策过程是时间其次的，即<span class="math inline">\(P[(R_{t+1},S_{t+1})|(S_t,A_t)]\)</span>与<span class="math inline">\(t\)</span>无关。这意味着Markov决策过程的转移概率在最一般情况下可以表示为<strong>状态-奖励转移概率函数</strong>：<br />
-<span class="math display">\[
+<p>与Markov过程和MRP一样，我们默认Markov决策过程是时间其次的，即<span class="math inline">\(P[(R_{t+1},S_{t+1})|(S_t,A_t)]\)</span>与<span class="math inline">\(t\)</span>无关。这意味着Markov决策过程的转移概率在最一般情况下可以表示为<strong>状态-奖励转移概率函数</strong>：</p>
+<p><span class="math display">\[
 \mathcal{P}_R:\mathcal{N\times A\times D\times S}\rightarrow [0,1]
 \]</span>
-定义为<br />
-<span class="math display">\[
+定义为</p>
+<p><span class="math display">\[
 \mathcal{P}_R(s,a,r,s&#39;)=P[(R_{t+1}=r,S_{t+1}=s&#39;)|(S_t=s,A_t=a)]
 \]</span>
-对于时间步<span class="math inline">\(t=0,1,2,...\)</span>，对于所有的<span class="math inline">\(s,s&#39;\in\mathcal{N},a\in\mathcal{A},r\in\mathcal{D}\)</span>满足<br />
-<span class="math display">\[
+对于时间步<span class="math inline">\(t=0,1,2,...\)</span>，对于所有的<span class="math inline">\(s,s&#39;\in\mathcal{N},a\in\mathcal{A},r\in\mathcal{D}\)</span>满足</p>
+<p><span class="math display">\[
 \sum_{s&#39;\in\mathcal{S}}\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,a,r,s&#39;)=1\text{ for all }s\in\mathcal{N},a\in\mathcal{A}
 \]</span>
 这又可以通过状态-奖励转移概率函数<span class="math inline">\(\mathcal{P}_R\)</span>来表征，给定<span class="math inline">\(\mathcal{P}_R\)</span>的规范，我们可以构造<br />
@@ -623,35 +625,33 @@ V(s)=&amp;\mathbb{E}[R_{t+1}|S_t=s]+\gamma\cdot\mathbb{E}[R_{t+2}|S_t=s]+...\\
 
 \end{align}\]</span></p></li>
 </ul>
-<p>在实践中，我们遇到的大多数Markov决策过程的奖励规范可以直接表示为奖励转移函数<span class="math inline">\(\mathcal{R}_T\)</span>而不是更一般的<span class="math inline">\(\mathcal{P}_R\)</span>.最后我们想强调的是可以将<span class="math inline">\(\mathcal{P}_R\)</span>或<span class="math inline">\(\mathcal{R}_T\)</span>转换为“更紧凑”的奖励函数，该函数足以执行设计MDP的关键计算，这个奖励函数为：<br />
-<span class="math display">\[
+<p>在实践中，我们遇到的大多数Markov决策过程的奖励规范可以直接表示为奖励转移函数<span class="math inline">\(\mathcal{R}_T\)</span>而不是更一般的<span class="math inline">\(\mathcal{P}_R\)</span>.最后我们想强调的是可以将<span class="math inline">\(\mathcal{P}_R\)</span>或<span class="math inline">\(\mathcal{R}_T\)</span>转换为“更紧凑”的奖励函数，该函数足以执行设计MDP的关键计算，这个奖励函数为：</p>
+<p><span class="math display">\[
 \mathcal{R}:\mathcal{N\times A}\rightarrow \mathbb{R}
 \]</span>
-定义为：<br />
-<span class="math display">\[
-\begin{aligned}
+定义为：</p>
+<span class="math display">\[\begin{aligned}
 \mathcal{R}(s,a)&amp;=\mathbb{E}[R_{t+1}|(S_t=s,A_t=a)]\\
 &amp;=\sum_{s\in\mathcal{S}}\mathcal{P}(s,a,s&#39;)\cdot\mathcal{R}_T(s,a,s&#39;)\\
 &amp;=\sum_{s\in\mathcal{S}}\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,a,r,s&#39;)\cdot r
-\end{aligned}
-\]</span></p>
+\end{aligned}\]</span>
 </div>
 <div id="策略" class="section level3 hasAnchor" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> 策略<a href="rlforfin.html#策略" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>理解了MDP的动态后，我们现在转向智能体动作的规范，即作为当前状态函数的动作选择。在一般情况下，我们假设智能体将根据当i请安状态<span class="math inline">\(S_t\)</span>的概率分布执行动作<span class="math inline">\(A_t\)</span>,我们将此函数称为策略（Policy）。<br />
-形式上，策略是一个函数：<br />
-<span class="math display">\[
+形式上，策略是一个函数：</p>
+<p><span class="math display">\[
 \pi:\mathcal{N\times A}\rightarrow [0,1]
 \]</span>
-定义为:<br />
-<span class="math display">\[
+定义为:</p>
+<p><span class="math display">\[
 \pi(s,a)=P[A_t=a|S_t=s]\text{ for }t=0,1,2,...\text{ for all }s\in\mathcal{N},a\in\mathcal{A}
 \]</span>
-使得<br />
-<span class="math display">\[
+使得</p>
+<p><span class="math display">\[
 \sum_{a\in\mathcal{A}}\pi(s,a)=1\text{ for all }s\in\mathcal{N}
-\]</span>
-需要注意的是，上述定义假设策略是Markov的，即动作概率仅依赖于当前状态，而不依赖于历史状态。上述定义还假设策略是平稳的，即<span class="math inline">\(P[A_t=a|S_t=s]\)</span>在时间<span class="math inline">\(t\)</span>上是不变的。如果我们遇到策略需要依赖于时间<span class="math inline">\(t\)</span>的情况，我们可以简单地将<span class="math inline">\(t\)</span>包含在状态中，从而使策略变得平稳（尽管这会增加状态空间的规模，从而导致计算成本的增加）。<br />
+\]</span></p>
+<p>需要注意的是，上述定义假设策略是Markov的，即动作概率仅依赖于当前状态，而不依赖于历史状态。上述定义还假设策略是平稳的，即<span class="math inline">\(P[A_t=a|S_t=s]\)</span>在时间<span class="math inline">\(t\)</span>上是不变的。如果我们遇到策略需要依赖于时间<span class="math inline">\(t\)</span>的情况，我们可以简单地将<span class="math inline">\(t\)</span>包含在状态中，从而使策略变得平稳（尽管这会增加状态空间的规模，从而导致计算成本的增加）。<br />
 当策略对每个状态的动作概率集中在单个动作上（即只要到达一个状态，动作是确定的）时，我们称之为<strong>确定性策略</strong>。形式上，确定性策略<span class="math inline">\(\pi_D:\mathcal{N}\rightarrow \mathcal{A}\)</span>具有以下性质：对所有的<span class="math inline">\(s\in\mathcal{N},\)</span></p>
 <p><span class="math display">\[
 \pi(s,\pi_D(s))=1\text{ and }\pi(s,a)=0, \text{ for all }a\ne \pi_D(s)
@@ -660,14 +660,16 @@ V(s)=&amp;\mathbb{E}[R_{t+1}|S_t=s]+\gamma\cdot\mathbb{E}[R_{t+2}|S_t=s]+...\\
 </div>
 <div id="markov决策过程策略-markov奖励过程" class="section level3 hasAnchor" number="1.2.4">
 <h3><span class="header-section-number">1.2.4</span> [Markov决策过程，策略]:= Markov奖励过程<a href="rlforfin.html#markov决策过程策略-markov奖励过程" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>本节有一个重要的见解——如果我们用固定策略<span class="math inline">\(\pi\)</span>（通常是一个固定的随机策略，注意与确定性策略区分）评估MDP，我们会得到一个由MDP和策略<span class="math inline">\(\pi\)</span>共同隐含的MRP。我们可以用符号精确地澄清这一点，但首先MDP和MRP中存在一些符号冲突。我们使用<br />
-- <span class="math inline">\(\mathcal{P}_R\)</span>表示MRP转移概率函数，同时也表示MDP的状态-奖励转移概率函数；
-- <span class="math inline">\(\mathcal{P}\)</span>表示MRP中隐含的Markov过程的转移概率函数，同时也表示MDP的状态转移函数；
-- <span class="math inline">\(\mathcal{R}_T\)</span>表示MRP的奖励转移函数，同时也表示MDP的奖励转移函数；
-- <span class="math inline">\(\mathcal{R}\)</span>表示MRP的奖励函数，同时也表示MDP的奖励函数。</p>
+<p>本节有一个重要的见解——如果我们用固定策略<span class="math inline">\(\pi\)</span>（通常是一个固定的随机策略，注意与确定性策略区分）评估MDP，我们会得到一个由MDP和策略<span class="math inline">\(\pi\)</span>共同隐含的MRP。我们可以用符号精确地澄清这一点，但首先MDP和MRP中存在一些符号冲突。我们使用</p>
+<ul>
+<li><p><span class="math inline">\(\mathcal{P}_R\)</span>表示MRP转移概率函数，同时也表示MDP的状态-奖励转移概率函数；</p></li>
+<li><p><span class="math inline">\(\mathcal{P}\)</span>表示MRP中隐含的Markov过程的转移概率函数，同时也表示MDP的状态转移函数；</p></li>
+<li><p><span class="math inline">\(\mathcal{R}_T\)</span>表示MRP的奖励转移函数，同时也表示MDP的奖励转移函数；</p></li>
+<li><p><span class="math inline">\(\mathcal{R}\)</span>表示MRP的奖励函数，同时也表示MDP的奖励函数。</p></li>
+</ul>
 <p>我们将在<span class="math inline">\(\pi\)</span>隐含的MRP的函数<span class="math inline">\(\mathcal{P}_R,\mathcal{P},\mathcal{R}_T,\mathcal{R}\)</span>加上上标<span class="math inline">\(\pi\)</span>以区分这些函数MDP和<span class="math inline">\(\pi\)</span>隐含的MRP中的使用。</p>
-<p>假设我们给定一个固定策略<span class="math inline">\(\pi\)</span>和一个由其状态-奖励转移概率函数<span class="math inline">\(\mathcal{P}_R\)</span>指定的MDP，那么由MDP与策略<span class="math inline">\(\pi\)</span>评估隐含的MRP的转移概率函数<span class="math inline">\(\mathcal{P}_R^\pi\)</span>定义为：<br />
-<span class="math display">\[
+<p>假设我们给定一个固定策略<span class="math inline">\(\pi\)</span>和一个由其状态-奖励转移概率函数<span class="math inline">\(\mathcal{P}_R\)</span>指定的MDP，那么由MDP与策略<span class="math inline">\(\pi\)</span>评估隐含的MRP的转移概率函数<span class="math inline">\(\mathcal{P}_R^\pi\)</span>定义为：</p>
+<p><span class="math display">\[
 \mathcal{P}_R^\pi(s,r,s&#39;)=\sum_{a\in\mathcal{A}}\pi(s,a)\cdot\mathcal{P}_R(s,a,r,s&#39;)
 \]</span>
 类似地有</p>
@@ -680,17 +682,17 @@ V(s)=&amp;\mathbb{E}[R_{t+1}|S_t=s]+\gamma\cdot\mathbb{E}[R_{t+2}|S_t=s]+...\\
 </div>
 <div id="固定策略下的mdp价值函数" class="section level3 hasAnchor" number="1.2.5">
 <h3><span class="header-section-number">1.2.5</span> 固定策略下的MDP价值函数<a href="rlforfin.html#固定策略下的mdp价值函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>现在我们准备讨论用固定策略<span class="math inline">\(\pi\)</span>评估的MDP的价值函数（也称为MDP预测问题，“预测”指的是该问题涉及在智能体遵循特定策略时预测未来期望回报）。与MRP情况类似，我们定义<br />
-<span class="math display">\[
+<p>现在我们准备讨论用固定策略<span class="math inline">\(\pi\)</span>评估的MDP的价值函数（也称为MDP预测问题，“预测”指的是该问题涉及在智能体遵循特定策略时预测未来期望回报）。与MRP情况类似，我们定义</p>
+<p><span class="math display">\[
 G_t=\sum_{i=t+1}^\infty \gamma^{i-t-1}\cdot R_i=R_{t+1}+\gamma \cdot R_{t+2}+\gamma^2\cdot R_{t+3}+....
 \]</span>
 其中<span class="math inline">\(\gamma\in[0,1]\)</span>是指定的贴现因子。即便对于终止序列我们也使用上述回报的定义。<br />
-用固定策略<span class="math inline">\(\pi\)</span>评估的MDP的价值函数为<br />
-<span class="math display">\[
+用固定策略<span class="math inline">\(\pi\)</span>评估的MDP的价值函数为</p>
+<p><span class="math display">\[
 V^\pi:\mathcal{N}\rightarrow \mathbb{R}
 \]</span>
-定义为：<br />
-<span class="math display">\[
+定义为：</p>
+<p><span class="math display">\[
 V^\pi(s)=\mathbb{E}_{\pi,\mathcal{P}_R}[G_t|S_t=s]\text{ for all }s\in\mathcal{N},\text{ for all }t=0,1,2,...
 \]</span>
 我们假设每当我们讨论价值函数时，折扣因子<span class="math inline">\(\gamma\)</span>是适当的，以确保每个状态的期望回报是有限的——特别是对于可能发散的连续（非终止）MDP，<span class="math inline">\(\gamma&lt;1\)</span>.<br />
@@ -709,15 +711,15 @@ V^\pi(s)=&amp;\mathcal{R}^\pi(s)+\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{
 =&amp;\sum_{a\in\mathcal{A}}\pi(s,a)\cdot(\mathcal{R}(s,a)+\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s,a,s&#39;)\cdot V^\pi(s&#39;))\text{ for all }s\in\mathcal{N} \tag{1.2}
 \end{align}\]</span></p>
 <p>对于状态空间不太大的有限MDP，方程 <a href="rlforfin.html#eq:4-1">(1.2)</a> 可以通过线性代数求解<span class="math inline">\(V^\pi\)</span>。更一般地，方程 <a href="rlforfin.html#eq:4-1">(1.2)</a> 将成为本书其余部分开发各种动态规划和强化学习算法以解决MDP预测问题的关键方程。<br />
-然而，另一个价值函数在开发MDP算法时也至关重要——它将（状态、动作）对映射到从该（状态，动作）对出发的期望回报，当用固定策略评估时。这被称为用固定策略评估的MDP地动作—价值函数：<br />
-<span class="math display">\[
+然而，另一个价值函数在开发MDP算法时也至关重要——它将（状态、动作）对映射到从该（状态，动作）对出发的期望回报，当用固定策略评估时。这被称为用固定策略评估的MDP地动作—价值函数：</p>
+<p><span class="math display">\[
 Q^\pi:\mathcal{N\times A}\rightarrow \mathbb{R}
 \]</span>
-定义为：<br />
-<span class="math display">\[
+定义为：</p>
+<p><span class="math display">\[
 Q^\pi(s,a)=\mathbb{E}_{\pi,\mathcal{P}_R}[G_t|(S_t=s,A_t=a)]\text{ for all }s\in\mathcal{N},a\in\mathcal{A} \text{ for all }t=0,1,2,...
-\]</span>
-为了避免术语混淆，我们将<span class="math inline">\(V^\pi\)</span>称为策略<span class="math inline">\(\pi\)</span>地<strong>状态-价值函数</strong>（尽管通常简称为价值函数），以区别于<strong>动作-价值函数</strong><span class="math inline">\(Q^\pi\)</span>.解释<span class="math inline">\(Q^\pi(s,a)\)</span>的方式是，它是从给定非终止状态<span class="math inline">\(s\)</span>出发，首先采取动作<span class="math inline">\(a\)</span>，然后遵循策略<span class="math inline">\(\pi\)</span>的期望回报。通过这种解释，我们可以将<span class="math inline">\(V^\pi(s)\)</span>视作<span class="math inline">\(Q^\pi(s,a)\)</span>的“加权平均”（对于所有从非终止状态<span class="math inline">\(s\)</span>出发的所有可能动作<span class="math inline">\(a\)</span>）,权重等于给定状态<span class="math inline">\(s\)</span>的动作<span class="math inline">\(a\)</span>的概率（即<span class="math inline">\(\pi(s,a)\)</span>）。具体来说：</p>
+\]</span></p>
+<p>为了避免术语混淆，我们将<span class="math inline">\(V^\pi\)</span>称为策略<span class="math inline">\(\pi\)</span>地<strong>状态-价值函数</strong>（尽管通常简称为价值函数），以区别于<strong>动作-价值函数</strong><span class="math inline">\(Q^\pi\)</span>.解释<span class="math inline">\(Q^\pi(s,a)\)</span>的方式是，它是从给定非终止状态<span class="math inline">\(s\)</span>出发，首先采取动作<span class="math inline">\(a\)</span>，然后遵循策略<span class="math inline">\(\pi\)</span>的期望回报。通过这种解释，我们可以将<span class="math inline">\(V^\pi(s)\)</span>视作<span class="math inline">\(Q^\pi(s,a)\)</span>的“加权平均”（对于所有从非终止状态<span class="math inline">\(s\)</span>出发的所有可能动作<span class="math inline">\(a\)</span>）,权重等于给定状态<span class="math inline">\(s\)</span>的动作<span class="math inline">\(a\)</span>的概率（即<span class="math inline">\(\pi(s,a)\)</span>）。具体来说：</p>
 <p><span class="math display" id="eq:4-2">\[\begin{equation}
 V^\pi(s)=\sum_{a\in\mathcal{A}}\pi(s,a)\cdot Q^\pi(s,a)\text{ for all }s\in\mathcal{N} \tag{1.3}
 \end{equation}\]</span></p>
@@ -734,64 +736,63 @@ Q^\pi(s,a)=\mathcal{R}(s,a)+\gamma \cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s
 <div id="最优价值函数和最优策略" class="section level3 hasAnchor" number="1.2.6">
 <h3><span class="header-section-number">1.2.6</span> 最优价值函数和最优策略<a href="rlforfin.html#最优价值函数和最优策略" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>最后，我们要达到Markov决策问题的主要目的——识别能够产生最有价值函数的策略，即从每个非终止状态出发的最佳可能期望回报。我们说，当我们识别出MDP的最优价值函数（及相关的最优策略，即产生最优价值函数的策略）时，MDP就被“解决”了。识别最优价值函数及其相关最优策略被称为<strong>MDP控制问题</strong>。“控制”指的是该问题涉及通过策略的迭代修改来引导动作，以推动价值函数向最优性发展。<br />
-形式上，最优价值函数定义为<br />
-<span class="math display">\[
+形式上，最优价值函数定义为</p>
+<p><span class="math display">\[
 V^*:\mathcal{N}\rightarrow \mathbb{R}
 \]</span>
-定义为<br />
-<span class="math display">\[
+定义为</p>
+<p><span class="math display">\[
 V^*(s)=\max_{\pi\in\Pi} V^\pi(s) \text{ for all }s\in\mathcal{N}
 \]</span>
 其中<span class="math inline">\(\Pi\)</span>是<span class="math inline">\(\mathcal{N,A}\)</span>空间上的平稳随机策略集合。<br />
 上述定义的解释是，对于每个非终止状态<span class="math inline">\(s\)</span>，我们考虑所有可能的随机平稳策略并在这些<span class="math inline">\(\pi\)</span>中选择最大化<span class="math inline">\(V^\pi(s).\)</span>需要注意的是，<span class="math inline">\(\pi\)</span>的选择是针对每个<span class="math inline">\(s\)</span>单独进行的，因此可以想象，不同的<span class="math inline">\(\pi\)</span>的选择可能会为不同的<span class="math inline">\(s\in\mathcal{N}\)</span>最大化<span class="math inline">\(V^\pi(s).\)</span>因此，从上述<span class="math inline">\(V^*\)</span>的定义中，我们还不能谈论“最优策略”的概念。因此，现在让我们只关注上述定义的最有价值函数。<br />
-同样，最优动作-价值函数定义为<br />
-<span class="math display">\[
+同样，最优动作-价值函数定义为</p>
+<p><span class="math display">\[
 Q^*:\mathcal{N\times A}\rightarrow \mathbb{R}
 \]</span>
-定义为<br />
-<span class="math display">\[
+定义为</p>
+<p><span class="math display">\[
 Q^*(s,a)=\max_{\pi\in\Pi} Q^\pi(s,a) \text{ for all }s\in\mathcal{N},a\in\mathcal{A}
 \]</span>
 <span class="math inline">\(V^*\)</span>通常被称为最优状态-价值函数，以区别于最优动作-价值函数<span class="math inline">\(Q^*\)</span>（尽管为了简洁，<span class="math inline">\(V^*\)</span>通常也被简称为最优价值函数）。需要明确的是，最优价值函数默认情况下值得就是最优状态-价值函数<span class="math inline">\(V^*\)</span>.</p>
-<p>正如固定策略的价值函数具有递归公式一样，贝尔曼指出我们可以为最优价值函数创建递归公式。让我们从展开给定非终止状态<span class="math inline">\(s\)</span>的最优状态-价值函数<span class="math inline">\(V^*(s)\)</span>开始——我们考虑从状态<span class="math inline">\(s\)</span>出发可以采取的所有可能动作<span class="math inline">\(a\in\mathcal{A},\)</span>并选择能够产生最佳动作-价值的动作<span class="math inline">\(a,\)</span>即选择出能够产生最优<span class="math inline">\(Q^*(s,a)\)</span>的动作<span class="math inline">\(a\)</span>。形式上给出了以下方程<br />
-<span class="math display" id="eq:4-5">\[
+<p>正如固定策略的价值函数具有递归公式一样，贝尔曼指出我们可以为最优价值函数创建递归公式。让我们从展开给定非终止状态<span class="math inline">\(s\)</span>的最优状态-价值函数<span class="math inline">\(V^*(s)\)</span>开始——我们考虑从状态<span class="math inline">\(s\)</span>出发可以采取的所有可能动作<span class="math inline">\(a\in\mathcal{A},\)</span>并选择能够产生最佳动作-价值的动作<span class="math inline">\(a,\)</span>即选择出能够产生最优<span class="math inline">\(Q^*(s,a)\)</span>的动作<span class="math inline">\(a\)</span>。形式上给出了以下方程</p>
+<p><span class="math display" id="eq:4-5">\[
 V^*(s)=\max_{a\in\mathcal{A}}Q^*(s,a)\text{ for all }s\in\mathcal{N} \tag{1.6}
 \]</span>
-同样让我们思考从给定非终止状态和动作对<span class="math inline">\((s,a)\)</span>出发的最优性意味着什么，也就是展开<span class="math inline">\(Q^*(s,a)\)</span>.首先我们获得即时的期望奖励<span class="math inline">\(\mathcal{R}(s,a)\)</span>.接下来，考虑所有可能的我们可以转到的状态<span class="math inline">\(s&#39;\in\mathcal{S}\)</span>并从每个非终止状态<span class="math inline">\(s&#39;\)</span>出发递归地采取最优动作。形式上，这给出了以下方程：<br />
-<span class="math display" id="eq:4-6">\[
+同样让我们思考从给定非终止状态和动作对<span class="math inline">\((s,a)\)</span>出发的最优性意味着什么，也就是展开<span class="math inline">\(Q^*(s,a)\)</span>.首先我们获得即时的期望奖励<span class="math inline">\(\mathcal{R}(s,a)\)</span>.接下来，考虑所有可能的我们可以转到的状态<span class="math inline">\(s&#39;\in\mathcal{S}\)</span>并从每个非终止状态<span class="math inline">\(s&#39;\)</span>出发递归地采取最优动作。形式上，这给出了以下方程：</p>
+<p><span class="math display" id="eq:4-6">\[
 Q^*(s,a)=\mathcal{R}(s,a)+\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s,a,s&#39;)\cdot V^*(s&#39;)\text{ for all }s\in\mathcal{N},a\in\mathcal{A} \tag{1.7}
 \]</span>
-将<a href="rlforfin.html#eq:4-6">(1.7)</a>中的<span class="math inline">\(Q^*(s,a)\)</span>代入<a href="rlforfin.html#eq:4-5">(1.6)</a>,可以得到<br />
-<span class="math display" id="eq:4-7">\[
+将<a href="rlforfin.html#eq:4-6">(1.7)</a>中的<span class="math inline">\(Q^*(s,a)\)</span>代入<a href="rlforfin.html#eq:4-5">(1.6)</a>,可以得到</p>
+<p><span class="math display" id="eq:4-7">\[
 V^*(s)=\max_{a\in\mathcal{A}}\{ \mathcal{R}(s,a)+\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s,a,s&#39;)\cdot V^*(s&#39;) \} \text{ for all }s\in\mathcal{N} \tag{1.8}
 \]</span>
 方程<a href="rlforfin.html#eq:4-7">(1.8)</a>被称为<strong>MDP状态-价值函数贝尔曼最优性方程</strong>。<br />
-将方程<a href="rlforfin.html#eq:4-5">(1.6)</a>代入方程<a href="rlforfin.html#eq:4-6">(1.7)</a>可以得到<br />
-<span class="math display" id="eq:4-8">\[
+将方程<a href="rlforfin.html#eq:4-5">(1.6)</a>代入方程<a href="rlforfin.html#eq:4-6">(1.7)</a>可以得到</p>
+<p><span class="math display" id="eq:4-8">\[
 Q^*(s,a)=\mathcal{R}(s,a)=\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s,a,s&#39;)\cdot \max_{a&#39;\in\mathcal{A}} Q^*(s&#39;,a&#39;)\text{ for all }s\in\mathcal{A},a\in\mathcal{A} \tag{1.9}
 \]</span>
 方程<a href="rlforfin.html#eq:4-8">(1.9)</a>被称为<strong>MDP动作-价值函数贝尔曼最优性方程</strong>。<br />
 方程<a href="rlforfin.html#eq:4-7">(1.8)</a>、<a href="rlforfin.html#eq:4-5">(1.6)</a>、<a href="rlforfin.html#eq:4-6">(1.7)</a>和<a href="rlforfin.html#eq:4-8">(1.9)</a>统称为<strong>MDP贝尔曼最优性方程</strong>。我们应该强调，当有人说 MDP贝尔曼方程或简称为贝尔曼方程时，除非他们明确说明，否则他们指的是 MDP 贝尔曼最优性方程（通常是 MDP 状态-价值函数贝尔曼最优性方程）。这是因为 MDP 贝尔曼最优性方程解决了马尔可夫决策过程的最终目的——识别最优价值函数和实现最优价值函数的相关策略（即使我们能够解决 MDP 控制问题）。<br />
 我们需要强调的是，贝尔曼最优性方程并没有直接给出计算最优质函数或实现最优质函数的策略的具体方法——它们只是阐述了最优值函数的一个强大数学性质，这一性质帮助我们提出动态规划或者强化学习的算法来计算最优值函数及其相关的策略。<br />
-我们一直在使用“实现最优值函数的策略/策略组合”这个词，但我们还没有给出这样的策略的明确定义。事实上，正如之前提到的，从<span class="math inline">\(V^*\)</span>的定义来看并不清楚是否存在这样的策略能实现<span class="math inline">\(V^*\)</span>（因为可以设想不同的策略<span class="math inline">\(\pi\)</span>对于不同的状态<span class="math inline">\(s\in\mathcal{N}\)</span>实现<span class="math inline">\(V^\pi(s)\)</span>最大化）。因此我们定义最优策略<span class="math inline">\(\pi^*:\mathcal{N\times A}\rightarrow [0,1]\)</span>主导所有其他策略的策略，在价值函数上优于所有其他策略。形式化地说<br />
-<span class="math display">\[
+我们一直在使用“实现最优值函数的策略/策略组合”这个词，但我们还没有给出这样的策略的明确定义。事实上，正如之前提到的，从<span class="math inline">\(V^*\)</span>的定义来看并不清楚是否存在这样的策略能实现<span class="math inline">\(V^*\)</span>（因为可以设想不同的策略<span class="math inline">\(\pi\)</span>对于不同的状态<span class="math inline">\(s\in\mathcal{N}\)</span>实现<span class="math inline">\(V^\pi(s)\)</span>最大化）。因此我们定义最优策略<span class="math inline">\(\pi^*:\mathcal{N\times A}\rightarrow [0,1]\)</span>主导所有其他策略的策略，在价值函数上优于所有其他策略。形式化地说</p>
+<p><span class="math display">\[
 \pi^*\in\Pi\text{ is an Optimal Policy if } V^{\pi^*}(s)\geq V^\pi(s)\text{ for all }\pi\in\Pi \text{ and for all states }s\in\mathcal{N}.
-\]</span>
-最优策略<span class="math inline">\(\pi^*\)</span>的定义表明，它是一个“优于或等于”所有其他静态策略的策略，且适用于所有非终止状态（注意可能存在多个最优策略）。将这个定义与最优值函数<span class="math inline">\(V^*\)</span>的定义结合，接下来的自然问题是：是否存在一个最优策略<span class="math inline">\(\pi^*\)</span>,对所有的<span class="math inline">\(s\in\mathcal{N}\)</span>最大化<span class="math inline">\(V^\pi(s)\)</span>,也就是是否存在一个<span class="math inline">\(\pi^*\)</span>使得<span class="math inline">\(V^*(s)=V^{\pi^*}(s)\)</span>对所有<span class="math inline">\(s\in\mathcal{N}.\)</span>下面的定理和证明是针对我们默认的MDP设置（离散时间、可数空间、时间齐次）的。</p>
-<div class="theorem">
-<p><span id="thm:zuiyoucelue" class="theorem"><strong>定理1.2  </strong></span>对于任何（离散时间、可数空间、时间齐次）的MDP：</p>
+\]</span></p>
+<p>最优策略<span class="math inline">\(\pi^*\)</span>的定义表明，它是一个“优于或等于”所有其他静态策略的策略，且适用于所有非终止状态（注意可能存在多个最优策略）。将这个定义与最优值函数<span class="math inline">\(V^*\)</span>的定义结合，接下来的自然问题是：是否存在一个最优策略<span class="math inline">\(\pi^*\)</span>,对所有的<span class="math inline">\(s\in\mathcal{N}\)</span>最大化<span class="math inline">\(V^\pi(s)\)</span>,也就是是否存在一个<span class="math inline">\(\pi^*\)</span>使得<span class="math inline">\(V^*(s)=V^{\pi^*}(s)\)</span>对所有<span class="math inline">\(s\in\mathcal{N}.\)</span>下面的定理和证明是针对我们默认的MDP设置（离散时间、可数空间、时间齐次）的。</p>
+<p><strong>定理</strong><br />
+对于任何（离散时间、可数空间、时间齐次）的MDP：</p>
 <ul>
 <li><p>存在一个最优策略<span class="math inline">\(\pi^*\in\Pi\)</span>.</p></li>
 <li><p>所有最优策略都实现最优值函数。</p></li>
 <li><p>所有最优策略实现最优动作-价值函数，即对于所有的<span class="math inline">\(s\in\mathcal{N},a\in\mathcal{A},Q^{\pi^*}(s,a)=Q^*(s,a)\)</span>对于所有的最优策略<span class="math inline">\(\pi^*\)</span>.</p></li>
 </ul>
-</div>
 <p>定理的证明略去。</p>
-<p>我们的确定性如下定义<br />
-<span class="math display" id="eq:4-9">\[
+<p>我们的确定性如下定义</p>
+<p><span class="math display" id="eq:4-9">\[
 \pi^*_D(s)=\mathop{\arg\max}_{a\in\mathcal{A}} Q^*(s,a)\text{ for all }s\in\mathcal{N} \tag{1.10}
-\]</span>
-方程<a href="rlforfin.html#eq:4-9">(1.10)</a>是一个关键构造，它与贝尔曼最优性方程紧密结合，在涉及各种动态规划和强化学习算法以解决MDP控制问题（即求解<span class="math inline">\(V^*,Q^*,\pi^*\)</span>）时起到重要作用。最后，值得注意的是，不像预测问题在小状态空间中有一个直接的线性代数求解器，控制问题是非线性的，因此没有类似的直接线性代数求解器。控制问题的最简单解法（即使是在小状态空间中）就是我们将在下一章中讨论的动态规划算法。</p>
+\]</span></p>
+<p>方程<a href="rlforfin.html#eq:4-9">(1.10)</a>是一个关键构造，它与贝尔曼最优性方程紧密结合，在涉及各种动态规划和强化学习算法以解决MDP控制问题（即求解<span class="math inline">\(V^*,Q^*,\pi^*\)</span>）时起到重要作用。最后，值得注意的是，不像预测问题在小状态空间中有一个直接的线性代数求解器，控制问题是非线性的，因此没有类似的直接线性代数求解器。控制问题的最简单解法（即使是在小状态空间中）就是我们将在下一章中讨论的动态规划算法。</p>
 </div>
 </div>
 <div id="dynamicprogram" class="section level2 hasAnchor" number="1.3">
@@ -819,21 +820,21 @@ Q^*(s,a)=\mathcal{R}(s,a)=\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s,a,
 <div id="merton投资组合问题及其解决" class="section level3 hasAnchor" number="1.4.2">
 <h3><span class="header-section-number">1.4.2</span> Merton投资组合问题及其解决<a href="rlforfin.html#merton投资组合问题及其解决" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>现在，我们描述默顿投资组合问题并推导其解析解，这是数学经济学中最优雅的解决方案之一。该解决方案的结构将为我们提供关于资产配置和消费决策如何不仅依赖于状态变量，还依赖于问题输入的深刻直觉。</p>
-<p>我们将时间记为<span class="math inline">\(t\)</span>，并假设当前时间为<span class="math inline">\(t=0\)</span>.假设你刚刚退休并且你将再活<span class="math inline">\(T\)</span>年。因此，用上一节的语言来说，你余生将不会获得任何收入，除了从投资组合中提取资金的选项。再假设你还没有固定支出，如按揭贷款、订阅费等等，这意味着你所有的消费都是灵活/可选的，即你可以在任何时间点选择消费任何非负实数。以上所有假设都是不合理的（<span style="color: orange;">但如果在养老金的资产配置中，这是合理的！</span>），但有助于保持问题的简单性，以便于解析处理。<br />
-我们将任何时间<span class="math inline">\(t\)</span>的财富（记为<span class="math inline">\(W_t\)</span>）定义为你的投资资产的总市场价值。请注意，由于没有外部的收入，并且所有消费都是可选的，<span class="math inline">\(W_t\)</span>就是你的净资产。假设有固定数量的<span class="math inline">\(n\)</span>个风险资产和1个无风险资产。如前所述，目标是通过在任何时间点的双重动作——资产配置和消费（消费等于在任何时间点从投资组合中提取的资金）——最大化你一生中消费的期望总效用。请注意，由于没有外部资金来源，并且所有从投资组合中提取的资金都会立即被消费，因此你永远不会向投资组合中添加资金。投资组合的增长只能来自投资组合中资产市场价值的增长。最后，我们假设消费效用函数是恒定相对风险厌恶（CRRA）的。<br />
-为了便于阐述，我们将问题形式化，并针对<span class="math inline">\(n=1\)</span>（即只有1个风险资产）的情况推导出Merton的优美的解析解。该解可以直观地推广到<span class="math inline">\(n&gt;1\)</span>个风险资产的情况。<br />
+<p>我们将时间记为<span class="math inline">\(t\)</span>，并假设当前时间为<span class="math inline">\(t=0\)</span>.假设你刚刚退休并且你将再活<span class="math inline">\(T\)</span>年。因此，用上一节的语言来说，你余生将不会获得任何收入，除了从投资组合中提取资金的选项。再假设你还没有固定支出，如按揭贷款、订阅费等等，这意味着你所有的消费都是灵活/可选的，即你可以在任何时间点选择消费任何非负实数。以上所有假设都是不合理的（<span style="color: orange;">但如果在养老金的资产配置中，这是合理的！</span>），但有助于保持问题的简单性，以便于解析处理。</p>
+<p>我们将任何时间<span class="math inline">\(t\)</span>的财富（记为<span class="math inline">\(W_t\)</span>）定义为你的投资资产的总市场价值。请注意，由于没有外部的收入，并且所有消费都是可选的，<span class="math inline">\(W_t\)</span>就是你的净资产。假设有固定数量的<span class="math inline">\(n\)</span>个风险资产和1个无风险资产。如前所述，目标是通过在任何时间点的双重动作——资产配置和消费（消费等于在任何时间点从投资组合中提取的资金）——最大化你一生中消费的期望总效用。请注意，由于没有外部资金来源，并且所有从投资组合中提取的资金都会立即被消费，因此你永远不会向投资组合中添加资金。投资组合的增长只能来自投资组合中资产市场价值的增长。最后，我们假设消费效用函数是恒定相对风险厌恶（CRRA）的。</p>
+<p>为了便于阐述，我们将问题形式化，并针对<span class="math inline">\(n=1\)</span>（即只有1个风险资产）的情况推导出Merton的优美的解析解。该解可以直观地推广到<span class="math inline">\(n&gt;1\)</span>个风险资产的情况。<br />
 由于我们在连续时间中进行操作，风险资产遵循一个随机过程<span class="math inline">\(S\)</span>,具体来说是一个几何布朗运动<br />
 <span class="math display">\[
 dS_t=\mu S_t+\sigma S_t dZ_t,
 \]</span>
 其中<span class="math inline">\(\mu\in\mathbb{R},\sigma\in\mathbb{R}_+\)</span>是固定常数（注意，对于<span class="math inline">\(n\)</span>个资产则分别为向量和矩阵）。<br />
-无风险资产没有不确定性，并且在连续时间内有固定的增长率，因此在时间<span class="math inline">\(t\)</span>时无风险资产<span class="math inline">\(R_t\)</span>的估值由下式给出<br />
-<span class="math display">\[
+无风险资产没有不确定性，并且在连续时间内有固定的增长率，因此在时间<span class="math inline">\(t\)</span>时无风险资产<span class="math inline">\(R_t\)</span>的估值由下式给出</p>
+<p><span class="math display">\[
 dR_t=rR_tdt,
 \]</span>
 其中<span class="math inline">\(r\in\mathbb{R}\)</span>是一个固定常数。我们将单位时间内财富的消费记为<span class="math inline">\(c(t,W_t)\geq0\)</span>，以明确消费决策通常取决于<span class="math inline">\(t,W_t.\)</span>将时间<span class="math inline">\(t\)</span>时分配给风险资产的财富比例记为<span class="math inline">\(\pi(t,W_t).\)</span>注意，<span class="math inline">\(c(t,W_t),\pi(t,W_t)\)</span>共同构成了时间<span class="math inline">\(t\)</span>时的决策（MDP动作）。为了保持简洁，将<span class="math inline">\(c(t,W_t),\pi(w,W_t)\)</span>分别写为<span class="math inline">\(c_t,\pi_t\)</span>,但请在整个推导过程中认识到两者都是时间<span class="math inline">\(t\)</span>和财富<span class="math inline">\(W_t\)</span>的函数。<br />
-最后，我们假设消费的效用函数为<br />
-<span class="math display">\[
+最后，我们假设消费的效用函数为</p>
+<p><span class="math display">\[
 U(x)=\frac{x^{1-\gamma}}{1-\gamma},
 \]</span>
 其中风险厌恶参数<span class="math inline">\(\gamma\neq1\)</span>.<span class="math inline">\(\gamma\)</span>是CRRA系数，等于<span class="math inline">\(\frac{-xU&#39;&#39;(x)}{U&#39;(x)}.\)</span>我们不会讨论<span class="math inline">\(\gamma=1\)</span>时的CRRA效用函数即<span class="math inline">\(U(x)=\log x\)</span>.<br />
@@ -842,55 +843,127 @@ U(x)=\frac{x^{1-\gamma}}{1-\gamma},
 dW_t=((r+\pi_t\cdot (\mu-r))\cdot W_t-c_t)dt+\pi_t\sigma W_t dZ_t. \tag{1.11}
 \end{equation}\]</span></p>
 <p>这是一个确定财富随机演化的伊藤过程。<br />
-我们的目标是确定在任何时间<span class="math inline">\(t\)</span>时的最优<span class="math inline">\((\pi(t,W_t),c(t,W_t))\)</span>,以最大化<br />
-<span class="math display">\[
+我们的目标是确定在任何时间<span class="math inline">\(t\)</span>时的最优<span class="math inline">\((\pi(t,W_t),c(t,W_t))\)</span>,以最大化</p>
+<p><span class="math display">\[
 \mathbb{E}\left[\int_t^T\frac{e^{-\rho(s-t)}\cdot c_s^{1-\gamma}}{1-\gamma} ds+\frac{e^{-\rho (T-t)}\cdot B(T)\cdot W_T^{1-\gamma}}{1-\gamma}|W_t \right],
 \]</span>
 其中<span class="math inline">\(\rho\geq0\)</span>是效用贴现率，用于考虑未来消费效用可能低于当前效用的事实，<span class="math inline">\(B(\cdot)\)</span>被称为遗赠函数，可以视为你在时间<span class="math inline">\(T\)</span>去世时留给家人的钱。我们可以为任意遗赠函数<span class="math inline">\(B(T)\)</span>解决这个问题，但为了简单起见，我们考虑<span class="math inline">\(B(T)=\epsilon^\gamma,0&lt;\epsilon \ll 1\)</span>,意味着无遗赠。出于技术原因我们不将其设为0，这将在后面变得明显。<br />
 我们应该将这个问题视为一个连续时间的随机控制问题，其中MDP定义如下：</p>
 <ul>
-<li>时间<span class="math inline">\(t\)</span>的状态为<span class="math inline">\((t,W_t)\)</span><br />
-</li>
-<li>时间<span class="math inline">\(t\)</span>的动作为<span class="math inline">\((\pi_t,c_t)\)</span><br />
-</li>
-<li>时间<span class="math inline">\(t&lt;T\)</span>时的单位时间奖励为：<br />
-<span class="math display">\[
+<li><p>时间<span class="math inline">\(t\)</span>的状态为<span class="math inline">\((t,W_t)\)</span></p></li>
+<li><p>时间<span class="math inline">\(t\)</span>的动作为<span class="math inline">\((\pi_t,c_t)\)</span></p></li>
+<li><p>时间<span class="math inline">\(t&lt;T\)</span>时的单位时间奖励为：</p>
+<p><span class="math display">\[
 U(c_t)=\frac{c_t^{1-\gamma}}{1-\gamma}
 \]</span>
-在终端时刻<span class="math inline">\(T\)</span>的奖励为<br />
-<span class="math display">\[
+在终端时刻<span class="math inline">\(T\)</span>的奖励为</p>
+<p><span class="math display">\[
 B(T)\cdot U(W_T)=\epsilon^\gamma\cdot \frac{W_T^{1-\gamma}}{1-\gamma}
 \]</span>
-时间<span class="math inline">\(t\)</span>时的回报是累积贴现奖励<br />
-<span class="math display">\[
+时间<span class="math inline">\(t\)</span>时的回报是累积贴现奖励</p>
+<p><span class="math display">\[
 \int_t^T\frac{e^{-\rho(s-t)\cdot c_s^{1-\gamma}}}{1-\gamma} ds+\frac{e^{-\rho (T-t)}\cdot \epsilon^\gamma\cdot W_T^{1-\gamma}}{1-\gamma}
-\]</span></li>
+\]</span></p></li>
 </ul>
 <p>我们的目标是找到策略：<span class="math inline">\((t,W_t)\rightarrow (\pi_t,c_t)\)</span>,以最大化期望汇报。<br />
 我们第一步是写出Hamilton-Jacobi-Bellman(HJB)方程，这是连续时间中的Bellman最优性方程的类比。我们将最优的价值函数记为<span class="math inline">\(V^*\)</span>,使得时间<span class="math inline">\(t\)</span>时财富<span class="math inline">\(W_t\)</span>的最优价值为<span class="math inline">\(V^*(t,W_t).\)</span>这里的HJB方程可以特化为下面的式子</p>
 <p><span class="math display" id="eq:8-2">\[\begin{equation}
 \max_{\pi_t,c_t}\left\{\mathbb{E}_t[dV^*(t,W_t)+\frac{c_t^{1-\gamma}}{1-\gamma}] dt\right\}=\rho V^*(t,W_t)dt \tag{1.12}
 \end{equation}\]</span></p>
-<p>现在对于<span class="math inline">\(dV^*\)</span>使用伊藤引理，移走<span class="math inline">\(dZ_t\)</span>的部分因为这是一个鞅，并且将等式两边都除以<span class="math inline">\(dt\)</span>,以产生任意<span class="math inline">\(0\leq t&lt;T\)</span>的HJB方程的偏微分形式<br />
-<span class="math display" id="eq:8-3">\[
+<p>现在对于<span class="math inline">\(dV^*\)</span>使用伊藤引理，移走<span class="math inline">\(dZ_t\)</span>的部分因为这是一个鞅，并且将等式两边都除以<span class="math inline">\(dt\)</span>,以产生任意<span class="math inline">\(0\leq t&lt;T\)</span>的HJB方程的偏微分形式</p>
+<p><span class="math display" id="eq:8-3">\[
 \max_{\pi_t,c_t}\left\{ \frac{\partial V^*}{\partial t}+\frac{\partial V^*}{\partial W_t} \cdot ((\pi_t(\mu-r)+r)W_t-c_t)+\frac{\partial^2 V^*}{\partial W_t^2}\cdot \frac{\pi_t^2\sigma^2W_t^2}{2}+\frac{c_t^{1-\gamma}}{1-\gamma}\right\}=\rho\cdot V^*(t,W_t)  \tag{1.13}
 \]</span>
-这个HJB方程由下面的终端条件<br />
-<span class="math display">\[
+这个HJB方程由下面的终端条件</p>
+<p><span class="math display">\[
 V^*(T,W_T)=\epsilon^\gamma \cdot\frac{W_T^{1-\gamma}}{1-\gamma}
-\]</span>-
-可以将<a href="rlforfin.html#eq:8-3">(1.13)</a>写得更简洁一些：<br />
-<span class="math display" id="eq:8-4">\[
+\]</span></p>
+<p>可以将<a href="rlforfin.html#eq:8-3">(1.13)</a>写得更简洁一些：</p>
+<p><span class="math display" id="eq:8-4">\[
 \max_{\pi_t,c_t} \Phi(t,W_t;\pi_t,c_t)=\rho\cdot V^*(t,W_t) \tag{1.14}
 \]</span>
 需要强调的是，我们处理的约束条件是<span class="math inline">\(W_t&gt;0,c_t\geq0,0\leq t&lt;T.\)</span><br />
 为了找到最优的<span class="math inline">\(\pi_t^*,c_t^*\)</span>，我们求得<span class="math inline">\(\Phi\)</span>的一阶条件得</p>
-<p><span class="math display" id="eq:8-6" id="eq:8-5">\[\begin{equation}
-\begin{split}
+<p><span class="math display" id="eq:8-6" id="eq:8-5">\[\begin{align}
 \pi_t^*&amp;=\frac{-\frac{\partial V^*}{\partial W_t}\cdot (\mu-r)}{\frac{\partial^2 V^*}{\partial W_t^*}\cdot\sigma^2\cdot W_t} \tag{1.15}\\
 c_t^*&amp;=\left( \frac{\partial V^*}{\partial W_t} \right)^{-\frac{1}{\gamma}} \tag{1.16}
-\end{split}
+\end{align}\]</span></p>
+<p>下面将<a href="rlforfin.html#eq:8-5">(1.15)</a>和<a href="rlforfin.html#eq:8-6">(1.16)</a>代入到<a href="rlforfin.html#eq:8-3">(1.13)</a>中得到下面的式子，这就给了我们最优价值函数的PDE(显然下面的<span class="math inline">\(w\)</span>应为<span class="math inline">\(W_t\)</span>)：</p>
+<p><span class="math display" id="eq:8-7">\[
+V^*_t-\frac{(\mu-r)^2}{2\sigma^2}\cdot\frac{(V^*_{w})^2}{V^*_{ww}}+V_w^*\cdot r\cdot w+\frac{\gamma}{1-\gamma}\cdot(V_w^*)^{\frac{\gamma-1}{\gamma}}=\rho\cdot V^* \tag{1.17}
+\]</span>
+终值条件仍是</p>
+<p><span class="math display">\[
+V^*(T,W_T)=\epsilon^\gamma \cdot\frac{W_T^{1-\gamma}}{1-\gamma}
+\]</span></p>
+<p><span class="math inline">\(\Phi\)</span>的二阶条件在以下假设下得以满足<span class="math inline">\(c^*_t&gt;0,W_t&gt;0,\frac{\partial^2V^*}{\partial W_t^2}&lt;0\)</span>对于所有的<span class="math inline">\(0\leq t&lt;T\)</span>,稍后将会证明这些条件在我们推导的解中得到满足，并且<span class="math inline">\(U(\cdot)\)</span>是凹函数，即<span class="math inline">\(\gamma&gt;0.\)</span></p>
+<p>接下来我们希望将PDE<a href="rlforfin.html#eq:8-7">(1.17)</a>简化为ODE，这样可以进行简单的求解。为此我们假设解的形式是一个关于时间的确定性函数<span class="math inline">\(f(t):\)</span></p>
+<p><span class="math display">\[
+V^*(t,W_t)=f(t)^\gamma\cdot\frac{W_t^{1-\gamma}}{1-\gamma}
+\]</span></p>
+<p>将猜解的形式代入PDE当中，可以得到</p>
+<p><span class="math display">\[\begin{align}
+&amp;f&#39;(t)=\nu f(t)-1,\\
+\text{where }&amp;\nu=\rho-(1-\gamma)\left(\frac{(\mu-r)^2}{2\sigma^2\gamma}+r  \right)
+\end{align}\]</span></p>
+<p>此时我们注意到遗赠函数<span class="math inline">\(B(T)=\epsilon^\gamma\)</span>对拟合猜测解非常有用，因此该ODE的边界条件为<span class="math inline">\(f(T)=\epsilon\)</span>.由此可以解得</p>
+<p><span class="math display">\[\begin{equation}
+f(t)=
+\begin{cases}
+\frac{1+(\nu\epsilon-1)e^{-\nu(T-t)}}{\nu}&amp;\text{ for }\nu\neq 0\\
+T-t+\epsilon&amp;\text{ for }\nu=0
+\end{cases}
 \end{equation}\]</span></p>
+<p>于是最优分配策略和消费策略如下</p>
+<p><span class="math display" id="eq:8-15" id="eq:8-14">\[\begin{align}
+\pi^*(t,W_t)&amp;=\frac{\mu-r}{\sigma^2\gamma} \tag{1.18}\\
+c^*(t,W_t)&amp;=
+\begin{cases}
+\frac{\nu W_t}{1+(\nu\epsilon-1)e^{-\nu(T-t)}} &amp;\text{ for }\nu\neq0\\
+\frac{W_t}{T-t+\epsilon}&amp;\text{ for }\nu=0
+\end{cases}
+\tag{1.19}
+\end{align}\]</span></p>
+<p>同时有了<span class="math inline">\(f(t)\)</span>的表达式。<span class="math inline">\(V^*(t,W_t)\)</span>的表达式也就迎刃而解了。注意<span class="math inline">\(f(t)&gt;0\)</span>对于所有<span class="math inline">\(0\leq t&lt;T,\forall \nv,\)</span>确保了<span class="math inline">\(W_t&gt;0,c_t^*&gt;0,\frac{\partial^2V^*}{\partial W_t^2}&lt;0\)</span>.这确保了约束条件<span class="math inline">\(W_t&gt;0,c_t\geq0\)</span>得以满足，同时二阶条件得以满足。解决Merton的投资组合问题的一个非常重要的经验教训是HJB公式是关键，这种解法为类似的连续时间随机控制问题提供了模板。</p>
+</div>
+<div id="merton投资组合问题解的直觉" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> Merton投资组合问题解的直觉<a href="rlforfin.html#merton投资组合问题解的直觉" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math inline">\(\pi^*\)</span>是个常数，代表无论财富如何年龄如何，都该将相同的财富比例投资于风险资产。
+而<span class="math inline">\(c^*\)</span>中风险资产的超额回报<span class="math inline">\((\mu-r)\)</span>出现在分子上，<span class="math inline">\(\sigma,\gamma\)</span>出现在坟墓上，波动率越大或者风险厌恶程度更高，自然会减少投资于风险资产，而当我们还年轻时我们希望消费的少一些，但是快死了的时候会增加消费（因为最优策略是死得一贫如洗，假设没有遗产）。</p>
+<p>将最优策略<a href="rlforfin.html#eq:8-14">(1.18)</a>和<a href="rlforfin.html#eq:8-15">(1.19)</a>代入财富过程@(eq:8-1)，可以得到进行最优资产配置和最优消费的时候，财富过程为</p>
+<p><span class="math display" id="eq:8-17">\[
+dW_t^*=(r+\frac{(\mu-r)^2}{\sigma^2\gamma}-\frac{1}{f(t)})\cdot W_t^* \cdot dt+\frac{\mu-r}{\sigma\gamma}\cdot W_t^* \cdot dZ_t \tag{1.20}
+\]</span>
+是一个对数正态过程，对数正态波动率是常数，对数正态飘逸与财富无关但依赖于时间，我们可以解得</p>
+<p><span class="math display">\[
+\mathbb{E}[W_t^*]=W_0\cdot e^{(r+\frac{(\mu-r)^2}{\sigma^2\gamma})t}\cdot e^{-\int_0^t\frac{du}{f(u)}}
+\]</span></p>
+</div>
+<div id="离散时间资产配置" class="section level3 hasAnchor" number="1.4.4">
+<h3><span class="header-section-number">1.4.4</span> 离散时间资产配置<a href="rlforfin.html#离散时间资产配置" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在这一节中，将会讨论问题的离散时间版本，这使得问题具有解析可解性。类似于Merton的连续时间投资组合问题，我们在时间<span class="math inline">\(t=0\)</span>是拥有财富<span class="math inline">\(W_0,\)</span>在每个离散时间步长<span class="math inline">\(t=0,1,...,T-1\)</span>时我们可以在没有约束没有交易成本的情况下，将财富<span class="math inline">\(W_t\)</span>分配到风险资产和无风险资产的投资组合中。风险资产的回报在每个时间步长内为常数<span class="math inline">\(r.\)</span></p>
+<p>我们假设在任何<span class="math inline">\(t&lt;T\)</span>时没有消费财富并且在时间<span class="math inline">\(T\)</span>时会清算并消费财富<span class="math inline">\(W_T.\)</span>因此我们的目标是通过在每个<span class="math inline">\(t=0,1,...,T-1\)</span>时动态地分配风险资产<span class="math inline">\(x_t\in\mathbb{R}\)</span>和剩余的<span class="math inline">\(W_t-x_t\)</span>无风险资产，最大化最终时间步<span class="math inline">\(t=T\)</span>时的期望财富效用。假设单步折现因子为<span class="math inline">\(\gamma\)</span>,最终时间步<span class="math inline">\(T\)</span>的财富效用由以下CARA函数给出</p>
+<p><span class="math display">\[
+U(W_T)=\frac{1-e^{-aW_T}}{a}\text{ for some fixed } a\neq 0
+\]</span>
+因此问题变成了在每个<span class="math inline">\(t=0,1,...,T_1\)</span>时通过选择<span class="math inline">\(x_t\)</span>来最大化</p>
+<p><span class="math display">\[
+\mathbb{E} \left[\gamma^{T-t}\cdot \frac{1-e^{-aW_T}}{a}\mid (t,W_t)\right]
+\]</span>
+等价于最大化</p>
+<p><span class="math display" id="eq:8-19">\[
+\mathbb{E} \left[-\frac{e^{-aW_T}}{a}\mid (t,W_t)\right] \tag{1.21}
+\]</span>
+我们将这个问题表述为一个连续状态和连续动作的离散时间有限时域MDP，并准确指定其转移状态、奖励和折现因子，然后我们的目标是求解MDP控制问题找到最优策略。</p>
+<p>有限时域MDP的终止时间为<span class="math inline">\(T\)</span>,因此所有时间<span class="math inline">\(t=T\)</span>的状态都是终止状态。时间步<span class="math inline">\(t=0,1,...,T\)</span>的状态<span class="math inline">\(s_t\in\mathcal{S_}_t\)</span>包含财富<span class="math inline">\(W_t.\)</span>决策<span class="math inline">\(a_t\in\mathcal{A}_t\)</span>是对风险投资的投资量<span class="math inline">\(x_t,\)</span>因此每个时间步对无风险投资的投资量为<span class="math inline">\(W_t-x_t.\)</span>时间步<span class="math inline">\(t\)</span>的确定性策略<span class="math inline">\(\pi_t\)</span>记为<span class="math inline">\(\pi_t(W_t)=x_t,\)</span>同样，时间步<span class="math inline">\(t\)</span>时最优确定性策略<span class="math inline">\(\pi_t^*\)</span>记为<span class="math inline">\(\pi_t^*(W_t)=x^*_t.\)</span></p>
+<p>我们将<span class="math inline">\(t\)</span>到<span class="math inline">\(t+1\)</span>的风险资产单步回报的随机变量记为<span class="math inline">\(Y_t\sim N(\mu,\sigma^2)\)</span>对于所有的<span class="math inline">\(t=0,1,...,T-1.\)</span>因此</p>
+<p><span class="math display" id="eq:8-20">\[
+W_{t+1}=x_t\cdot(1+Y_t)+(W_t-x_t)\cdot (1+r)=x_t\cdot(Y_t-r)+W_t\cdot(1+r) \tag{1.22}
+\]</span></p>
+<p>MDP的奖励在每个<span class="math inline">\(t=0,1,...,T-1\)</span>时为0，因此基于上述简化的目标<a href="rlforfin.html#eq:8-19">(1.21)</a>,MDP在<span class="math inline">\(t=T\)</span>时的奖励设置为随机量<span class="math inline">\(\frac{-e^{aW_T}}{a}.\)</span>我们将MDP的折现因子设置为<span class="math inline">\(\gamma=1,\)</span>在时间<span class="math inline">\(t\)</span>时的价值函数（给定策略<span class="math inline">\(\pi=(\pi_0,\pi_1,...,\pi_{T-1})\)</span>）记为</p>
+<p><span class="math display">\[
+V_t^\pi(W_t)=\mathbb{E}_\pi\left[ -\frac{e^{-aW_T}}{a}\mid (t,W_t) \right]
+\]</span></p>
 
 </div>
 </div>

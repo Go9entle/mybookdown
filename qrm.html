@@ -204,6 +204,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="rlforfin.html"><a href="rlforfin.html#个人财务的优化"><i class="fa fa-check"></i><b>1.4.1</b> 个人财务的优化</a></li>
 <li class="chapter" data-level="1.4.2" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题及其解决"><i class="fa fa-check"></i><b>1.4.2</b> Merton投资组合问题及其解决</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题解的直觉"><i class="fa fa-check"></i><b>1.4.3</b> Merton投资组合问题解的直觉</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rlforfin.html"><a href="rlforfin.html#离散时间资产配置"><i class="fa fa-check"></i><b>1.4.4</b> 离散时间资产配置</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>2</b> 广义线性模型</a>
@@ -215,6 +217,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr2"><i class="fa fa-check"></i><b>3.1</b> 提出的方法</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr21"><i class="fa fa-check"></i><b>3.1.1</b> 预备知识</a></li>
+<li class="chapter" data-level="3.1.2" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr22"><i class="fa fa-check"></i><b>3.1.2</b> Local constant method</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="qrm.html"><a href="qrm.html"><i class="fa fa-check"></i><b>4</b> 量化风险管理</a>
@@ -376,93 +379,87 @@ V_t=f(t,\boldsymbol{Z}_t)
 L_{t+1}=-(f(t+1,\boldsymbol{z}_t+\boldsymbol{X}_{t+1})-f(t,\boldsymbol{z}_t))
 \]</span>
 由该式可以看出损失分布由风险因子变化<span class="math inline">\(\boldsymbol{X}_{t+1}\)</span>的分布所决定。 因此我们可以把<span class="math inline">\(L_{t+1}\)</span>写作<span class="math inline">\(L(\boldsymbol{X}_{t+1})\)</span>,其中损失算子<span class="math inline">\(L(\boldsymbol{x}):=-(f(t+1,\boldsymbol{z}_t+\boldsymbol{x})-f(t,\boldsymbol{z}_t))\)</span>.</p>
-<p>如果<span class="math inline">\(f\)</span>是可微的，其一阶泰勒近似（由于<span class="math inline">\(f(\boldsymbol{y})\approx f(\boldsymbol{y}_0)+\nabla f(\boldsymbol{y}_0)^T(\boldsymbol{y}-\boldsymbol{y}_0)\)</span>其中 <span class="math inline">\(\boldsymbol{y}=(t+1,Z_{t,1}+X_{t+1,1},...,Z_{t,d}+X_{t+1,d})\)</span>, <span class="math inline">\(\boldsymbol{y}_0=(t,Z_{t,1},...,Z_{t,d})\)</span>） 就是
-<span class="math display">\[
+<p>如果<span class="math inline">\(f\)</span>是可微的，其一阶泰勒近似（由于<span class="math inline">\(f(\boldsymbol{y})\approx f(\boldsymbol{y}_0)+\nabla f(\boldsymbol{y}_0)^T(\boldsymbol{y}-\boldsymbol{y}_0)\)</span>其中 <span class="math inline">\(\boldsymbol{y}=(t+1,Z_{t,1}+X_{t+1,1},...,Z_{t,d}+X_{t+1,d})\)</span>, <span class="math inline">\(\boldsymbol{y}_0=(t,Z_{t,1},...,Z_{t,d})\)</span>） 就是</p>
+<p><span class="math display">\[
 f(t+1,\boldsymbol{Z}_t+\boldsymbol{X}_{t+1})\approx f(t,\boldsymbol{Z}_t)+f_t(t,\boldsymbol{Z}_t)\cdot 1+\sum_{j=1}^df_{z_j}(t,\boldsymbol{Z}_t)\cdot X_{t+1,j}
 \]</span>
-因此我们可以定义损失的一阶近似<span class="math inline">\(L_{t+1}^\Delta\)</span>形式，
-<span class="math display">\[
-\begin{align}
+因此我们可以定义损失的一阶近似<span class="math inline">\(L_{t+1}^\Delta\)</span>形式，</p>
+<p><span class="math display" id="eq:qrm3-1">\[\begin{align}
 L_{t+1}^\Delta:&amp;=-\left( f_t(t,\boldsymbol{z}_t)+\sum_{j=1}^df_{z_j}(t,\boldsymbol{z}_t)X_{t+1,j} \right)\\
-&amp;=-(c_t+\boldsymbol{b}_t&#39;\boldsymbol{X}_{t+1}),\tag{3.1}\label{lt}
-\end{align}
-\]</span>
-这个式子将损失表示为风险因子变化的<em>线性函数</em>。如果风险因子变化很小（即如果我们在很短的时间范围内测量风险）并且投资组合的价值与风险因子线性相关（即如果函数<span class="math inline">\(f\)</span>的二阶导数很小）则上式中的近似质量非常好。</p>
+&amp;=-(c_t+\boldsymbol{b}_t&#39;\boldsymbol{X}_{t+1}), \tag{4.1}
+\end{align}\]</span></p>
+<p>这个式子将损失表示为风险因子变化的<em>线性函数</em>。如果风险因子变化很小（即如果我们在很短的时间范围内测量风险）并且投资组合的价值与风险因子线性相关（即如果函数<span class="math inline">\(f\)</span>的二阶导数很小）则上式中的近似质量非常好。</p>
 <p>现在通过有关市场风险、信用风险和保险领域的一些例子说明典型的风险管理问题如何适用于这个框架之中。</p>
 <p><strong>例 2.1 股票投资组合</strong></p>
-<p>考虑一个包含<span class="math inline">\(d\)</span>种股票的固定投资组合，<span class="math inline">\(t\)</span>时刻投资组合中股票<span class="math inline">\(i\)</span>的份额用<span class="math inline">\(\lambda_i\)</span>表示，股票<span class="math inline">\(i\)</span>的价格过程用<span class="math inline">\((S_{t,i})_{t\in\mathbb{N}}\)</span>表示。根据金融和风险管理的标准做法，使用自然对数价格作为风险因子，即<span class="math inline">\(Z_{t,i}:=\ln S_{t,i},i=1,...,d.\)</span>于是我们有<br />
-<span class="math display">\[
+<p>考虑一个包含<span class="math inline">\(d\)</span>种股票的固定投资组合，<span class="math inline">\(t\)</span>时刻投资组合中股票<span class="math inline">\(i\)</span>的份额用<span class="math inline">\(\lambda_i\)</span>表示，股票<span class="math inline">\(i\)</span>的价格过程用<span class="math inline">\((S_{t,i})_{t\in\mathbb{N}}\)</span>表示。根据金融和风险管理的标准做法，使用自然对数价格作为风险因子，即<span class="math inline">\(Z_{t,i}:=\ln S_{t,i},i=1,...,d.\)</span>于是我们有</p>
+<p><span class="math display">\[
 V_t=f(t,\boldsymbol{Z_t})=\sum_{i=1}^d\lambda_i\exp(Z_{t,i})
-\]</span>
-风险因子变化表示为<span class="math inline">\(X_{t+1,i}=\ln S_{t+1,i}-\ln S_{t,i}\)</span>,相当于投资组合中股票的对数收益。从<span class="math inline">\(t\)</span>时刻到<span class="math inline">\(t+1\)</span>时刻投资组合的损失可以由下式得出：<br />
-<span class="math display">\[
+\]</span></p>
+<p>风险因子变化表示为<span class="math inline">\(X_{t+1,i}=\ln S_{t+1,i}-\ln S_{t,i}\)</span>,相当于投资组合中股票的对数收益。从<span class="math inline">\(t\)</span>时刻到<span class="math inline">\(t+1\)</span>时刻投资组合的损失可以由下式得出：</p>
+<p><span class="math display">\[
 L_{t+1}=-(V_{t+1}-V_t)=-\sum_{i=1}^d\lambda_iS_{t,i}(e^{X_{t+1,i}}-1)
 \]</span>
-线性化的损失可以写为<br />
-<span class="math display">\[
+线性化的损失可以写为</p>
+<p><span class="math display">\[
 L_{t+1}^\Delta=-\sum_{i=1}^d\lambda_iS_{t,i}X_{t+1,i}=-V_t\sum_{i=1}^dw_{t,i}X_{t+1,i}
-\]</span>
-其中权重<span class="math inline">\(w_{t,i}:=(\lambda_iS_{t,i})/V_t\)</span>是指<span class="math inline">\(t\)</span>时刻投资于股票<span class="math inline">\(i\)</span>的投资组合的价值比例。当然也可以通过<span class="math inline">\(f_{z_j}(t,\boldsymbol{Z}_t)=\lambda_i\exp(Z_{t,i})=\lambda_iS_{t,i}\overset{d}{=}\tilde{w}_{t,i}=V_t w_{t,i}\)</span>如下改写线性化损失<br />
-<span class="math display">\[
+\]</span></p>
+<p>其中权重<span class="math inline">\(w_{t,i}:=(\lambda_iS_{t,i})/V_t\)</span>是指<span class="math inline">\(t\)</span>时刻投资于股票<span class="math inline">\(i\)</span>的投资组合的价值比例。当然也可以通过<span class="math inline">\(f_{z_j}(t,\boldsymbol{Z}_t)=\lambda_i\exp(Z_{t,i})=\lambda_iS_{t,i}\overset{d}{=}\tilde{w}_{t,i}=V_t w_{t,i}\)</span>如下改写线性化损失</p>
+<p><span class="math display">\[
 L^\Delta_{t+1}=\sum_{i=1}^d\tilde{w}_{t,i}X_{t+1,i}=-\tilde{\boldsymbol{w}}^T_tX_{t+1}
 \]</span></p>
 <ul>
 <li><p>这是前面一阶近似的线性损失(<span class="math inline">\(\ref{lt}\)</span>)的特例，只需<span class="math inline">\(c_t=0,\boldsymbol{b}_t=\tilde{\boldsymbol{w}_t}.\)</span></p></li>
-<li><p>如果<span class="math inline">\(\mathbb{E}\boldsymbol{X}_{t+1}=\boldsymbol{\mu},\text{cov}\boldsymbol{X}_{t+1}=\Sigma\)</span>已知，可以得到<br />
-<span class="math display">\[
-\begin{aligned}
+<li><p>如果<span class="math inline">\(\mathbb{E}\boldsymbol{X}_{t+1}=\boldsymbol{\mu},\text{cov}\boldsymbol{X}_{t+1}=\Sigma\)</span>已知，可以得到</p>
+<p><span class="math display">\[\begin{align}
 \mathbb{E}L_{t+1}^\Delta&amp;=-\sum_{i=1}^d\tilde{w}_{t,i}\mathbb{E}(X_{t+1,i})=-\tilde{\boldsymbol{w}}_t^T\boldsymbol{\mu},\\
 \text{var}L_{t+1}^\Delta&amp;=\text{var}(\tilde{\boldsymbol{w}}^T_tX_{t+1})=\tilde{\boldsymbol{w}}^T_t\text{cov}(\boldsymbol{X}_{t+1})\tilde{\boldsymbol{w}}_t
 =\tilde{\boldsymbol{w}}^T_t\Sigma\tilde{\boldsymbol{w}}_t.
-\end{aligned}
-\]</span></p></li>
+\end{align}\]</span></p></li>
 </ul>
 <p><strong>例2.2 欧式看涨期权（European call option）</strong></p>
-<p>考虑一个有关衍生证券投资组合的简单例子，也就是一个建立在零股息股票上的到期日为<span class="math inline">\(T,\)</span>行权价为<span class="math inline">\(K\)</span>的标准欧式看涨期权。我们用BS期权定价公式来确定投资组合的价值。在时间<span class="math inline">\(t\)</span>时，价格为<span class="math inline">\(S_t\)</span>的股票的看涨期权价值如下<br />
-<span class="math display">\[
+<p>考虑一个有关衍生证券投资组合的简单例子，也就是一个建立在零股息股票上的到期日为<span class="math inline">\(T,\)</span>行权价为<span class="math inline">\(K\)</span>的标准欧式看涨期权。我们用BS期权定价公式来确定投资组合的价值。在时间<span class="math inline">\(t\)</span>时，价格为<span class="math inline">\(S_t\)</span>的股票的看涨期权价值如下</p>
+<p><span class="math display">\[
 V_t=C^{\text{BS}}(t,S_t;r,\sigma,K,T):=S_t\Phi(d_1)-Ke^{-r(T-t)}\Phi(d_2),
-\]</span>
-其中<span class="math inline">\(\Phi\)</span>是标准正态分布的分布函数，<span class="math inline">\(r\)</span>是连续复利无风险利率，<span class="math inline">\(\sigma\)</span>是标的股票对数收益率的波动率，并且<br />
-<span class="math display">\[
+\]</span></p>
+<p>其中<span class="math inline">\(\Phi\)</span>是标准正态分布的分布函数，<span class="math inline">\(r\)</span>是连续复利无风险利率，<span class="math inline">\(\sigma\)</span>是标的股票对数收益率的波动率，并且</p>
+<p><span class="math display">\[
 d_1=\frac{\ln (S/K)+(r+\frac{1}{2}\sigma^2)(T-t)}{\sigma\sqrt{T-t}},\quad d_2=d_1-\sigma\sqrt{T-t}
-\]</span>
-为了简便起见，假设距离期权到期的时间<span class="math inline">\(T-t\)</span>以投资期为一单位来度量（即一年一年），同时参数<span class="math inline">\(r,\sigma\)</span>​也采取了同样的度量单位（即年化收益率和波动率）。</p>
-<p>然而实际情况下除了<span class="math inline">\(\ln S_t,r_t,\sigma_t\)</span>也都是风险因子，因此我们定义风险因子向量如下<br />
-<span class="math display">\[
+\]</span></p>
+<p>为了简便起见，假设距离期权到期的时间<span class="math inline">\(T-t\)</span>以投资期为一单位来度量（即一年一年），同时参数<span class="math inline">\(r,\sigma\)</span>​也采取了同样的度量单位（即年化收益率和波动率）。</p>
+<p>然而实际情况下除了<span class="math inline">\(\ln S_t,r_t,\sigma_t\)</span>也都是风险因子，因此我们定义风险因子向量如下</p>
+<p><span class="math display">\[
 \boldsymbol{Z}_t=(\ln S_t,r_t,\sigma_t)&#39;\Rightarrow \boldsymbol{X}_{t+1}=(\ln (S_{t+1}/S_t),r_{t+1}-r_t,\sigma_{t+1}-\sigma_t)&#39;.
 \]</span>
 后一个式子是风险因子的变动，可以发现有三种风险因子。</p>
-这意味着风险因素下的映射<span class="math inline">\(f\)</span>由以下公式给出：
-<span class="math display">\[
+<p>这意味着风险因素下的映射<span class="math inline">\(f\)</span>由以下公式给出：</p>
+<p><span class="math display">\[
 V_t=C^{\text{BS}}(t,e^{Z_{t,1}};Z_{t,2},Z_{t,3},K,T)=:f(t,\boldsymbol{Z}_t)
 \]</span>
-而线性化的损失（忽略<span class="math inline">\(C^{\text{BS}}\)</span>的参数）即为<br />
-$$
-<span class="math display">\[\begin{aligned}
+而线性化的损失（忽略<span class="math inline">\(C^{\text{BS}}\)</span>的参数）即为</p>
+<p><span class="math display">\[\begin{align}
 L_{t+1}^\Delta =&amp; -(f_t(t,\boldsymbol{Z}_t)+\sum_{i=1}^3f_{z_i}(t,\boldsymbol{Z}_t)X_{t+1,i})\\
 =&amp;-(C_t^{\text{BS}}\Delta t+C_{S_t}^{\text{BS}}S_tX_{t+1,1}+C_{r_t}^{\text{BS}}X_{t+1,2}+C_{\sigma_t}^{\text{BS}}X_{t+1,3}).
 
-\end{aligned}\]</span>
-<p>$$
-如果我们风险管理时间的范围是1天而不是1年，我们需要在这里引入<span class="math inline">\(\Delta t:=1/250.\)</span>因为上述都是年化利率和波动率。于是我们就引入风险管理常见的希腊字母了！<span class="math inline">\(C_t^{\text{BS}}\)</span>就是期权的<span class="math inline">\(theta;C_{S_t}^{\text{BS}}\)</span>是<span class="math inline">\(delta;C_{r_t}^{\text{BS}}\)</span>是<span class="math inline">\(rho;C_{\sigma_t}^{\text{BS}}\)</span>是<span class="math inline">\(vega.\)</span></p>
+\end{align}\]</span></p>
+<p>如果我们风险管理时间的范围是1天而不是1年，我们需要在这里引入<span class="math inline">\(\Delta t:=1/250.\)</span>因为上述都是年化利率和波动率。于是我们就引入风险管理常见的希腊字母了！<span class="math inline">\(C_t^{\text{BS}}\)</span>就是期权的<span class="math inline">\(theta;C_{S_t}^{\text{BS}}\)</span>是<span class="math inline">\(delta;C_{r_t}^{\text{BS}}\)</span>是<span class="math inline">\(rho;C_{\sigma_t}^{\text{BS}}\)</span>是<span class="math inline">\(vega.\)</span></p>
 <p><strong>估值方法</strong></p>
 <p><strong>风险中性估值</strong></p>
 <p>风险中性估值广泛用于金融产品的定价，例如衍生品。在风险中性定价中，金融工具的现值是由未来现金流的预期贴现值计算得到的。其中预期值的确定与某种概率测度<span class="math inline">\(Q\)</span>相关，这种测度被称为风险中性定价测度。<span class="math inline">\(Q\)</span>是一种人工测度，将可交易证券的贴现价格变成鞅，因此是公平下注，也叫等价鞅测度（EMM）。与现实世界/物理测度<span class="math inline">\(\mathbb{P}\)</span>相对。风险中性定价测度是一个概率测度<span class="math inline">\(Q,\)</span>使得这点牛<span class="math inline">\(Q\)</span>的贴现收益的期望等于<span class="math inline">\(V_0.\)</span></p>
-<p>在<span class="math inline">\(T\)</span>时，时间<span class="math inline">\(t\)</span>时的债权<span class="math inline">\(H\)</span>的风险中性估值通过风险中性定价规则进行：<br />
-<span class="math display">\[
+<p>在<span class="math inline">\(T\)</span>时，时间<span class="math inline">\(t\)</span>时的债权<span class="math inline">\(H\)</span>的风险中性估值通过风险中性定价规则进行：</p>
+<p><span class="math display">\[
 V_t^H=\mathbb{E}^Q_{t}(e^{-r(T-t)}H),\;t&lt;T,
 \]</span>
 其中<span class="math inline">\(\mathbb{E}_{Q,t}\)</span>表示在时间<span class="math inline">\(t\)</span>及之前的信息下针对<span class="math inline">\(Q\)</span>的期望。<span class="math inline">\(\mathbb{P}\)</span>是基于历史数据估计的；<span class="math inline">\(Q\)</span>是根据市场价格进行校准的。交易证券的价格用于在风险中性测度<span class="math inline">\(P\)</span>下校准模型参数，然后用这一测度用于给非交易产品定价。</p>
 <p><strong>例2.4 欧式看涨期权（续）</strong></p>
-<p>假设行权价为<span class="math inline">\(K\)</span>或到期时间为<span class="math inline">\(T\)</span>的期权没有被交易，但以该股票为标的的其他期权产品是有交易的。给定<span class="math inline">\(\mu\in\mathbb{R}\)</span>是漂移项、<span class="math inline">\(\sigma&gt;0\)</span>是波动率，<span class="math inline">\((W_t)\)</span>是一个标准布朗运动，我们假设在真实测度<span class="math inline">\(\mathbb{P}\)</span>下，股票价格<span class="math inline">\((S_t)\)</span>遵循几何布朗运动模型，即所谓的B-S模型，其动态过程由下式表示<br />
-<span class="math display">\[
+<p>假设行权价为<span class="math inline">\(K\)</span>或到期时间为<span class="math inline">\(T\)</span>的期权没有被交易，但以该股票为标的的其他期权产品是有交易的。给定<span class="math inline">\(\mu\in\mathbb{R}\)</span>是漂移项、<span class="math inline">\(\sigma&gt;0\)</span>是波动率，<span class="math inline">\((W_t)\)</span>是一个标准布朗运动，我们假设在真实测度<span class="math inline">\(\mathbb{P}\)</span>下，股票价格<span class="math inline">\((S_t)\)</span>遵循几何布朗运动模型，即所谓的B-S模型，其动态过程由下式表示</p>
+<p><span class="math display">\[
 dS_t=\mu S_tdt+\sigma S_tdW_t
 \]</span>
-众所周知，存在等价鞅测度<span class="math inline">\(Q,\)</span>其中股票价格折现值<span class="math inline">\((e^{-rt}S_t)\)</span>是鞅，在<span class="math inline">\(Q\)</span>下股价遵循具有漂移项<span class="math inline">\(r\)</span>和波动率<span class="math inline">\(\sigma\)</span>的几何布朗运动模型。欧式看涨期权到期收益<span class="math inline">\(H=(S_T-K)^+=\max\{S_T-K,0\}\)</span>于是风险中性估值公式就可以写作<br />
-<span class="math display">\[
-V_t=\mathbb{E}_t^Q(e^{-r(T-t)}(S_T-K)^+)=C^{\text{BS}}(t,s_t;r,\sigma,K,T),\quad t&lt;T;\tag{3.2}\label{rnv}
-\]</span>
-为了在<span class="math inline">\(t\)</span>时刻给定看涨期权一个风险中性定价（知道股票的当前价格<span class="math inline">\(S_t\)</span>、利率<span class="math inline">\(r\)</span>以及期权特征<span class="math inline">\(K,T\)</span>），我们需要校准模型参数<span class="math inline">\(\sigma\)</span>.如上所述，我们通常使用具有不同特征的股票期权的报价<span class="math inline">\(C^{\text{BS}}(t,S_t;r,\sigma,K^*,T^*)\)</span>来推断<span class="math inline">\(\sigma.\)</span>然后将所谓的隐含波动率代入公式<span class="math inline">\((\ref{rnv})\)</span>.</p>
+众所周知，存在等价鞅测度<span class="math inline">\(Q,\)</span>其中股票价格折现值<span class="math inline">\((e^{-rt}S_t)\)</span>是鞅，在<span class="math inline">\(Q\)</span>下股价遵循具有漂移项<span class="math inline">\(r\)</span>和波动率<span class="math inline">\(\sigma\)</span>的几何布朗运动模型。欧式看涨期权到期收益<span class="math inline">\(H=(S_T-K)^+=\max\{S_T-K,0\}\)</span>于是风险中性估值公式就可以写作</p>
+<p><span class="math display" id="eq:qrm3-2">\[
+V_t=\mathbb{E}_t^Q(e^{-r(T-t)}(S_T-K)^+)=C^{\text{BS}}(t,s_t;r,\sigma,K,T),\quad t&lt;T; \tag{4.2}
+\]</span></p>
+<p>为了在<span class="math inline">\(t\)</span>时刻给定看涨期权一个风险中性定价（知道股票的当前价格<span class="math inline">\(S_t\)</span>、利率<span class="math inline">\(r\)</span>以及期权特征<span class="math inline">\(K,T\)</span>），我们需要校准模型参数<span class="math inline">\(\sigma\)</span>.如上所述，我们通常使用具有不同特征的股票期权的报价<span class="math inline">\(C^{\text{BS}}(t,S_t;r,\sigma,K^*,T^*)\)</span>来推断<span class="math inline">\(\sigma.\)</span>然后将所谓的隐含波动率代入公式 <a href="qrm.html#eq:qrm3-2">(4.2)</a>.</p>
 <p>风险中性定价有两个理论支持。首先，数理金融的标准结果（所谓的资产定价第一基本定理）指出，当且仅当证券定价模型承认至少有一个等价鞅测度<span class="math inline">\(Q\)</span>时，该模型是无套利的。因此，如果一个金融产品按照无套利原则定价，则其价格必须由一些风险中性测度<span class="math inline">\(Q\)</span>的风险中性定价公式给出。第二个理由是对冲：在金融模型中，通常可以通过资产交易来复制金融产品的收益率，其中一种就是动态对冲，在一个无摩擦市场中实施对冲是由风险中性定价规则给定的。</p>
 <p><strong>损失分布</strong><br />
 在确定映射<span class="math inline">\(f\)</span>后，我们可以确定量化风险管理（QRM）的以下关键统计任务：<br />
@@ -471,19 +468,17 @@ V_t=\mathbb{E}_t^Q(e^{-r(T-t)}(S_T-K)^+)=C^{\text{BS}}(t,s_t;r,\sigma,K,T),\quad
 3. 从<span class="math inline">\(F_{L_{t+1}}\)</span>计算风险度量</p>
 <p>有三种方法解决这些问题，分别是解析法、历史模拟法和蒙特卡洛方法。下面介绍历史模拟法和蒙特卡洛方法。</p>
 <p><strong>历史模拟法</strong><br />
-基于<br />
-<span class="math display">\[
-L_k=L(X_k)=-(f(t+1,\boldsymbol{Z}_t+\boldsymbol{X}_k)-f(t,\boldsymbol{Z}_t)),\tag{4}\label{Lk}
+基于</p>
+<p><span class="math display" id="eq:qrm3-3">\[
+L_k=L(X_k)=-(f(t+1,\boldsymbol{Z}_t+\boldsymbol{X}_k)-f(t,\boldsymbol{Z}_t)), \tag{4.3}
 \]</span>
 其中<span class="math inline">\(k\in\{ t-n+1,...,t \}.L_{t-n+1},...,L_t\)</span>显示了如果风险因子在过去<span class="math inline">\(n\)</span>个时间步的变化再次发生，当前的投资组合将会发生什么变化。</p>
-<p>通过经验分布函数估计<span class="math inline">\(F_{L_{t+1}}\)</span>:<br />
-<span class="math display">\[
-\begin{equation}
-\hat{F}_{L_{t+1},n}(x)=\frac{1}{n}\sum_{i=1}^nI_{\{L_{t-i+1}\leq x\}},\; x\in \mathbb{R},\tag{5}\label{edf}
-\end{equation}
+<p>通过经验分布函数估计<span class="math inline">\(F_{L_{t+1}}\)</span>:</p>
+<p><span class="math display" id="eq:qrm3-4">\[
+\hat{F}_{L_{t+1},n}(x)=\frac{1}{n}\sum_{i=1}^nI_{\{L_{t-i+1}\leq x\}},\; x\in \mathbb{R}, \tag{4.4}
 \]</span></p>
 <p><strong>蒙特卡洛方法</strong><br />
-为<span class="math inline">\(\boldsymbol{X}_{t+1}\)</span>选择合适的模型，模拟<span class="math inline">\(\boldsymbol{X}_{t+1}\)</span>，计算相应的损失，如公式<span class="math inline">\((\ref{lk})\)</span>,并如公式<span class="math inline">\((\ref{edf})\)</span>估计<span class="math inline">\(F_{L_{t+1}}\)</span>.</p>
+为<span class="math inline">\(\boldsymbol{X}_{t+1}\)</span>选择合适的模型，模拟<span class="math inline">\(\boldsymbol{X}_{t+1}\)</span>，计算相应的损失，如公式<a href="qrm.html#eq:qrm3-3">(4.3)</a>,并如公式<a href="qrm.html#eq:qrm3-4">(4.4)</a>估计<span class="math inline">\(F_{L_{t+1}}\)</span>.</p>
 
 </div>
 </div>

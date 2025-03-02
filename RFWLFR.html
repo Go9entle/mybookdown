@@ -204,6 +204,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="rlforfin.html"><a href="rlforfin.html#个人财务的优化"><i class="fa fa-check"></i><b>1.4.1</b> 个人财务的优化</a></li>
 <li class="chapter" data-level="1.4.2" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题及其解决"><i class="fa fa-check"></i><b>1.4.2</b> Merton投资组合问题及其解决</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题解的直觉"><i class="fa fa-check"></i><b>1.4.3</b> Merton投资组合问题解的直觉</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rlforfin.html"><a href="rlforfin.html#离散时间资产配置"><i class="fa fa-check"></i><b>1.4.4</b> 离散时间资产配置</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>2</b> 广义线性模型</a>
@@ -215,6 +217,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr2"><i class="fa fa-check"></i><b>3.1</b> 提出的方法</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr21"><i class="fa fa-check"></i><b>3.1.1</b> 预备知识</a></li>
+<li class="chapter" data-level="3.1.2" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr22"><i class="fa fa-check"></i><b>3.1.2</b> Local constant method</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="qrm.html"><a href="qrm.html"><i class="fa fa-check"></i><b>4</b> 量化风险管理</a>
@@ -341,59 +344,62 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="RFWLFR" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">3</span> Random forest weighted local Frechet regression with random objects<a href="RFWLFR.html#RFWLFR" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>《带有随机对象的随机森林加权局部 Fr'echet 回归》</strong>这篇文章是中国人民大学统计学院2025年春季研究生课程广义线性模型的小组汇报论文。小组成员除了我还包括Huang Jinming &amp; Yang Zhe.这是<a href="https://www.jmlr.org/papers/volume25/23-0811/23-0811.pdf">论文原文</a>。</p>
+<p><strong>《带有随机对象的随机森林加权局部 Frechet 回归》</strong>这篇文章是中国人民大学统计学院2025年春季研究生课程广义线性模型的小组汇报论文。小组成员除了我还包括Huang Jinming &amp; Yang Zhe.这是<a href="https://www.jmlr.org/papers/volume25/23-0811/23-0811.pdf">论文原文</a>。</p>
 <div id="rfwlfr2" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> 提出的方法<a href="RFWLFR.html#rfwlfr2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>在@ref(Local constant method)节正式展示方法之前，需要进行一些初步的准备工作，包括提供Frechet回归的背景介绍，并解释Frechet树的构建过程，这是我们方法的基本组成部分。</p>
 <div id="rfwlfr21" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> 预备知识<a href="RFWLFR.html#rfwlfr21" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>(<code>#rfwlfr21</code>带数字是否可以？？)
-#### Fr'echet回归<br />
-设<span class="math inline">\((\Omega,d)\)</span>为一个配备特定度量<span class="math inline">\(d\)</span>的度量空间，<span class="math inline">\(\mathcal{R}^p\)</span>是一个<span class="math inline">\(p\)</span>维的欧氏空间。我们考虑一个随机对<span class="math inline">\((X,Y)\sim F,\)</span>其中<span class="math inline">\(X\sim\mathcal{R}^p,Y\sim \Omega\)</span>并且<span class="math inline">\(F\)</span>是<span class="math inline">\((X,Y)\)</span>的联合分布。记<span class="math inline">\(X,Y\)</span>的边际分布分别为<span class="math inline">\(F_X,F_Y\)</span>,条件分布<span class="math inline">\(F_{X|Y},F_{Y|X}\)</span>也假设存在。当<span class="math inline">\(\Omega\subseteq \mathcal{R}\)</span>时，经典回归的目标是估计条件均值<br />
-<span class="math display">\[
+<p>(<code>#rfwlfr21</code>带数字是否可以？？)</p>
+<div id="frechet回归" class="section level4 hasAnchor" number="3.1.1.1">
+<h4><span class="header-section-number">3.1.1.1</span> Frechet回归<a href="RFWLFR.html#frechet回归" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>设<span class="math inline">\((\Omega,d)\)</span>为一个配备特定度量<span class="math inline">\(d\)</span>的度量空间，<span class="math inline">\(\mathcal{R}^p\)</span>是一个<span class="math inline">\(p\)</span>维的欧氏空间。我们考虑一个随机对<span class="math inline">\((X,Y)\sim F,\)</span>其中<span class="math inline">\(X\sim\mathcal{R}^p,Y\sim \Omega\)</span>并且<span class="math inline">\(F\)</span>是<span class="math inline">\((X,Y)\)</span>的联合分布。记<span class="math inline">\(X,Y\)</span>的边际分布分别为<span class="math inline">\(F_X,F_Y\)</span>,条件分布<span class="math inline">\(F_{X|Y},F_{Y|X}\)</span>也假设存在。当<span class="math inline">\(\Omega\subseteq \mathcal{R}\)</span>时，经典回归的目标是估计条件均值</p>
+<p><span class="math display">\[
 m(x)=E(Y\mid X=x)=\mathop{\arg\min}_{y\in\mathcal{R}} E\left\{(Y-y)^2\mid X=x\right\}.
 \]</span>
-通过将欧几里得距离替换成<span class="math inline">\(\Omega\)</span>的内在度量<span class="math inline">\(d,\)</span>条件Fr'echet均值可以定义为<br />
-<span class="math display">\[
+通过将欧几里得距离替换成<span class="math inline">\(\Omega\)</span>的内在度量<span class="math inline">\(d,\)</span>条件Fr'echet均值可以定义为</p>
+<p><span class="math display">\[
 m_{\oplus}(x)=\mathop{\arg\min}_{y \in \Omega} M_{\oplus}(x,y)=\mathop{\arg\min}_{y \in \Omega} E\big\{d^{2}(Y, y) \mid X=x\big\}.
 \]</span>
-给定一个独立同分布的训练样本<span class="math inline">\(\mathcal{D}_n=\{(X_i,Y_i)\}_{i=1}^n\)</span>其中<span class="math inline">\((X_i,Y_i)\sim F\)</span>,Fr'echet回归的目标是在样本层面估计<span class="math inline">\(m_{\oplus}(x)\)</span>,为此Hein (2009) 将Nadaraya-Watson回归推广到Fr'echet版本：<br />
-<span class="math display">\[
+给定一个独立同分布的训练样本<span class="math inline">\(\mathcal{D}_n=\{(X_i,Y_i)\}_{i=1}^n\)</span>其中<span class="math inline">\((X_i,Y_i)\sim F\)</span>,Fr'echet回归的目标是在样本层面估计<span class="math inline">\(m_{\oplus}(x)\)</span>,为此Hein (2009) 将Nadaraya-Watson回归推广到Frechet版本：</p>
+<p><span class="math display">\[
 \hat{m}_{\oplus}^{\text{NW}}(x)=\mathop{\arg\min}_{y \in \Omega} \frac{1}{n} \sum_{i=1}^{n} K_{h}\left(X_{i}-x\right) d^{2}\left(Y_{i}, y\right),
 \]</span></p>
-<p>其中<span class="math inline">\(K\)</span>是一个平滑核（如Epanechnikov核或高斯核），<span class="math inline">\(h\)</span>为带宽，<span class="math inline">\(K_h(\cdot)=h^{-1}K(\cdot/h)\)</span>.Petersen和Müller（2019）将标准的多元线性回归和局部线性回归重新表述为加权Fréchet均值的函数，并提出了全局Fréchet回归和局部Fréchet回归：<br />
-<span class="math display">\[
+<p>其中<span class="math inline">\(K\)</span>是一个平滑核（如Epanechnikov核或高斯核），<span class="math inline">\(h\)</span>为带宽，<span class="math inline">\(K_h(\cdot)=h^{-1}K(\cdot/h)\)</span>.Petersen和Müller（2019）将标准的多元线性回归和局部线性回归重新表述为加权Fréchet均值的函数，并提出了全局Fréchet回归和局部Fréchet回归：</p>
+<p><span class="math display">\[
 \hat{m}_{\oplus}(x)=\mathop{\arg\min}_{y \in \Omega}  \frac{1}{n}\sum_{i=1}^{n} s_{i n}(x) d^{2}\left(Y_{i}, y\right),
 \]</span>
 其中<span class="math inline">\(s_{in}(x)\)</span>在全局和局部Fr'echet回归中具有不同的表示形式。<br />
 Nadaraya-Watson Fr'echet回归和局部Fréchet回归都涉及核加权函数<span class="math inline">\(K\)</span>，这在<span class="math inline">\(p ≥ 3\)</span>时限制了它们的应用。为了解决这个问题，我们的目标是借助随机森林的力量，生成一个更强大的加权函数，以应对适度较大的<span class="math inline">\(p\)</span>.<br />
 图<a href="RFWLFR.html#fig:manhattan">3.1</a>展示了纽约曼哈顿黄色出租车交通流统计和预测结果。这个问题可以表述为一个Fréchet回归问题，其中响应变量是一个网络（矩阵），并且考虑了14个预测变量。特别地，当<span class="math inline">\(p = 14\)</span>时，Nadaraya-Watson Fréchet回归和局部Fréchet回归方法显示出显著的局限性。在这里，我们使用Fréchet充分维数约简（Ying和Yu，2022）来实现局部Fréchet回归。尽管全局Fréchet回归不受维度限制，但它依赖于线性假设才能达到令人满意的效果。相反，从图<a href="RFWLFR.html#fig:manhattan">3.1</a>可以明显看出，我们将在本文中提出的两种方法的预测准确性高于全局Fréchet回归。</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="RFWLFR.html#cb7-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&#39;https://Go9entle.github.io/picx-images-hosting/1740492700639.102axqi287.webp&#39;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:manhattan"></span>
 <img src="https://Go9entle.github.io/picx-images-hosting/1740492700639.102axqi287.webp" alt="The first plot illustrates the flow statistics of yellow taxis in ten distinct zones of Manhattan, New York, during a certain time period. The thickness of the edges connecting vertices corresponds to the level of inter-zone traffic, while the size of vertices represents the total traffic volume within each zone. The remaining five plots from left to right are the predictions given by the global Fr'echet regression, local Fr'echet regression after dimension reduction, single index Fr'echet regression, RFWLCFR and RFWLLFR."  />
 <p class="caption">
 图3.1: The first plot illustrates the flow statistics of yellow taxis in ten distinct zones of Manhattan, New York, during a certain time period. The thickness of the edges connecting vertices corresponds to the level of inter-zone traffic, while the size of vertices represents the total traffic volume within each zone. The remaining five plots from left to right are the predictions given by the global Fr’echet regression, local Fr’echet regression after dimension reduction, single index Fr’echet regression, RFWLCFR and RFWLLFR.
 </p>
 </div>
-<div id="frechet树" class="section level4 hasAnchor" number="3.1.1.1">
-<h4><span class="header-section-number">3.1.1.1</span> Fr'echet树<a href="RFWLFR.html#frechet树" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="frechet树" class="section level4 hasAnchor" number="3.1.1.2">
+<h4><span class="header-section-number">3.1.1.2</span> Frechet树<a href="RFWLFR.html#frechet树" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>回归树<span class="math inline">\(T\)</span>从根节点（整个输入空间）递归地划分输入空间。在每次划分时，父节点根据某个特征方向和某个切割点被分成两个子节点，这些切割点由特定的划分标准决定。经过多次划分后，子节点变得足够小，形成叶节点，叶节点中的样本数据用于估计条件（Fréchet）均值。</p>
-<p>在本文中，我们使用Fréchet树来指代处理度量空间值响应的回归树，不管其划分标准是什么。这里我们引入了一种自适应标准——方差减少划分标准，它利用预测变量<span class="math inline">\(X=(X^{(1)},...,X^{(p)})\)</span>和响应变量<span class="math inline">\(Y\)</span>的信息来决定节点的划分。<span class="math inline">\(Y\)</span>来自一般度量空间的杂质(impurity)不再由欧几里得距离下的方差来度量而是使用Fr'echet方差。一个内部节点<span class="math inline">\(A\)</span>的分裂可以用一对<span class="math inline">\((j,c),j\in\{1,...,p\}\)</span>来表示，表示在特征<span class="math inline">\(X^{(j)}\)</span>方向上，节点<span class="math inline">\(A\)</span>在位置<span class="math inline">\(c\)</span>被分裂，我们选取最优的<span class="math inline">\((j_n^*,c_n^*)\)</span>使得样本Frechet方差尽可能减小，以至于在同一子节点的样本具有高度的相似性。具体地，分裂准则如下<br />
-<span class="math display">\[
+<p>在本文中，我们使用Fréchet树来指代处理度量空间值响应的回归树，不管其划分标准是什么。这里我们引入了一种自适应标准——方差减少划分标准，它利用预测变量<span class="math inline">\(X=(X^{(1)},...,X^{(p)})\)</span>和响应变量<span class="math inline">\(Y\)</span>的信息来决定节点的划分。<span class="math inline">\(Y\)</span>来自一般度量空间的杂质(impurity)不再由欧几里得距离下的方差来度量而是使用Fr'echet方差。一个内部节点<span class="math inline">\(A\)</span>的分裂可以用一对<span class="math inline">\((j,c),j\in\{1,...,p\}\)</span>来表示，表示在特征<span class="math inline">\(X^{(j)}\)</span>方向上，节点<span class="math inline">\(A\)</span>在位置<span class="math inline">\(c\)</span>被分裂，我们选取最优的<span class="math inline">\((j_n^*,c_n^*)\)</span>使得样本Frechet方差尽可能减小，以至于在同一子节点的样本具有高度的相似性。具体地，分裂准则如下</p>
+<p><span class="math display">\[
 \mathcal{L}_n(j,c)=\frac{1}{N_n(A)}\left\{\sum_{i:X_i\in A}d^2(Y_i,\bar{Y}_A) -\sum_{i:X_i\in A_{j,l}}d^2(Y_i,\bar{Y}_{A_{j,l}})-\sum_{i:X\in A_{j,r}}d^2(Y_i,\bar{Y}_{A_{j,r}}) \right\},
 \]</span>
-其中<span class="math inline">\(A_{j,l}=\{ x\in A:x^{(j)}&lt;c \},A_{j,r}=\{ x\in A:x^{(j)}\geq c \},N_n(A)\)</span>是落在节点<span class="math inline">\(A\)</span>中的样本数量，并且<span class="math inline">\(\bar{Y}_A=\mathop{\arg\min}_{y\in\Omega} \sum_{i:X_i\in A}d^2(Y_i,y)\)</span>也就是节点<span class="math inline">\(A\)</span>中样本<span class="math inline">\(Y_i\)</span>的Frechet均值，<span class="math inline">\(\bar{Y}_{A_{j,l}},\bar{Y}_{A_{j,r}}\)</span>也是类似定义的。于是最优分裂对由下面的式子决定<br />
-<span class="math display">\[
+其中<span class="math inline">\(A_{j,l}=\{ x\in A:x^{(j)}&lt;c \},A_{j,r}=\{ x\in A:x^{(j)}\geq c \},N_n(A)\)</span>是落在节点<span class="math inline">\(A\)</span>中的样本数量，并且<span class="math inline">\(\bar{Y}_A=\mathop{\arg\min}_{y\in\Omega} \sum_{i:X_i\in A}d^2(Y_i,y)\)</span>也就是节点<span class="math inline">\(A\)</span>中样本<span class="math inline">\(Y_i\)</span>的Frechet均值，<span class="math inline">\(\bar{Y}_{A_{j,l}},\bar{Y}_{A_{j,r}}\)</span>也是类似定义的。于是最优分裂对由下面的式子决定</p>
+<p><span class="math display">\[
 (j_n^*,c_n^*)=\mathop{\arg\max}_{j,c} \mathcal{L}_n(j,c).
-\]</span>
-### Local constant method {#rfwlfr22}<br />
-单棵树模型可能会因为调参的不同而面临较大的偏差或方差。为了提高预测精度，我们可以聚合多棵树来构建随机森林。随机森林的预测误差与不同树之间的相关性密切相关。除了通过重采样训练数据集来生长个别树之外，通常还会引入额外的随机性，以进一步降低树之间的相关性，从而提高随机森林的性能。例如，每次分裂前会随机选择一个特征子集，分裂方向仅基于该子集来设计。在这里，我们用<span class="math inline">\(\xi\sim\Xi\)</span>表示这种辅助随机性。<br />
-我们首先考虑经典的欧几里得响应的随机森林。每棵树是在训练数据集<span class="math inline">\(\mathcal{D}_n\)</span>的一个子样本<span class="math inline">\(\mathcal{D}_n^b=\{(X_{i_{b,1}},Y_{i_{b,1}}),(X_{i_{b,2}},Y_{i_{b,2}}),...,(X_{i_{b,s_n}},Y_{i_{b,s_n}})\}\)</span>上训练的，其中<span class="math inline">\(1\leq i_{b,1}&lt; i_{b,2}&lt;...&lt;i_{b,s_n}\leq n.\)</span>本文中假设子样本大小<span class="math inline">\(s_n\rightarrow \infty,s_n/n\rightarrow 0\)</span>当<span class="math inline">\(n\rightarrow \infty\)</span>时。数据重采样是无放回的。由<span class="math inline">\(\mathcal{D}_n^b\)</span>和随机抽取<span class="math inline">\(\xi_b\sim\Xi\)</span>构造的第<span class="math inline">\(b\)</span>棵树<span class="math inline">\(T_b\)</span>给出了<span class="math inline">\(m(x)\)</span>的估计：</p>
+\]</span></p>
+</div>
+</div>
+<div id="rfwlfr22" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Local constant method<a href="RFWLFR.html#rfwlfr22" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>单棵树模型可能会因为调参的不同而面临较大的偏差或方差。为了提高预测精度，我们可以聚合多棵树来构建随机森林。随机森林的预测误差与不同树之间的相关性密切相关。除了通过重采样训练数据集来生长个别树之外，通常还会引入额外的随机性，以进一步降低树之间的相关性，从而提高随机森林的性能。例如，每次分裂前会随机选择一个特征子集，分裂方向仅基于该子集来设计。在这里，我们用<span class="math inline">\(\xi\sim\Xi\)</span>表示这种辅助随机性。</p>
+<p>我们首先考虑经典的欧几里得响应的随机森林。每棵树是在训练数据集<span class="math inline">\(\mathcal{D}_n\)</span>的一个子样本<span class="math inline">\(\mathcal{D}_n^b=\{(X_{i_{b,1}},Y_{i_{b,1}}),(X_{i_{b,2}},Y_{i_{b,2}}),...,(X_{i_{b,s_n}},Y_{i_{b,s_n}})\}\)</span>上训练的，其中<span class="math inline">\(1\leq i_{b,1}&lt; i_{b,2}&lt;...&lt;i_{b,s_n}\leq n.\)</span>本文中假设子样本大小<span class="math inline">\(s_n\rightarrow \infty,s_n/n\rightarrow 0\)</span>当<span class="math inline">\(n\rightarrow \infty\)</span>时。数据重采样是无放回的。由<span class="math inline">\(\mathcal{D}_n^b\)</span>和随机抽取<span class="math inline">\(\xi_b\sim\Xi\)</span>构造的第<span class="math inline">\(b\)</span>棵树<span class="math inline">\(T_b\)</span>给出了<span class="math inline">\(m(x)\)</span>的估计：</p>
 <p><span class="math display">\[
 T_b(x;\mathcal{D}_n^b,\xi_b)=\frac{1}{N(L_b(x;\mathcal{D}_n^b,\xi_b))}\sum_{i:X_i\in L_b(x;\mathcal{D}_n^b,\xi_b)} Y_i,
 \]</span></p>
 
-</div>
 </div>
 </div>
 </div>

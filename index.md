@@ -45,7 +45,8 @@ bookdown::render_book("index.Rmd",
 ``` r
 bookdown::publish_book()
 ```
-上述命令将电子书提交到[bookdown](https://bookdown.org),详见[谢益辉](https://bookdown.org/yihui/bookdown/rstudio-connect.html),前提是要将`RStudio`连接到posit账户，详见[posit的connect文档](https://docs.posit.co/connect/user/publishing-rstudio/)，也不要忘记在`YAML`块加入`site: bookdown::bookdown_site`。(并不确定这个是否有用，参考了[这里](https://support.posit.co/hc/en-us/articles/115009036948-Using-Bookdown-in-the-RStudio-IDE-and-RStudio-Connect)。)
+上述命令将电子书提交到[bookdown](https://bookdown.org),详见[谢益辉](https://bookdown.org/yihui/bookdown/rstudio-connect.html),前提是要将`RStudio`连接到posit账户，详见[posit的connect文档](https://docs.posit.co/connect/user/publishing-rstudio/)，也不要忘记在`YAML`块加入`site: bookdown::bookdown_site`(并不确定这个是否有用，参考了[这里](https://support.posit.co/hc/en-us/articles/115009036948-Using-Bookdown-in-the-RStudio-IDE-and-RStudio-Connect))。
+
 Bookdown如果输出为网页，
 其中的数学公式需要MathJax程序库的支持，
 用如下数学公式测试浏览器中数学公式显示是否正常：
@@ -57,8 +58,9 @@ $$
 如果显示不正常，
 可以在公式上右键单击，
 选择“Math Settings--Math Renderer”，
-依次使用改成“Common HTML”，“SVG”等是否可以变成正常显示。  
-另外发现bookdown生成的网页支持公式的长度有限，所以有些公式可能无法全部展示。
+依次使用改成“Common HTML”，“SVG”等是否可以变成正常显示。
+
+本篇笔记一直在慢慢编写当中，且前期一些语法不够规范导致公式显示不正常，正在随缘修改中。另外发现bookdown生成的网页支持公式的长度有限，所以有些公式可能无法全部展示。
 
 ## 为什么要写课程笔记 {-}  
 很遗憾本科期间没有养成多用电脑多上网的习惯，上个学期本来是新的开始却也没有好好听讲，导致没什么收获。这个学期希望通过做笔记的形式多学一点东西，虽然可能也不会有多少收获，聊以填充这略显枯燥的研究生生活吧！
@@ -77,8 +79,8 @@ gogentle，As known as 涛哥, 9ZT, GZT...存在于21世纪地球村的一个人
 
 ----  
 
-* Email: `gzt0912@foxmail.com`
-* Blog: <https://go9entle.github.io>(已经许久没更新)
+* Email: <gzt0912@foxmail.com>
+* Blog: <https://go9entle.github.io>(已经许久未更新)
 * GitHub: <https://github.com/Go9entle>
 
 

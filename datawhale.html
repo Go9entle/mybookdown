@@ -204,6 +204,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="rlforfin.html"><a href="rlforfin.html#个人财务的优化"><i class="fa fa-check"></i><b>1.4.1</b> 个人财务的优化</a></li>
 <li class="chapter" data-level="1.4.2" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题及其解决"><i class="fa fa-check"></i><b>1.4.2</b> Merton投资组合问题及其解决</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题解的直觉"><i class="fa fa-check"></i><b>1.4.3</b> Merton投资组合问题解的直觉</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rlforfin.html"><a href="rlforfin.html#离散时间资产配置"><i class="fa fa-check"></i><b>1.4.4</b> 离散时间资产配置</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>2</b> 广义线性模型</a>
@@ -215,6 +217,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr2"><i class="fa fa-check"></i><b>3.1</b> 提出的方法</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr21"><i class="fa fa-check"></i><b>3.1.1</b> 预备知识</a></li>
+<li class="chapter" data-level="3.1.2" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr22"><i class="fa fa-check"></i><b>3.1.2</b> Local constant method</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="qrm.html"><a href="qrm.html"><i class="fa fa-check"></i><b>4</b> 量化风险管理</a>
@@ -525,52 +528,52 @@ div.csl-indent {
 <p><strong>历史A股K线数据</strong></p>
 <p>日线是股票、期货等市场中的一种技术分析图表，每个数据点代表一天的交易信息。它记录了该品种在一天内的开盘价、最高价、最低价和收盘价等数据，并通过连续的数据点形成一条曲线，以反映该品种价格的走势。</p>
 <p>日线可以帮助投资者识别出股票或期货的价格趋势和支撑阻力位，判断未来价格走势的可能性，从而制定相应的投资策略。除此之外，日线还能够辅助投资者进行风险控制，识别出市场中的买卖信号，更好地把握交易机会。以下是通过调用<code>query_history_k_data_plus()</code>方法来对日线进行数据获取。</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="datawhale.html#cb9-1" tabindex="-1"></a><span class="im">import</span> baostock <span class="im">as</span> bs</span>
-<span id="cb9-2"><a href="datawhale.html#cb9-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb9-3"><a href="datawhale.html#cb9-3" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
-<span id="cb9-4"><a href="datawhale.html#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="datawhale.html#cb9-5" tabindex="-1"></a><span class="co">#### 登陆系统 ####</span></span>
-<span id="cb9-6"><a href="datawhale.html#cb9-6" tabindex="-1"></a>lg <span class="op">=</span> bs.login()</span>
-<span id="cb9-7"><a href="datawhale.html#cb9-7" tabindex="-1"></a><span class="co"># 显示登陆返回信息</span></span>
-<span id="cb9-8"><a href="datawhale.html#cb9-8" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;login respond error_code:&#39;</span><span class="op">+</span>lg.error_code)</span>
-<span id="cb9-9"><a href="datawhale.html#cb9-9" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;login respond  error_msg:&#39;</span><span class="op">+</span>lg.error_msg)</span>
-<span id="cb9-10"><a href="datawhale.html#cb9-10" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="datawhale.html#cb9-11" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="datawhale.html#cb9-12" tabindex="-1"></a><span class="co">#### 获取沪深A股历史K线数据 ####</span></span>
-<span id="cb9-13"><a href="datawhale.html#cb9-13" tabindex="-1"></a><span class="co"># 详细指标参数，参见“历史行情指标参数”章节；“分钟线”参数与“日线”参数不同。“分钟线”不包含指数。</span></span>
-<span id="cb9-14"><a href="datawhale.html#cb9-14" tabindex="-1"></a><span class="co"># 分钟线指标：date,time,code,open,high,low,close,volume,amount,adjustflag</span></span>
-<span id="cb9-15"><a href="datawhale.html#cb9-15" tabindex="-1"></a><span class="co"># 周月线指标：date,code,open,high,low,close,volume,amount,adjustflag,turn,pctChg</span></span>
-<span id="cb9-16"><a href="datawhale.html#cb9-16" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.600000&quot;</span>,</span>
-<span id="cb9-17"><a href="datawhale.html#cb9-17" tabindex="-1"></a>    <span class="st">&quot;date,code,open,high,low,close,preclose,volume,amount,adjustflag,turn,tradestatus,pctChg,isST&quot;</span>,</span>
-<span id="cb9-18"><a href="datawhale.html#cb9-18" tabindex="-1"></a>                                  </span>
-<span id="cb9-19"><a href="datawhale.html#cb9-19" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-07-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-12-31&#39;</span>,</span>
-<span id="cb9-20"><a href="datawhale.html#cb9-20" tabindex="-1"></a>    frequency<span class="op">=</span><span class="st">&quot;d&quot;</span>, adjustflag<span class="op">=</span><span class="st">&quot;3&quot;</span>)</span>
-<span id="cb9-21"><a href="datawhale.html#cb9-21" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="datawhale.html#cb9-22" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond error_code:&#39;</span><span class="op">+</span>rs.error_code)</span>
-<span id="cb9-23"><a href="datawhale.html#cb9-23" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)</span>
-<span id="cb9-24"><a href="datawhale.html#cb9-24" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="datawhale.html#cb9-25" tabindex="-1"></a><span class="co">#### 打印结果集 ####</span></span>
-<span id="cb9-26"><a href="datawhale.html#cb9-26" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
-<span id="cb9-27"><a href="datawhale.html#cb9-27" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
-<span id="cb9-28"><a href="datawhale.html#cb9-28" tabindex="-1"></a>    <span class="co"># 获取一条记录，将记录合并在一起</span></span>
-<span id="cb9-29"><a href="datawhale.html#cb9-29" tabindex="-1"></a>    data_list.append(rs.get_row_data())</span>
-<span id="cb9-30"><a href="datawhale.html#cb9-30" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(data_list, columns<span class="op">=</span>rs.fields)</span>
-<span id="cb9-31"><a href="datawhale.html#cb9-31" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="datawhale.html#cb9-32" tabindex="-1"></a><span class="co">#### 结果集输出到csv文件 ####   </span></span>
-<span id="cb9-33"><a href="datawhale.html#cb9-33" tabindex="-1"></a>result.to_csv(<span class="st">&quot;./history_A_stock_k_data.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb9-34"><a href="datawhale.html#cb9-34" tabindex="-1"></a>display(result)</span>
-<span id="cb9-35"><a href="datawhale.html#cb9-35" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="datawhale.html#cb9-36" tabindex="-1"></a><span class="co">#### 登出系统 ####</span></span>
-<span id="cb9-37"><a href="datawhale.html#cb9-37" tabindex="-1"></a>bs.logout()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="datawhale.html#cb8-1" tabindex="-1"></a><span class="im">import</span> baostock <span class="im">as</span> bs</span>
+<span id="cb8-2"><a href="datawhale.html#cb8-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href="datawhale.html#cb8-3" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb8-4"><a href="datawhale.html#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="datawhale.html#cb8-5" tabindex="-1"></a><span class="co">#### 登陆系统 ####</span></span>
+<span id="cb8-6"><a href="datawhale.html#cb8-6" tabindex="-1"></a>lg <span class="op">=</span> bs.login()</span>
+<span id="cb8-7"><a href="datawhale.html#cb8-7" tabindex="-1"></a><span class="co"># 显示登陆返回信息</span></span>
+<span id="cb8-8"><a href="datawhale.html#cb8-8" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;login respond error_code:&#39;</span><span class="op">+</span>lg.error_code)</span>
+<span id="cb8-9"><a href="datawhale.html#cb8-9" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;login respond  error_msg:&#39;</span><span class="op">+</span>lg.error_msg)</span>
+<span id="cb8-10"><a href="datawhale.html#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="datawhale.html#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="datawhale.html#cb8-12" tabindex="-1"></a><span class="co">#### 获取沪深A股历史K线数据 ####</span></span>
+<span id="cb8-13"><a href="datawhale.html#cb8-13" tabindex="-1"></a><span class="co"># 详细指标参数，参见“历史行情指标参数”章节；“分钟线”参数与“日线”参数不同。“分钟线”不包含指数。</span></span>
+<span id="cb8-14"><a href="datawhale.html#cb8-14" tabindex="-1"></a><span class="co"># 分钟线指标：date,time,code,open,high,low,close,volume,amount,adjustflag</span></span>
+<span id="cb8-15"><a href="datawhale.html#cb8-15" tabindex="-1"></a><span class="co"># 周月线指标：date,code,open,high,low,close,volume,amount,adjustflag,turn,pctChg</span></span>
+<span id="cb8-16"><a href="datawhale.html#cb8-16" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.600000&quot;</span>,</span>
+<span id="cb8-17"><a href="datawhale.html#cb8-17" tabindex="-1"></a>    <span class="st">&quot;date,code,open,high,low,close,preclose,volume,amount,adjustflag,turn,tradestatus,pctChg,isST&quot;</span>,</span>
+<span id="cb8-18"><a href="datawhale.html#cb8-18" tabindex="-1"></a>                                  </span>
+<span id="cb8-19"><a href="datawhale.html#cb8-19" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-07-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-12-31&#39;</span>,</span>
+<span id="cb8-20"><a href="datawhale.html#cb8-20" tabindex="-1"></a>    frequency<span class="op">=</span><span class="st">&quot;d&quot;</span>, adjustflag<span class="op">=</span><span class="st">&quot;3&quot;</span>)</span>
+<span id="cb8-21"><a href="datawhale.html#cb8-21" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="datawhale.html#cb8-22" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond error_code:&#39;</span><span class="op">+</span>rs.error_code)</span>
+<span id="cb8-23"><a href="datawhale.html#cb8-23" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)</span>
+<span id="cb8-24"><a href="datawhale.html#cb8-24" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="datawhale.html#cb8-25" tabindex="-1"></a><span class="co">#### 打印结果集 ####</span></span>
+<span id="cb8-26"><a href="datawhale.html#cb8-26" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
+<span id="cb8-27"><a href="datawhale.html#cb8-27" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
+<span id="cb8-28"><a href="datawhale.html#cb8-28" tabindex="-1"></a>    <span class="co"># 获取一条记录，将记录合并在一起</span></span>
+<span id="cb8-29"><a href="datawhale.html#cb8-29" tabindex="-1"></a>    data_list.append(rs.get_row_data())</span>
+<span id="cb8-30"><a href="datawhale.html#cb8-30" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(data_list, columns<span class="op">=</span>rs.fields)</span>
+<span id="cb8-31"><a href="datawhale.html#cb8-31" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="datawhale.html#cb8-32" tabindex="-1"></a><span class="co">#### 结果集输出到csv文件 ####   </span></span>
+<span id="cb8-33"><a href="datawhale.html#cb8-33" tabindex="-1"></a>result.to_csv(<span class="st">&quot;./history_A_stock_k_data.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-34"><a href="datawhale.html#cb8-34" tabindex="-1"></a>display(result)</span>
+<span id="cb8-35"><a href="datawhale.html#cb8-35" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="datawhale.html#cb8-36" tabindex="-1"></a><span class="co">#### 登出系统 ####</span></span>
+<span id="cb8-37"><a href="datawhale.html#cb8-37" tabindex="-1"></a>bs.logout()</span></code></pre></div>
 <ul>
 <li><p>使用 <code>bs.query_history_k_data_plus()</code> 函数查询指定股票在指定时间范围内的 K 线数据，其中第一个参数为要查询的股票代码，第二个参数为要查询的 K 线数据字段列表，第三个参数为开始日期，第四个参数为结束日期，第五个参数为查询频率，第六个参数为复权类型。该函数返回一个对象 <code>rs</code>，其中包含了查询返回的错误代码和错误信息以及查询结果集。</p></li>
 <li><p>将查询结果集转换成 Pandas DataFrame 格式，并输出到 CSV 文件中。首先创建一个空列表 <code>data_list</code>，然后使用 <code>rs.next()</code> 循环获取查询结果集里的每一行数据，将每一行数据存入 <code>data_list</code> 列表中。最后使用 Pandas 的 <code>DataFrame</code> 函数将 <code>data_list</code> 转换成 <code>DataFrame</code> 格式并输出到 CSV 文件中。</p></li>
 </ul>
 <p>分钟线</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="datawhale.html#cb10-1" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.600000&quot;</span>,</span>
-<span id="cb10-2"><a href="datawhale.html#cb10-2" tabindex="-1"></a>    <span class="st">&quot;date,time,code,open,high,low,close,volume,amount,adjustflag&quot;</span>,</span>
-<span id="cb10-3"><a href="datawhale.html#cb10-3" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-07-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-07-31&#39;</span>,</span>
-<span id="cb10-4"><a href="datawhale.html#cb10-4" tabindex="-1"></a>    frequency<span class="op">=</span><span class="st">&quot;5&quot;</span>, adjustflag<span class="op">=</span><span class="st">&quot;3&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="datawhale.html#cb9-1" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.600000&quot;</span>,</span>
+<span id="cb9-2"><a href="datawhale.html#cb9-2" tabindex="-1"></a>    <span class="st">&quot;date,time,code,open,high,low,close,volume,amount,adjustflag&quot;</span>,</span>
+<span id="cb9-3"><a href="datawhale.html#cb9-3" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-07-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-07-31&#39;</span>,</span>
+<span id="cb9-4"><a href="datawhale.html#cb9-4" tabindex="-1"></a>    frequency<span class="op">=</span><span class="st">&quot;5&quot;</span>, adjustflag<span class="op">=</span><span class="st">&quot;3&quot;</span>)</span></code></pre></div>
 <ul>
 <li><p><code>frequency</code>：这个参数用于指定查询的数据类型。可以选择返回日线、周线、月线或分钟线的K线数据。其中，大写字母表示周期，如”D”代表日线，“W”代表周线，“M”代表月线，数字表示分钟线的周期，如”5”代表5分钟线，“15”代表15分钟线等。指数只支持日线数据。周线数据只能选择每周最后一个交易日查询，月线数据只能选择每月最后一个交易日查询。</p></li>
 <li><p><code>adjustflag</code>：这个参数用于指定查询数据是否需要进行复权处理。如果需要进行复权处理，则可以选择前复权或后复权。复权类型，默认不复权：3；1：后复权；2：前复权。已支持分钟线、日线、周线、月线前后复权。复权是一种调整股票价格的方法，以考虑公司发生的分红和配股等因素，以及股票本身的拆细和合并等因素。复权的目的是消除这些因素对股票价格的影响，使投资者能够更准确地分析股票的真实表现。</p></li>
@@ -695,50 +698,50 @@ div.csl-indent {
 <p>指数数据是用来表示某个经济或金融市场的整体表现的数字指标，通常由一组代表该市场重要公司股票价格的股票指数构成。指数数据的意义在于让人们更好地了解市场的走势和趋势。它可以显示出市场整体的涨跌情况，帮助投资者评估其投资组合的表现，并作为制定投资决策的参考。此外，指数数据还可以被用来创建各种金融衍生品产品，例如期货和期权等。</p>
 <p>我们可以通过API接口获取不同类型的指数K线数据，包括综合指数（如上证指数、深证综指）、规模指数（如上证50、沪深300）、行业指数（一级行业、二级行业等）、策略指数、成长指数、价值指数、主题指数、基金指数和债券指数。每种指数都有其对应的代码，例如上证指数的代码为sh.000001。下面以沪深指数K线数据为例解释说明。</p>
 <p>沪深指数K线数据是描述中国上海证券交易所和深圳证券交易所股市行情的一种图表表示方法。它通过显示每个交易周期（如日、周或月）的四个价格点：开盘价、最高价、最低价和收盘价，来展示股市的波动情况。</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="datawhale.html#cb11-1" tabindex="-1"></a><span class="co"># 获取指数(综合指数、规模指数、一级行业指数、二级行业指数、策略指数、成长指数、价值指数、主题指数)K线数据</span></span>
-<span id="cb11-2"><a href="datawhale.html#cb11-2" tabindex="-1"></a><span class="co"># 综合指数，例如：sh.000001 上证指数，sz.399106 深证综指 等；</span></span>
-<span id="cb11-3"><a href="datawhale.html#cb11-3" tabindex="-1"></a><span class="co"># 规模指数，例如：sh.000016 上证50，sh.000300 沪深300，sh.000905 中证500，sz.399001 深证成指等；</span></span>
-<span id="cb11-4"><a href="datawhale.html#cb11-4" tabindex="-1"></a><span class="co"># 一级行业指数，例如：sh.000037 上证医药，sz.399433 国证交运 等；</span></span>
-<span id="cb11-5"><a href="datawhale.html#cb11-5" tabindex="-1"></a><span class="co"># 二级行业指数，例如：sh.000952 300地产，sz.399951 300银行 等；</span></span>
-<span id="cb11-6"><a href="datawhale.html#cb11-6" tabindex="-1"></a><span class="co"># 策略指数，例如：sh.000050 50等权，sh.000982 500等权 等；</span></span>
-<span id="cb11-7"><a href="datawhale.html#cb11-7" tabindex="-1"></a><span class="co"># 成长指数，例如：sz.399376 小盘成长 等；</span></span>
-<span id="cb11-8"><a href="datawhale.html#cb11-8" tabindex="-1"></a><span class="co"># 价值指数，例如：sh.000029 180价值 等；</span></span>
-<span id="cb11-9"><a href="datawhale.html#cb11-9" tabindex="-1"></a><span class="co"># 主题指数，例如：sh.000015 红利指数，sh.000063 上证周期 等；</span></span>
-<span id="cb11-10"><a href="datawhale.html#cb11-10" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="datawhale.html#cb11-11" tabindex="-1"></a><span class="co"># 详细指标参数，参见“历史行情指标参数”章节；“周月线”参数与“日线”参数不同。</span></span>
-<span id="cb11-12"><a href="datawhale.html#cb11-12" tabindex="-1"></a><span class="co"># 周月线指标：date,code,open,high,low,close,volume,amount,adjustflag,turn,pctChg</span></span>
-<span id="cb11-13"><a href="datawhale.html#cb11-13" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.000001&quot;</span>,</span>
-<span id="cb11-14"><a href="datawhale.html#cb11-14" tabindex="-1"></a>    <span class="st">&quot;date,code,open,high,low,close,preclose,volume,amount,pctChg&quot;</span>,</span>
-<span id="cb11-15"><a href="datawhale.html#cb11-15" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-01-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-06-30&#39;</span>, frequency<span class="op">=</span><span class="st">&quot;d&quot;</span>)</span>
-<span id="cb11-16"><a href="datawhale.html#cb11-16" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond error_code:&#39;</span><span class="op">+</span>rs.error_code)</span>
-<span id="cb11-17"><a href="datawhale.html#cb11-17" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)</span>
-<span id="cb11-18"><a href="datawhale.html#cb11-18" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="datawhale.html#cb11-19" tabindex="-1"></a><span class="co"># 打印结果集</span></span>
-<span id="cb11-20"><a href="datawhale.html#cb11-20" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
-<span id="cb11-21"><a href="datawhale.html#cb11-21" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
-<span id="cb11-22"><a href="datawhale.html#cb11-22" tabindex="-1"></a>    <span class="co"># 获取一条记录，将记录合并在一起</span></span>
-<span id="cb11-23"><a href="datawhale.html#cb11-23" tabindex="-1"></a>    data_list.append(rs.get_row_data())</span>
-<span id="cb11-24"><a href="datawhale.html#cb11-24" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(data_list, columns<span class="op">=</span>rs.fields)</span>
-<span id="cb11-25"><a href="datawhale.html#cb11-25" tabindex="-1"></a><span class="co"># 结果集输出到csv文件</span></span>
-<span id="cb11-26"><a href="datawhale.html#cb11-26" tabindex="-1"></a>result.to_csv(<span class="st">&quot;./history_Index_k_data.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb11-27"><a href="datawhale.html#cb11-27" tabindex="-1"></a>display(result)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="datawhale.html#cb10-1" tabindex="-1"></a><span class="co"># 获取指数(综合指数、规模指数、一级行业指数、二级行业指数、策略指数、成长指数、价值指数、主题指数)K线数据</span></span>
+<span id="cb10-2"><a href="datawhale.html#cb10-2" tabindex="-1"></a><span class="co"># 综合指数，例如：sh.000001 上证指数，sz.399106 深证综指 等；</span></span>
+<span id="cb10-3"><a href="datawhale.html#cb10-3" tabindex="-1"></a><span class="co"># 规模指数，例如：sh.000016 上证50，sh.000300 沪深300，sh.000905 中证500，sz.399001 深证成指等；</span></span>
+<span id="cb10-4"><a href="datawhale.html#cb10-4" tabindex="-1"></a><span class="co"># 一级行业指数，例如：sh.000037 上证医药，sz.399433 国证交运 等；</span></span>
+<span id="cb10-5"><a href="datawhale.html#cb10-5" tabindex="-1"></a><span class="co"># 二级行业指数，例如：sh.000952 300地产，sz.399951 300银行 等；</span></span>
+<span id="cb10-6"><a href="datawhale.html#cb10-6" tabindex="-1"></a><span class="co"># 策略指数，例如：sh.000050 50等权，sh.000982 500等权 等；</span></span>
+<span id="cb10-7"><a href="datawhale.html#cb10-7" tabindex="-1"></a><span class="co"># 成长指数，例如：sz.399376 小盘成长 等；</span></span>
+<span id="cb10-8"><a href="datawhale.html#cb10-8" tabindex="-1"></a><span class="co"># 价值指数，例如：sh.000029 180价值 等；</span></span>
+<span id="cb10-9"><a href="datawhale.html#cb10-9" tabindex="-1"></a><span class="co"># 主题指数，例如：sh.000015 红利指数，sh.000063 上证周期 等；</span></span>
+<span id="cb10-10"><a href="datawhale.html#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="datawhale.html#cb10-11" tabindex="-1"></a><span class="co"># 详细指标参数，参见“历史行情指标参数”章节；“周月线”参数与“日线”参数不同。</span></span>
+<span id="cb10-12"><a href="datawhale.html#cb10-12" tabindex="-1"></a><span class="co"># 周月线指标：date,code,open,high,low,close,volume,amount,adjustflag,turn,pctChg</span></span>
+<span id="cb10-13"><a href="datawhale.html#cb10-13" tabindex="-1"></a>rs <span class="op">=</span> bs.query_history_k_data_plus(<span class="st">&quot;sh.000001&quot;</span>,</span>
+<span id="cb10-14"><a href="datawhale.html#cb10-14" tabindex="-1"></a>    <span class="st">&quot;date,code,open,high,low,close,preclose,volume,amount,pctChg&quot;</span>,</span>
+<span id="cb10-15"><a href="datawhale.html#cb10-15" tabindex="-1"></a>    start_date<span class="op">=</span><span class="st">&#39;2022-01-01&#39;</span>, end_date<span class="op">=</span><span class="st">&#39;2022-06-30&#39;</span>, frequency<span class="op">=</span><span class="st">&quot;d&quot;</span>)</span>
+<span id="cb10-16"><a href="datawhale.html#cb10-16" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond error_code:&#39;</span><span class="op">+</span>rs.error_code)</span>
+<span id="cb10-17"><a href="datawhale.html#cb10-17" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_history_k_data_plus respond  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)</span>
+<span id="cb10-18"><a href="datawhale.html#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="datawhale.html#cb10-19" tabindex="-1"></a><span class="co"># 打印结果集</span></span>
+<span id="cb10-20"><a href="datawhale.html#cb10-20" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
+<span id="cb10-21"><a href="datawhale.html#cb10-21" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
+<span id="cb10-22"><a href="datawhale.html#cb10-22" tabindex="-1"></a>    <span class="co"># 获取一条记录，将记录合并在一起</span></span>
+<span id="cb10-23"><a href="datawhale.html#cb10-23" tabindex="-1"></a>    data_list.append(rs.get_row_data())</span>
+<span id="cb10-24"><a href="datawhale.html#cb10-24" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(data_list, columns<span class="op">=</span>rs.fields)</span>
+<span id="cb10-25"><a href="datawhale.html#cb10-25" tabindex="-1"></a><span class="co"># 结果集输出到csv文件</span></span>
+<span id="cb10-26"><a href="datawhale.html#cb10-26" tabindex="-1"></a>result.to_csv(<span class="st">&quot;./history_Index_k_data.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-27"><a href="datawhale.html#cb10-27" tabindex="-1"></a>display(result)</span></code></pre></div>
 <p><strong>上证50成分股</strong></p>
 <p>上证50成分股指的是上海证券交易所（Shanghai Stock Exchange）挑选出来的50家规模最大、流动性最好的公司，这些公司在中国A股市场中具有较高的影响力和代表性。上证50指数是由这些50家公司的股票组成的指数。这个指数通常被视为中国股市的核心指标之一，因为它覆盖了50家规模大、具有代表性的公司，在市场风险和涨跌幅方面具有重要的参考意义。此外，由于该指数的成分股通常由市值较大、经营稳定的公司组成，因此被认为是一种相对较为稳健的投资方式。</p>
 <p><code>query_sz50_stocks</code>()：这个方法通过API接口获取上证50成分股的信息，更新频率为每周一更新。这个方法返回一个<code>pandas</code>的<code>DataFrame</code>类型，即一个二维表格数据结构，其中包含了上证50成分股的详细信息。</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="datawhale.html#cb12-1" tabindex="-1"></a><span class="co"># 获取上证50成分股</span></span>
-<span id="cb12-2"><a href="datawhale.html#cb12-2" tabindex="-1"></a>rs <span class="op">=</span> bs.query_sz50_stocks()  <span class="co"># 调用 query_sz50_stocks 方法获取上证50成分股信息</span></span>
-<span id="cb12-3"><a href="datawhale.html#cb12-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_sz50 error_code:&#39;</span><span class="op">+</span>rs.error_code)  <span class="co"># 打印方法返回错误码</span></span>
-<span id="cb12-4"><a href="datawhale.html#cb12-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_sz50  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)   <span class="co"># 打印方法返回错误信息</span></span>
-<span id="cb12-5"><a href="datawhale.html#cb12-5" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="datawhale.html#cb12-6" tabindex="-1"></a><span class="co"># 打印结果集</span></span>
-<span id="cb12-7"><a href="datawhale.html#cb12-7" tabindex="-1"></a>sz50_stocks <span class="op">=</span> []   <span class="co"># 创建一个空列表，用于存储查询结果</span></span>
-<span id="cb12-8"><a href="datawhale.html#cb12-8" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
-<span id="cb12-9"><a href="datawhale.html#cb12-9" tabindex="-1"></a>    <span class="co"># 如果查询没有出错且还有数据</span></span>
-<span id="cb12-10"><a href="datawhale.html#cb12-10" tabindex="-1"></a>    sz50_stocks.append(rs.get_row_data())   <span class="co"># 将获取到的数据添加到列表中</span></span>
-<span id="cb12-11"><a href="datawhale.html#cb12-11" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(sz50_stocks, columns<span class="op">=</span>rs.fields)  <span class="co"># 使用 pandas 将数据转换为 DataFrame 格式</span></span>
-<span id="cb12-12"><a href="datawhale.html#cb12-12" tabindex="-1"></a><span class="co"># 结果集输出到csv文件</span></span>
-<span id="cb12-13"><a href="datawhale.html#cb12-13" tabindex="-1"></a>result.to_csv(<span class="st">&quot;D:/sz50_stocks.csv&quot;</span>, encoding<span class="op">=</span><span class="st">&quot;gbk&quot;</span>, index<span class="op">=</span><span class="va">False</span>)  <span class="co"># 将结果保存为 csv 文件</span></span>
-<span id="cb12-14"><a href="datawhale.html#cb12-14" tabindex="-1"></a>display(result)   <span class="co"># 打印结果</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="datawhale.html#cb11-1" tabindex="-1"></a><span class="co"># 获取上证50成分股</span></span>
+<span id="cb11-2"><a href="datawhale.html#cb11-2" tabindex="-1"></a>rs <span class="op">=</span> bs.query_sz50_stocks()  <span class="co"># 调用 query_sz50_stocks 方法获取上证50成分股信息</span></span>
+<span id="cb11-3"><a href="datawhale.html#cb11-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_sz50 error_code:&#39;</span><span class="op">+</span>rs.error_code)  <span class="co"># 打印方法返回错误码</span></span>
+<span id="cb11-4"><a href="datawhale.html#cb11-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;query_sz50  error_msg:&#39;</span><span class="op">+</span>rs.error_msg)   <span class="co"># 打印方法返回错误信息</span></span>
+<span id="cb11-5"><a href="datawhale.html#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="datawhale.html#cb11-6" tabindex="-1"></a><span class="co"># 打印结果集</span></span>
+<span id="cb11-7"><a href="datawhale.html#cb11-7" tabindex="-1"></a>sz50_stocks <span class="op">=</span> []   <span class="co"># 创建一个空列表，用于存储查询结果</span></span>
+<span id="cb11-8"><a href="datawhale.html#cb11-8" tabindex="-1"></a><span class="cf">while</span> (rs.error_code <span class="op">==</span> <span class="st">&#39;0&#39;</span>) <span class="op">&amp;</span> rs.<span class="bu">next</span>():</span>
+<span id="cb11-9"><a href="datawhale.html#cb11-9" tabindex="-1"></a>    <span class="co"># 如果查询没有出错且还有数据</span></span>
+<span id="cb11-10"><a href="datawhale.html#cb11-10" tabindex="-1"></a>    sz50_stocks.append(rs.get_row_data())   <span class="co"># 将获取到的数据添加到列表中</span></span>
+<span id="cb11-11"><a href="datawhale.html#cb11-11" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame(sz50_stocks, columns<span class="op">=</span>rs.fields)  <span class="co"># 使用 pandas 将数据转换为 DataFrame 格式</span></span>
+<span id="cb11-12"><a href="datawhale.html#cb11-12" tabindex="-1"></a><span class="co"># 结果集输出到csv文件</span></span>
+<span id="cb11-13"><a href="datawhale.html#cb11-13" tabindex="-1"></a>result.to_csv(<span class="st">&quot;D:/sz50_stocks.csv&quot;</span>, encoding<span class="op">=</span><span class="st">&quot;gbk&quot;</span>, index<span class="op">=</span><span class="va">False</span>)  <span class="co"># 将结果保存为 csv 文件</span></span>
+<span id="cb11-14"><a href="datawhale.html#cb11-14" tabindex="-1"></a>display(result)   <span class="co"># 打印结果</span></span></code></pre></div>
 </div>
 </div>
 <div id="quantselect" class="section level2 hasAnchor" number="9.4">

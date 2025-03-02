@@ -204,6 +204,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="rlforfin.html"><a href="rlforfin.html#个人财务的优化"><i class="fa fa-check"></i><b>1.4.1</b> 个人财务的优化</a></li>
 <li class="chapter" data-level="1.4.2" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题及其解决"><i class="fa fa-check"></i><b>1.4.2</b> Merton投资组合问题及其解决</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题解的直觉"><i class="fa fa-check"></i><b>1.4.3</b> Merton投资组合问题解的直觉</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rlforfin.html"><a href="rlforfin.html#离散时间资产配置"><i class="fa fa-check"></i><b>1.4.4</b> 离散时间资产配置</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>2</b> 广义线性模型</a>
@@ -215,6 +217,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr2"><i class="fa fa-check"></i><b>3.1</b> 提出的方法</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr21"><i class="fa fa-check"></i><b>3.1.1</b> 预备知识</a></li>
+<li class="chapter" data-level="3.1.2" data-path="RFWLFR.html"><a href="RFWLFR.html#rfwlfr22"><i class="fa fa-check"></i><b>3.1.2</b> Local constant method</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="qrm.html"><a href="qrm.html"><i class="fa fa-check"></i><b>4</b> 量化风险管理</a>
@@ -372,13 +375,20 @@ X(t)=x+pt-\sum_{i=1}^m\sum_{k=1}^{N_i(t)}\sum_{j\in A_i}Y_{ijk}, \tag{8.1}
 p=\sum_{j=1}^np_j,\quad p_j=(1+\eta_j)\sum_{i=1}^m\beta_i\mu_{ij}I_{A_i}(j), \tag{8.2}
 \]</span>
 其中<span class="math inline">\(I_{A_i}(x)\)</span>是示性函数。上面这个式子也许需要更进一步理解：<span class="math inline">\(\beta_i\)</span>是源<span class="math inline">\(i\)</span>发生的平均次数,<span class="math inline">\(\mu_{ij}\)</span>是所有<span class="math inline">\(k\)</span>次索赔的平均索赔大小。</p>
+<ul>
+<li><p><span class="math inline">\(p_j\)</span>是业务线<span class="math inline">\(j\)</span>的保费；</p></li>
+<li><p><span class="math inline">\(\eta_j\)</span>是与业务线<span class="math inline">\(j\)</span>相关的相对安全载荷因子，表示对风险的附加费用；</p></li>
+<li><p><span class="math inline">\(\beta_i\)</span>是源<span class="math inline">\(i\)</span>在业务线<span class="math inline">\(j\)</span>上的平均索赔大小；</p></li>
+<li><p><span class="math inline">\(\mu_{ij}\)</span>是源<span class="math inline">\(i\)</span>在业务线<span class="math inline">\(j\)</span>上的平均索赔大小。</p></li>
+<li><p><span class="math inline">\(I_{A_i}(j)\)</span>是示性函数，表示如果业务线 <span class="math inline">\(j\)</span> 受源 <span class="math inline">\(i\)</span> 影响，则 <span class="math inline">\(I_{A_i}(j)=1\)</span>，否则为 <span class="math inline">\(0\)</span>.</p></li>
+</ul>
 <div id="reinsurance" class="section level4 hasAnchor" number="8.1.1.1">
 <h4><span class="header-section-number">8.1.1.1</span> Reinsurance<a href="mulreinsurance.html#reinsurance" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>在本小节中，将会定义一个拥有<span class="math inline">\(n\)</span>条业务线的公司再保险策略。首先，考虑滤波<span class="math inline">\(\mathcal{F}=\{\mathcal{F}_t:t\geq0\}\)</span>其中<span class="math inline">\(\mathcal{F_t}\)</span>是由<span class="math inline">\(\{X(s):0\leq s\leq t\}\)</span>生成的<span class="math inline">\(\sigma\)</span>-代数。</p>
 <p>再保险策略是一个多维的随机过程<span class="math inline">\(\boldsymbol{U}=\{\boldsymbol{U}(t)=(U_1(t),...,U_n(t)):t\geq0\}.\)</span>如果在时刻<span class="math inline">\(t=t_1\)</span>发生源<span class="math inline">\(i\)</span>的索赔，大小为<span class="math inline">\(Y=\sum_{j\in A_i}Y_{ijk}\)</span>,那么再保险公司将承担<span class="math inline">\(Y-\sum_{j\in A_i} r_j(U_j(t_1), Y_{ijk})\)</span>,其中函数<span class="math inline">\(0\leq r_j(u,y)\leq y\)</span>是连续且关于<span class="math inline">\(y\)</span>是递增的。我们说<span class="math inline">\(\boldsymbol{U}\)</span>是可接受的，如果对于<span class="math inline">\(j=1,2,...,n\)</span>和<span class="math inline">\(t\geq0,y\geq0\)</span>函数<span class="math inline">\((\omega,t,y)\rightarrow r_j(U_j(\omega,t),y)\)</span>是<span class="math inline">\(\mathcal{E\times B\times B}\)</span>可测的，并且函数<span class="math inline">\(\omega\rightarrow \sum_{j\in A_i}r_j(U_j(\omega,t),y)\)</span>是<span class="math inline">\(\mathcal{F_t}\)</span>可测的。我们将所有可接受策略记为<span class="math inline">\(\boldsymbol{\mathcal{R}}.\)</span>本文将考虑下面两种再保险合约：</p>
 <ol style="list-style-type: decimal">
-<li><p>比例再保险：<span class="math inline">\(r^P(u,y)=uy,\quad u\in \mathcal{U}^P=[0,1]\)</span>.</p></li>
-<li><p>损失超额再保险（XL）：<span class="math inline">\(r^{XL}(u,y)=\min(u,y),\quad u\in\mathcal{U}^{XL}=[0,\infty].\)</span></p></li>
+<li><p>比例再保险：再保险公司承担比例 <span class="math inline">\(u\)</span> 的索赔金额，即<span class="math inline">\(r^P(u,y)=uy,\quad u\in \mathcal{U}^P=[0,1]\)</span>.</p></li>
+<li><p>损失超额再保险（XL）：再保险公司承担至 <span class="math inline">\(u\)</span> 的索赔金额，但最多只承担 <span class="math inline">\(y\)</span>，即<span class="math inline">\(r^{XL}(u,y)=\min(u,y),\quad u\in\mathcal{U}^{XL}=[0,\infty].\)</span></p></li>
 </ol>
 <p>由公式<a href="mulreinsurance.html#eq:omr1">(8.1)</a>,由再保险策略<span class="math inline">\(\boldsymbol{U}\)</span>控制的盈余过程就写为</p>
 <p><span class="math display" id="eq:omr3">\[
@@ -388,11 +398,11 @@ X_{\boldsymbol{U}}(t)=x+\int_0^tp(\boldsymbol{U}(s))ds-\sum_{i=1}^m\sum_{k=1}^{N
 <p><span class="math display">\[
 p(\boldsymbol{u})=p-\sum_{j=1}^nq_j(u_j),\quad \boldsymbol{u}\in \mathcal{U}
 \]</span>
-并且</p>
+并且业务线<span class="math inline">\(j\)</span>的再保险保费是<span class="math inline">\(q_j(u_j)\)</span></p>
 <p><span class="math display">\[
-q_j(u_j)=(1+\theta_j)\sum_{i=1}^m\beta_i\mathbb{E}(Y_{ijk}-r_j(u_j.Y_{ijk}))I_{A_i}(j)
-\]</span>
-其中<span class="math inline">\(\theta_j&gt;\eta_j\)</span>是安全载荷因子，<span class="math inline">\(p\)</span>在<a href="mulreinsurance.html#eq:omr2">(8.2)</a>中定义，且<span class="math inline">\(\mathcal{U}=\mathcal{U}_1\times\mathcal{U}_2\times ...\times\mathcal{U_n}\)</span>是<span class="math inline">\(\mathbb{R}^n\)</span>中一个子集。对于比例再保险<span class="math inline">\(U_j=[0,1]\)</span>而对于损失超额再保险<span class="math inline">\(U_j=[0,\infty].\)</span></p>
+q_j(u_j)=(1+\theta_j)\sum_{i=1}^m\beta_i\mathbb{E}(Y_{ijk}-r_j(u_j,Y_{ijk}))I_{A_i}(j)
+\]</span></p>
+<p>其中<span class="math inline">\(\theta_j&gt;\eta_j\)</span>是安全载荷因子，<span class="math inline">\(p\)</span>在<a href="mulreinsurance.html#eq:omr2">(8.2)</a>中定义，<span class="math inline">\(r_j(u_j,Y_{ijk})是再保险公司承担的索赔金额，且\)</span>=_1_2…<span class="math inline">\(是\)</span>^n<span class="math inline">\(中一个子集。对于比例再保险\)</span>U_j=[0,1]<span class="math inline">\(而对于损失超额再保险\)</span>U_j=[0,].$</p>
 </div>
 <div id="the-value-function" class="section level4 hasAnchor" number="8.1.1.2">
 <h4><span class="header-section-number">8.1.1.2</span> The value function<a href="mulreinsurance.html#the-value-function" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -426,7 +436,8 @@ V(x)=\sup_{\boldsymbol{U}\in\boldsymbol{R}} V_{\boldsymbol{U}}(x), \tag{8.5}
 其中</p>
 <p><span class="math display">\[
 H_g(x,\boldsymbol{u})=x+p(\boldsymbol{u})g&#39;(x)-(\delta+\beta)g(x)+\sum_{i=1}^m\beta_i\int_0^x g(x-z)d F_i^{\boldsymbol{u}}(z).
-\]</span></p>
+\]</span>
+且<span class="math inline">\(\beta=\sum_{i=1}^m\beta_i\)</span>,<span class="math inline">\(F_i^{\boldsymbol{u}}\)</span>是<span class="math inline">\(\sum_{j\in A_i}r_j(u_j,Y_{ijk})\)</span>的累积分布函数。</p>
 </div>
 </div>
 <div id="mrau" class="section level2 hasAnchor" number="8.2">
@@ -486,11 +497,12 @@ X_T&amp;=\exp(rT)X_{1,T}X_{2,T}
 <p><span class="math display">\[
 u(X_{1,T},X_{2,T})=sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}
 \]</span>
-其中<span class="math inline">\(0&lt;\alpha_1\leq\alpha_2&lt;1\)</span>或者<span class="math inline">\(\alpha_2\leq\alpha_1&lt;0.\)</span>注意，<span class="math inline">\(u(X_{1,T}, X_{2,T})\)</span> 是凹的（Hessian 矩阵是半负定的），并且在每个变量上是递增的，而 Arrow–Pratt 的绝对风险厌恶系数依赖于变量/属性：</p>
-<p><span class="math display">\[
--\frac{\frac{\partial^2u}{\partial X_1^2}}{\frac{\partial u}{\partial X_1}}=\frac{1-\alpha_1}{X_1},\quad \frac{\frac{\partial^2u}{\partial X_2^2}}{\frac{\partial u}{\partial X_2}}=\frac{1-\alpha_2}{X_2}
-\]</span>
-这个问题的价值函数为：</p>
+其中<span class="math inline">\(0&lt;\alpha_1\leq\alpha_2&lt;1\)</span>或者<span class="math inline">\(\alpha_2\leq\alpha_1&lt;0.\)</span>注意，<span class="math inline">\(u(X_{1,T}, X_{2,T})\)</span> 是凹的（Hessian 矩阵是半负定的），并且在每个变量上是递增的. Arrow–Pratt系数用于衡量绝对风险厌恶度。其依赖于变量的财富水平：</p>
+<ul>
+<li><p>对绿色投资的风险厌恶系数为<span class="math inline">\(-\frac{\frac{\partial^2u}{\partial X_1^2}}{\frac{\partial u}{\partial X_1}}=\frac{1-\alpha_1}{X_1}\)</span>;</p></li>
+<li><p>对棕色投资的风险厌恶系数为<span class="math inline">\(\frac{\frac{\partial^2u}{\partial X_2^2}}{\frac{\partial u}{\partial X_2}}=\frac{1-\alpha_2}{X_2}.\)</span></p></li>
+</ul>
+<p>这个问题的价值函数为：</p>
 <p><span class="math display" id="eq:mrau2">\[
 V(t,X_{1,0},X_{2,0})=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E}[u(X_{1,T},X_{2,T})]=\max_{\pi_{1,t},\pi_{2,t}}\mathbb{E} \left[sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}\right] \tag{8.9}
 \]</span></p>

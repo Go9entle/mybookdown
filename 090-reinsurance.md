@@ -35,16 +35,28 @@ $$
 $$
 p=\sum_{j=1}^np_j,\quad p_j=(1+\eta_j)\sum_{i=1}^m\beta_i\mu_{ij}I_{A_i}(j), (\#eq:omr2)
 $$
-其中$I_{A_i}(x)$是示性函数。上面这个式子也许需要更进一步理解：$\beta_i$是源$i$发生的平均次数,$\mu_{ij}$是所有$k$次索赔的平均索赔大小。  
+其中$I_{A_i}(x)$是示性函数。上面这个式子也许需要更进一步理解：$\beta_i$是源$i$发生的平均次数,$\mu_{ij}$是所有$k$次索赔的平均索赔大小。
+
+- $p_j$是业务线$j$的保费；
+
+- $\eta_j$是与业务线$j$相关的相对安全载荷因子，表示对风险的附加费用；
+
+- $\beta_i$是源$i$在业务线$j$上的平均索赔大小；
+
+- $\mu_{ij}$是源$i$在业务线$j$上的平均索赔大小。
+
+- $I_{A_i}(j)$是示性函数，表示如果业务线 $j$ 受源 $i$ 影响，则 $I_{A_i}(j)=1$，否则为 $0$.
+
+
 
 #### Reinsurance  
 在本小节中，将会定义一个拥有$n$条业务线的公司再保险策略。首先，考虑滤波$\mathcal{F}=\{\mathcal{F}_t:t\geq0\}$其中$\mathcal{F_t}$是由$\{X(s):0\leq s\leq t\}$生成的$\sigma$-代数。
 
 再保险策略是一个多维的随机过程$\boldsymbol{U}=\{\boldsymbol{U}(t)=(U_1(t),...,U_n(t)):t\geq0\}.$如果在时刻$t=t_1$发生源$i$的索赔，大小为$Y=\sum_{j\in A_i}Y_{ijk}$,那么再保险公司将承担$Y-\sum_{j\in A_i} r_j(U_j(t_1), Y_{ijk})$,其中函数$0\leq r_j(u,y)\leq y$是连续且关于$y$是递增的。我们说$\boldsymbol{U}$是可接受的，如果对于$j=1,2,...,n$和$t\geq0,y\geq0$函数$(\omega,t,y)\rightarrow r_j(U_j(\omega,t),y)$是$\mathcal{E\times B\times B}$可测的，并且函数$\omega\rightarrow \sum_{j\in A_i}r_j(U_j(\omega,t),y)$是$\mathcal{F_t}$可测的。我们将所有可接受策略记为$\boldsymbol{\mathcal{R}}.$本文将考虑下面两种再保险合约：  
 
-1. 比例再保险：$r^P(u,y)=uy,\quad u\in \mathcal{U}^P=[0,1]$.
+1. 比例再保险：再保险公司承担比例 $u$ 的索赔金额，即$r^P(u,y)=uy,\quad u\in \mathcal{U}^P=[0,1]$.
 
-2. 损失超额再保险（XL）：$r^{XL}(u,y)=\min(u,y),\quad u\in\mathcal{U}^{XL}=[0,\infty].$
+2. 损失超额再保险（XL）：再保险公司承担至 $u$ 的索赔金额，但最多只承担 $y$，即$r^{XL}(u,y)=\min(u,y),\quad u\in\mathcal{U}^{XL}=[0,\infty].$
 
 由公式\@ref(eq:omr1),由再保险策略$\boldsymbol{U}$控制的盈余过程就写为
 
@@ -56,12 +68,13 @@ $$
 $$
 p(\boldsymbol{u})=p-\sum_{j=1}^nq_j(u_j),\quad \boldsymbol{u}\in \mathcal{U}
 $$
-并且
+并且业务线$j$的再保险保费是$q_j(u_j)$
 
 $$
-q_j(u_j)=(1+\theta_j)\sum_{i=1}^m\beta_i\mathbb{E}(Y_{ijk}-r_j(u_j.Y_{ijk}))I_{A_i}(j)
+q_j(u_j)=(1+\theta_j)\sum_{i=1}^m\beta_i\mathbb{E}(Y_{ijk}-r_j(u_j,Y_{ijk}))I_{A_i}(j)
 $$
-其中$\theta_j>\eta_j$是安全载荷因子，$p$在\@ref(eq:omr2)中定义，且$\mathcal{U}=\mathcal{U}_1\times\mathcal{U}_2\times ...\times\mathcal{U_n}$是$\mathbb{R}^n$中一个子集。对于比例再保险$U_j=[0,1]$而对于损失超额再保险$U_j=[0,\infty].$
+
+其中$\theta_j>\eta_j$是安全载荷因子，$p$在\@ref(eq:omr2)中定义，$r_j(u_j,Y_{ijk})是再保险公司承担的索赔金额，且$\mathcal{U}=\mathcal{U}_1\times\mathcal{U}_2\times ...\times\mathcal{U_n}$是$\mathbb{R}^n$中一个子集。对于比例再保险$U_j=[0,1]$而对于损失超额再保险$U_j=[0,\infty].$
 
 #### The value function
 
@@ -105,6 +118,10 @@ $$
 $$
 H_g(x,\boldsymbol{u})=x+p(\boldsymbol{u})g'(x)-(\delta+\beta)g(x)+\sum_{i=1}^m\beta_i\int_0^x g(x-z)d F_i^{\boldsymbol{u}}(z).
 $$
+且$\beta=\sum_{i=1}^m\beta_i$,$F_i^{\boldsymbol{u}}$是$\sum_{j\in A_i}r_j(u_j,Y_{ijk})$的累积分布函数。
+
+
+
 
 ## 应用于ESG投资的多元风险厌恶效用 {#mrau}
 
@@ -187,11 +204,13 @@ X_T&=\exp(rT)X_{1,T}X_{2,T}
 $$
 u(X_{1,T},X_{2,T})=sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{2,T})^{\alpha_2}}{\alpha_2}
 $$
-其中$0<\alpha_1\leq\alpha_2<1$或者$\alpha_2\leq\alpha_1<0.$注意，$u(X_{1,T}, X_{2,T})$ 是凹的（Hessian 矩阵是半负定的），并且在每个变量上是递增的，而 Arrow–Pratt 的绝对风险厌恶系数依赖于变量/属性：
+其中$0<\alpha_1\leq\alpha_2<1$或者$\alpha_2\leq\alpha_1<0.$注意，$u(X_{1,T}, X_{2,T})$ 是凹的（Hessian 矩阵是半负定的），并且在每个变量上是递增的. Arrow–Pratt系数用于衡量绝对风险厌恶度。其依赖于变量的财富水平：
 
-$$
--\frac{\frac{\partial^2u}{\partial X_1^2}}{\frac{\partial u}{\partial X_1}}=\frac{1-\alpha_1}{X_1},\quad \frac{\frac{\partial^2u}{\partial X_2^2}}{\frac{\partial u}{\partial X_2}}=\frac{1-\alpha_2}{X_2}
-$$
+- 对绿色投资的风险厌恶系数为$-\frac{\frac{\partial^2u}{\partial X_1^2}}{\frac{\partial u}{\partial X_1}}=\frac{1-\alpha_1}{X_1}$;
+
+- 对棕色投资的风险厌恶系数为$\frac{\frac{\partial^2u}{\partial X_2^2}}{\frac{\partial u}{\partial X_2}}=\frac{1-\alpha_2}{X_2}.$
+
+
 这个问题的价值函数为：
 
 $$
