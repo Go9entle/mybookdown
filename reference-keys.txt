@@ -1,6 +1,5 @@
 eq:bellman
 fig:mdp
-lem:chf-pdf
 eq:4-1
 eq:4-2
 eq:4-3
@@ -22,6 +21,12 @@ eq:8-15
 eq:8-17
 eq:8-19
 eq:8-20
+eq:8-21
+eq:8-22
+eq:8-23
+eq:8-24
+eq:8-25
+eq:8-26
 fig:manhattan
 eq:qrm3-1
 eq:qrm3-2
@@ -65,6 +70,7 @@ dynassall
 merton投资组合问题及其解决
 merton投资组合问题解的直觉
 离散时间资产配置
+现实世界的应用
 glm
 glmexp
 RFWLFR

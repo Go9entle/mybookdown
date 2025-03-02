@@ -206,6 +206,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.4.2" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题及其解决"><i class="fa fa-check"></i><b>1.4.2</b> Merton投资组合问题及其解决</a></li>
 <li class="chapter" data-level="1.4.3" data-path="rlforfin.html"><a href="rlforfin.html#merton投资组合问题解的直觉"><i class="fa fa-check"></i><b>1.4.3</b> Merton投资组合问题解的直觉</a></li>
 <li class="chapter" data-level="1.4.4" data-path="rlforfin.html"><a href="rlforfin.html#离散时间资产配置"><i class="fa fa-check"></i><b>1.4.4</b> 离散时间资产配置</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rlforfin.html"><a href="rlforfin.html#现实世界的应用"><i class="fa fa-check"></i><b>1.4.5</b> 现实世界的应用</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>2</b> 广义线性模型</a>
@@ -572,10 +573,6 @@ V(s)=&amp;\mathbb{E}[R_{t+1}|S_t=s]+\gamma\cdot\mathbb{E}[R_{t+2}|S_t=s]+...\\
 图1.1: Markov Decision Process
 </p>
 </div>
-<div class="lemma">
-<p><span id="lem:chf-pdf" class="lemma"><strong>Lemma 1.1  </strong></span>For any two random variables <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, they both have the same probability distribution if and only if</p>
-<p><span class="math display">\[\varphi _{X_1}(t)=\varphi _{X_2}(t)\]</span></p>
-</div>
 </div>
 <div id="markov决策过程的正式定义" class="section level3 hasAnchor" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> Markov决策过程的正式定义<a href="rlforfin.html#markov决策过程的正式定义" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -780,8 +777,8 @@ Q^*(s,a)=\mathcal{R}(s,a)=\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s,a,
 \pi^*\in\Pi\text{ is an Optimal Policy if } V^{\pi^*}(s)\geq V^\pi(s)\text{ for all }\pi\in\Pi \text{ and for all states }s\in\mathcal{N}.
 \]</span></p>
 <p>最优策略<span class="math inline">\(\pi^*\)</span>的定义表明，它是一个“优于或等于”所有其他静态策略的策略，且适用于所有非终止状态（注意可能存在多个最优策略）。将这个定义与最优值函数<span class="math inline">\(V^*\)</span>的定义结合，接下来的自然问题是：是否存在一个最优策略<span class="math inline">\(\pi^*\)</span>,对所有的<span class="math inline">\(s\in\mathcal{N}\)</span>最大化<span class="math inline">\(V^\pi(s)\)</span>,也就是是否存在一个<span class="math inline">\(\pi^*\)</span>使得<span class="math inline">\(V^*(s)=V^{\pi^*}(s)\)</span>对所有<span class="math inline">\(s\in\mathcal{N}.\)</span>下面的定理和证明是针对我们默认的MDP设置（离散时间、可数空间、时间齐次）的。</p>
-<p><strong>定理</strong><br />
-对于任何（离散时间、可数空间、时间齐次）的MDP：</p>
+<p><strong>定理</strong></p>
+<p>对于任何（离散时间、可数空间、时间齐次）的MDP：</p>
 <ul>
 <li><p>存在一个最优策略<span class="math inline">\(\pi^*\in\Pi\)</span>.</p></li>
 <li><p>所有最优策略都实现最优值函数。</p></li>
@@ -963,7 +960,116 @@ W_{t+1}=x_t\cdot(1+Y_t)+(W_t-x_t)\cdot (1+r)=x_t\cdot(Y_t-r)+W_t\cdot(1+r) \tag{
 <p>MDP的奖励在每个<span class="math inline">\(t=0,1,...,T-1\)</span>时为0，因此基于上述简化的目标<a href="rlforfin.html#eq:8-19">(1.21)</a>,MDP在<span class="math inline">\(t=T\)</span>时的奖励设置为随机量<span class="math inline">\(\frac{-e^{aW_T}}{a}.\)</span>我们将MDP的折现因子设置为<span class="math inline">\(\gamma=1,\)</span>在时间<span class="math inline">\(t\)</span>时的价值函数（给定策略<span class="math inline">\(\pi=(\pi_0,\pi_1,...,\pi_{T-1})\)</span>）记为</p>
 <p><span class="math display">\[
 V_t^\pi(W_t)=\mathbb{E}_\pi\left[ -\frac{e^{-aW_T}}{a}\mid (t,W_t) \right]
+\]</span>
+在时间<span class="math inline">\(t\)</span>时的最优价值函数记为</p>
+<p>$$
+V_t^*(W_t)=<em>{} V_t^(W_t)=</em>{_}</p>
+<p>$$
+贝尔曼最优方程为(当<span class="math inline">\(t=0,1,...,T-2\)</span>时)</p>
+<p><span class="math display">\[
+V_t^*(W_t)=\max_{x_t}Q_t^*(W_t,x_t)=\max_{x_t}\left\{\mathbb{E}_{Y_t\sim N(\mu,\sigma^2)}\left[ V_{t+1}^*(W_{t+1}) \right] \right\}
+\]</span>
+且</p>
+<p><span class="math display">\[
+V_{T-1}^*(W_{T-1})=\max_{x_{T-1}}Q_{T-1}^*(W_{T-1},x_{T-1})=\max_{x_{T-1}}\left\{\mathbb{E}_{Y_{T-1}\sim N(\mu,\sigma^2)}\left[ \frac{-e^{-aW_T}}{a} \right] \right\}
 \]</span></p>
+<p>其中<span class="math inline">\(Q_t^*\)</span>是时间<span class="math inline">\(t\)</span>时的最优动作价值函数。</p>
+<p>我们通过对最优价值函数的形式进行合理猜测，得到</p>
+<p><span class="math display" id="eq:8-21">\[
+V_t^*(W_t)=-b_t e^{-c_tW_t} \tag{1.23}
+\]</span>
+其中<span class="math inline">\(b_t,c_t\)</span>与财富<span class="math inline">\(W_t\)</span>无关，接下来我们使用这个最优价值函数的形式来表达贝尔曼最优性方程</p>
+<p><span class="math display">\[
+V_t^*(W_t)=\max_{x_t}\left\{\mathbb{E}_{Y_t\sim N(\mu,\sigma^2)}\left[ -b_{t+1}e^{-c_{t+1}W_{t+1}} \right] \right\}
+\]</span>
+利用公式<a href="rlforfin.html#eq:8-20">(1.22)</a>可以将其改写为</p>
+<p><span class="math display">\[
+V_t^*(W_t)=\max_{x_t}\left\{\mathbb{E}_{Y_t\sim N(\mu,\sigma^2)}\left[ -b_{t+1}e^{-c_{t+1}(x_t(Y_t-r)+W_t(1+r))} \right] \right\}
+\]</span></p>
+<p>这个指数形式的期望值在正态分布下计算结果为</p>
+<p><span class="math display" id="eq:8-22">\[
+V_t^*(W_t)=\max_{x_t}\left\{-b_{t+1}\exp\left\{-c_{t+1}(1+r)W_t-c_{t+1}(\mu-r)x_t+c_{t+1}^2 \frac{\sigma^2}{2} x_{t}^2\right\} \right\} \tag{1.24}
+\]</span></p>
+<p>又由于<span class="math inline">\(V_{t}^*(W_t)=\max_{x_t}Q^*_t(W_t,x_t),\)</span>从上面的公式中可以推断出最优动作价值函数<span class="math inline">\(Q^*_t(W_t,x_t)\)</span>的函数形式为</p>
+<p><span class="math display" id="eq:8-23">\[
+Q^*_t(W_t,x_t)=-b_{t+1}\exp\left\{-c_{t+1}(1+r)W_t-c_{t+1}(\mu-r)x_t+c_{t+1}^2 \frac{\sigma^2}{2} x_{t}^2\right\} \tag{1.25}
+\]</span></p>
+<p>由于贝尔曼最优性方程<a href="rlforfin.html#eq:8-22">(1.24)</a>右侧涉及对<span class="math inline">\(x_t\)</span>的最大化操作，我们可以认为最大化操作内的项对于<span class="math inline">\(x_t\)</span>的偏导数是0，这使得我们能够将最优分配<span class="math inline">\(x_t^*\)</span>表示为<span class="math inline">\(c_{t+1}\)</span>的函数，如下所示</p>
+<p><span class="math display">\[
+-c_{t+1}(\mu-r)+\sigma^2c_{t+1}^2x_t^*=0
+\]</span>
+即</p>
+<p><span class="math display" id="eq:8-24">\[
+x_t^*=\frac{\mu-r}{\sigma^2 c_{t+1}} \tag{1.26}
+\]</span>
+代入贝尔曼最优性方程<a href="rlforfin.html#eq:8-22">(1.24)</a>可得</p>
+<p><span class="math display">\[
+V_{t}^*(W_t)=-b_{t+1}\exp\left\{ -c_{t+1}(1+r)W_t-\frac{(\mu-r)^2}{2\sigma^2}\right\}
+\]</span>
+但由于</p>
+<p><span class="math display">\[
+V_{t}^*(W_t)=-b_t\exp\{-c_tW_t\}
+\]</span>
+就可以得到如下递推方程</p>
+<p><span class="math display">\[
+b_t=b_{t+1}\exp\left\{-\frac{(\mu-r)^2}{2\sigma^2}\right\},\quad  c_t=c_{t+1}(1+r)
+\]</span>
+我们还可以通过知道在<span class="math inline">\(t+T\)</span>终端时刻的MDP的奖励<span class="math inline">\(\frac{-e^{-aW_T}}{a}\)</span>即终端时刻的财富效用来计算<span class="math inline">\(b_{T-1},c_{T-1},\)</span>然后递推得到<span class="math inline">\(b_t,c_t\)</span>的值。</p>
+<p>在<span class="math inline">\(t=T-1\)</span>时：</p>
+<p><span class="math display">\[
+V_{T-1}^*(W_{T-1})=\max_{x_{T-1}}\left\{\mathbb{E}_{Y_{T-1}\sim N(\mu,\sigma^2)}\left[ \frac{-e^{-aW_T}}{a} \right] \right\}
+\]</span>
+通过公式<a href="rlforfin.html#eq:8-20">(1.22)</a>可以写为</p>
+<p><span class="math display">\[
+V_{T-1}^*(W_{T-1})=\max_{x_{T-1}}\left\{\mathbb{E}_{Y_{T-1}\sim N(\mu,\sigma^2)}\left[ \frac{-\exp\{-a(x_{T-1}(Y_{T-1}-r)+W_{T-1}(1+r))\}}{a} \right] \right\}
+\]</span></p>
+<p>利用矩母函数的相关知识可以将其改写为</p>
+<p><span class="math display">\[
+V_{T-1}^*(W_{T-1})=-e^{-\frac{(\mu-r)^2}{2\sigma^2}}-\frac{a(1+r)W_{T-1}}{a}
+\]</span>
+因此</p>
+<p><span class="math display">\[
+b_{T-1}=\frac{e^{-\frac{(\mu-r)^2}{2\sigma^2}}}{a},\quad c_{T-1}=a(1+r)
+\]</span>
+递推得到当<span class="math inline">\(t=0,1,...,T-2\)</span>时（当然<span class="math inline">\(t=T-1\)</span>也满足下面的递推式）</p>
+<p><span class="math display">\[
+b_t=\frac{e^{-\frac{(\mu-r)^2(T-t)}{2\sigma^2}}}{a},\quad c_t=a(1+r)^{T-t}
+\]</span></p>
+<p>将<span class="math inline">\(c_{t+1}\)</span>带入到<a href="rlforfin.html#eq:8-24">(1.26)</a>即可得到最优策略的解</p>
+<p><span class="math display" id="eq:8-25">\[
+\pi_t^*(W_t)=x_t^*=\frac{\mu-r}{\sigma^2a(1+r)^{T-t-1}},\text{ for all }t=0,1,...,T-1  \tag{1.27}
+\]</span>
+请注意最优策略在时间步<span class="math inline">\(t\)</span>时不依赖于状态<span class="math inline">\(W_t.\)</span>因此对于固定时间的最优策略<span class="math inline">\(\pi_t^*\)</span>是一个常数确定性的策略函数。</p>
+<p>将<span class="math inline">\(b_t,c_t\)</span>的解代入公式<a href="rlforfin.html#eq:8-21">(1.23)</a>即可得到最优价值函数的解：</p>
+<p><span class="math display" id="eq:8-26">\[
+V_t^*(W_t)=\frac{-e^{-\frac{(\mu-r)^2(T-t)}{2\sigma^2}}}{a}\cdot e^{-a(1+r)^{T-t}W_t} \text{ for all }t=0,1,...,T-1 \tag{1.28}
+\]</span>
+将<span class="math inline">\(b_{t+1},c_{t+1}\)</span>代入到公式<a href="rlforfin.html#eq:8-23">(1.25)</a>可以得到最优动作价值函数的解（对于所有的<span class="math inline">\(t=0,1,...,T-1\)</span>）</p>
+<p><span class="math display">\[
+Q^*_t(W_t,x_t)=\\
+\frac{-e^{\frac{-(\mu-r)^2(T-t-1)}{2\sigma^2}}}{a}\exp\left\{-a(1+r)^{T-t}W_t-a(\mu-r)(1+r)^{T-t-1}x_t+\frac{(a\sigma(1+r)^{T-t-1})^2}{2}x_t^2  \right\}
+\]</span></p>
+</div>
+<div id="现实世界的应用" class="section level3 hasAnchor" number="1.4.5">
+<h3><span class="header-section-number">1.4.5</span> 现实世界的应用<a href="rlforfin.html#现实世界的应用" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>上面的讨论和设置通过简化假设提供了分析的可解性。使得问题具有解析可解性的具体简化假设包括：</p>
+<ul>
+<li><p>资产回报的正态分布</p></li>
+<li><p>CRRA/CARA假设</p></li>
+<li><p>无摩擦市场交易（没有交易成本没有约束，价格/分配数量/消费都是连续的）</p></li>
+</ul>
+<p>但是，现实世界中的动态资产配置和消费问题并不像我们讨论的那么简单和清晰。实际的资产价格波动更加复杂，效用函数不一定符合简单的 CRRA/CARA 形式。实际上，交易通常发生在离散空间中——资产价格、分配数量和消费量往往是离散的。此外，当我们改变资产配置或清算部分投资组合以进行消费时，会产生交易成本。更重要的是，交易并不总是在连续时间内进行——通常会有特定的交易窗口或交易限制。最后，许多投资是流动性差的（如房地产），或者在特定的时间之前无法清算（如退休基金），这对从投资组合中提取资金进行消费构成了重大约束。因此，尽管价格、分配数量和消费可能接近连续变量，但上述摩擦使得我们无法在简化示例中那样利用微积分的便利。</p>
+<p>考虑到上述现实世界的因素，我们需要利用动态规划——更具体地说，利用近似动态规划，因为现实世界的问题通常涉及大规模的状态空间和行动空间（即使这些空间不是连续的，它们通常接近连续）。对价值函数的适当函数逼近是解决这些问题的关键。实现一个完整的现实世界投资和消费管理系统超出了本书的范围，但我们可以实现一个具有足够理解的示例，展示如何实现一个完整的现实世界应用。我们要实现的设置包括：</p>
+<ul>
+<li><p>一个风险资产和一个无风险资产；</p></li>
+<li><p>有限时间步数（类似于上一节的离散时间设置）；</p></li>
+<li><p>在有限时间结束之前不进行消费（即不从投资组合中提取资金），因此折现因子设置为1；</p></li>
+<li><p>风险资产回报的任意分布；</p></li>
+<li><p>随时间变化的无风险资产回报；</p></li>
+<li><p>任意效用函数；</p></li>
+<li><p>在每个时间步，有限数量的风险资产投资选择；</p></li>
+<li><p>初始财富的任意分布。</p></li>
+</ul>
 
 </div>
 </div>
