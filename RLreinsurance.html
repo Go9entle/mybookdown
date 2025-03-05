@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5 随机分析 | GOGENTLE’s NOTEBOOK</title>
+  <title>9 A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning | GOGENTLE’s NOTEBOOK</title>
   <meta name="description" content="这是用R的bookdown功能制作的课堂笔记。" />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5 随机分析 | GOGENTLE’s NOTEBOOK" />
+  <meta property="og:title" content="9 A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning | GOGENTLE’s NOTEBOOK" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="这是用R的bookdown功能制作的课堂笔记。" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5 随机分析 | GOGENTLE’s NOTEBOOK" />
+  <meta name="twitter:title" content="9 A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning | GOGENTLE’s NOTEBOOK" />
   
   <meta name="twitter:description" content="这是用R的bookdown功能制作的课堂笔记。" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="qrm.html"/>
-<link rel="next" href="english.html"/>
+<link rel="prev" href="mulreinsurance.html"/>
+<link rel="next" href="datawhale.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -366,229 +366,41 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stochastic" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">5</span> 随机分析<a href="stochastic.html#stochastic" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="introduction" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Introduction<a href="stochastic.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>一般地，我们称系数可以是随机的微分方程为<strong>随机微分方程（Stochastic Differential Equation）</strong>，显然随机微分方程的解一定具有随机性，因此我们只期望得到关于解的概率分布。</p>
-<div id="最优停时optimal-stopping" class="section level3 hasAnchor" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> 1.4 最优停时（Optimal Stopping）<a href="stochastic.html#最优停时optimal-stopping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>假定某人计划卖掉一个资产，在开放的市场中，他的资产在<span class="math inline">\(t\)</span>时刻的价格<span class="math inline">\(X_t\)</span>满足随机微分方程<br />
-<span class="math display">\[
-\frac{dX_t}{dt}=rX_t+\alpha X_t\cdot [\text{noise}],
-\]</span>
-这里的<span class="math inline">\(r,\alpha\)</span>为已知的常数，折现率为已知常数<span class="math inline">\(\rho\)</span>，那么在什么时候卖掉该资产为最好？</p>
-<p>假设知道现在时刻<span class="math inline">\(t\)</span>以前的资产表现<span class="math inline">\(X_s(s&lt;t)\)</span>但是由于系统中的噪声，当然无法确信选择卖的时间是否为最优，因此要找一个停时策略，在长期运行中它应该是最好的结果，即把通胀考虑进去以后的最大化期望利润。这是一个最优停时问题。</p>
+<div id="RLreinsurance" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning<a href="RLreinsurance.html#RLreinsurance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>再保险优化的混合框架：集成生成模型和强化学习</strong></p>
+<div id="rlreabstract" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Abstract<a href="RLreinsurance.html#rlreabstract" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>再保险优化对于保险公司管理风险敞口、确保财务稳定和维持偿付能力至关重要。传统方法常常在应对动态索赔分布、高维约束和不断变化的市场条件时遇到困难。本文介绍了一种新颖的混合框架，将生成模型，特别是变分自编码器（VAE），与强化学习（RL）结合，使用近端策略优化（PPO）算法。该框架通过结合复杂索赔分布的生成建模与强化学习的自适应决策能力，实现了再保险策略的动态和可扩展优化。</p>
+<p>VAE组件生成合成索赔数据，包括稀有和灾难性事件，解决了数据稀缺和波动性的问题，而PPO算法则动态调整再保险参数，以最大化盈余并最小化破产概率。通过广泛的实验验证该框架的性能，包括样本外测试、压力测试情景（例如疫情影响、灾难事件）和在不同投资组合规模下的可扩展性分析。结果表明，与传统优化技术相比，该框架具有更强的适应性、可扩展性和鲁棒性，能够实现更高的最终盈余和计算效率。</p>
+<p>本文的主要贡献包括：开发了一种针对高维优化的混合方法，动态再保险参数化，以及在随机索赔分布下的验证。该框架为现代再保险挑战提供了变革性的解决方案，并具有在多险种保险操作、灾难建模和风险共担策略设计等领域的潜在应用。</p>
 </div>
-<div id="随机控制stochastic-control" class="section level3 hasAnchor" number="5.1.2">
-<h3><span class="header-section-number">5.1.2</span> 1.5 随机控制（Stochastic Control）<a href="stochastic.html#随机控制stochastic-control" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>假设某人有两个投资可能性：</p>
+<div id="rlreintro" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Introduction<a href="RLreinsurance.html#rlreintro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>保险和再保险行业在管理金融风险和确保经济稳定方面发挥着关键作用。再保险是将风险从保险公司转移到再保险公司的过程，是旨在维持偿付能力和优化财务表现的风险管理战略的基石。然而，由于索赔的随机性、多维约束以及风险保留、盈利性和合规性之间的动态相互作用，设计有效的再保险策略依然是一个高度复杂的挑战。</p>
+<p>传统的再保险优化方法，如经典的Cramér-Lundberg模型，提供了盈余动态和破产概率的基础性见解。这些模型尽管在数学上严格，但它们依赖于关于保费率和索赔分布的静态假设，这限制了它们在现代再保险实践中的适用性。这些模型的扩展，包括比例再保险和分层再保险结构，解决了其中的一些局限性，但往往计算量大，且不足以应对高维的实际场景。</p>
+<p>近年来，机器学习和人工智能（AI）的进展展示了其在解决保险领域挑战方面的巨大潜力。生成性AI模型，如变分自编码器（VAE），已在捕捉复杂数据分布和生成反映稀有和灾难性事件的合成数据方面表现出色，这些事件在历史数据中往往被低估。与此同时，强化学习（RL）技术，特别是近端策略优化（PPO）算法，已成为应对不确定环境中的序列决策和动态优化的强大工具。</p>
+<p>本文介绍了一种新颖的混合框架，将生成性AI与强化学习结合，动态和自适应地优化再保险策略。通过利用VAE建模索赔分布并生成合成场景，该框架克服了数据稀缺和波动性的问题。PPO算法则动态调整再保险参数——如保留率和分层边界——以应对不断变化的索赔分布、市场条件和监管约束。这一协同作用使得该框架能够实时评估和优化复杂的再保险策略，解决高维不确定性并确保财务稳定。</p>
+<p>该混合框架通过全面的仿真验证，包括压力测试场景（如高频索赔、灾难尾事件和疫情影响），证明了其鲁棒性、可扩展性和适应性，远超传统优化方法，如动态规划、蒙特卡洛模拟和多目标优化。此外，敏感性分析和可扩展性测试也突出了该框架在不同索赔环境和不同投资组合规模下的韧性。</p>
+<p>本文的主要贡献包括：</p>
 <ol style="list-style-type: decimal">
-<li><p>无风险投资（如债券）.在<span class="math inline">\(t\)</span>时刻每单位的价格<span class="math inline">\(X_0(t)\)</span>按指数增长：<br />
-<span class="math display">\[
-\frac{dX_0}{dt}=\rho X_0
-\]</span>
-这里的<span class="math inline">\(\rho\)</span>为大于0的常数</p></li>
-<li><p>有风险投资（如股票）.在<span class="math inline">\(t\)</span>时刻每单位的价格<span class="math inline">\(X_1(t)\)</span>满足随机微分方程：<br />
-<span class="math display">\[
-\frac{dX_1}{dt}=(\mu+\sigma\cdot[\text{noise}])X_1
-\]</span></p></li>
+<li><p>再保险优化的混合框架：结合生成性AI模型（VAE）和强化学习（PPO），解决再保险中的多维随机优化挑战。</p></li>
+<li><p>再保险策略的动态参数化：结合自适应的保留率和分层边界，在不断变化的市场条件下确保风险分担机制的灵活性。</p></li>
+<li><p>全面的验证与基准测试：通过与已建立的优化技术的对比，证明了框架在可扩展性、计算效率和鲁棒性方面的优越性。</p></li>
 </ol>
-<p>在每个时刻<span class="math inline">\(t\)</span>，该投资者选择他的财富<span class="math inline">\(V_t\)</span>中多大比例<span class="math inline">\(u_t\)</span>用于风险投资，从而另一部分用于无风险投资，给定效用函数<span class="math inline">\(U\)</span>和终端时刻<span class="math inline">\(T\)</span>,该投资问题是找到一个最优证券组合，使得终端时刻财富<span class="math inline">\(V_T\)</span>的期望效用最大<br />
-<span class="math display">\[
-\mathop{max}\limits_{0\leq u_t\leq1}\{E[U(V_T^{(u)})]\}
-\]</span></p>
+<p>本文其余部分的结构如下：第2节介绍盈余过程、再保险结构和优化目标的数学基础；第3节介绍混合计算框架，详细描述了生成性AI和强化学习的整合；第4节描述实验设置、结果和与替代方法的对比；第5节讨论所提出框架的意义和局限性，第6节总结了主要发现和未来的研究方向。</p>
+<p>通过弥合传统精算方法和前沿AI技术之间的鸿沟，本研究提供了一种变革性的再保险优化框架，解决了金融风险管理中的紧迫挑战，并为保险行业未来的创新奠定了基础。</p>
 </div>
+<div id="rlremodel" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Model Description<a href="RLreinsurance.html#rlremodel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本节介绍了一种稳健且是适应性强的框架，用于建模保险公司在有限计划期<span class="math inline">\(T\)</span>内的运营。该模型通过引入离散时间建模、广义盈余过程和动态再保险机制，解决了风险管理、动态索赔过程和财务稳定性等关键挑战。该方法为在不确定性下优化决策提供了全面的基础。</p>
+<div id="离散时间框架" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> 离散时间框架<a href="RLreinsurance.html#离散时间框架" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>计划期<span class="math inline">\(T\)</span>被划分为<span class="math inline">\(n\)</span>个离散时间间隔，记为<span class="math inline">\(0=t_1&lt;t_2&lt;...&lt;t_n=T.\)</span>每个时间间隔表示保险公司管理风险组合、生成保费收入并发生索赔的时间步。该时间结构反映了现实世界中的保险实践，其中财务表现和风险敞口会定期进行审查和调整。</p>
+<p>离散时间的公式化使得对风险和财务指标进行精细评估成为可能，允许将随机因素融入操作决策中，这种粒度对于分析索赔、保费和再保险之间的动态相互作用至关重要。</p>
 </div>
-<div id="预备知识" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> 预备知识<a href="stochastic.html#预备知识" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="概率空间-随机变量-随机过程" class="section level3 hasAnchor" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span> 概率空间 随机变量 随机过程<a href="stochastic.html#概率空间-随机变量-随机过程" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>定义2.1.1</strong></p>
-<p>给定全集合<span class="math inline">\(\Omega\)</span>，那么<span class="math inline">\(\Omega\)</span>上的<span class="math inline">\(\sigma\)</span>代数<span class="math inline">\(\mathcal{F}\)</span>是由<span class="math inline">\(\Omega\)</span>的某些子集构成的集合族且具有下列性质</p>
-<ol style="list-style-type: decimal">
-<li><span class="math inline">\(\varnothing\in\mathcal{F}\)</span>;</li>
-<li><span class="math inline">\(F\in\mathcal{F}\Rightarrow F^C\in\mathcal{F}\)</span>;</li>
-<li><span class="math inline">\(A_1,A_2,\dots\in\mathcal{F}\Rightarrow A:=\mathop{\cup}\limits_{i=1}^{\infty}A_i\in\mathcal{F}\)</span>.</li>
-</ol>
-<p>称<span class="math inline">\((\Omega,\mathcal{F})\)</span>为一个可测空间，这个可测空间的概率测度<span class="math inline">\(P\)</span>是一个实值函数，将<span class="math inline">\(\mathcal{F}\)</span>映射到<span class="math inline">\([0,1]\)</span>上，满足概率测度的两个条件</p>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(P(\varnothing)=0,P(\Omega)=1\)</span>;</p></li>
-<li><p>若<span class="math inline">\(A_1,A_2,\dots\in\mathcal{F}\)</span>且<span class="math inline">\(\{A_i\}_{i=1}^{\infty}\)</span>是互不相交，那么<br />
-<span class="math display">\[
-P(\mathop{\cup}_{i=1}^{\infty}A_i)=\mathop{\sum}_{i=1}^{\infty}P(A_i).
-\]</span></p></li>
-</ol>
-<p>称<span class="math inline">\((\Omega,\mathcal{F},P)\)</span>为一个概率空间。我们假定所有概率空间都是完备的，即<span class="math inline">\(\mathcal{F}\)</span>包括了<span class="math inline">\(\Omega\)</span>中<span class="math inline">\(P\)</span>外测度为零的所有子集。</p>
-<p>对<span class="math inline">\(\Omega\)</span>中的某一子集<span class="math inline">\(F\)</span>，如果<span class="math inline">\(F\in\mathcal{F}\)</span>,则称<span class="math inline">\(F\)</span>为<span class="math inline">\(\mathcal{F}\)</span>可测集，在概率上称为事件，<span class="math inline">\(P(F)\)</span>就称为事件<span class="math inline">\(F\)</span>发生的概率。特别地，<span class="math inline">\(P(F)=1\)</span>则说事件<span class="math inline">\(F\)</span>为依概率1发生或者几乎必然(a.s.)发生。</p>
-<p>对给定的<span class="math inline">\(\Omega\)</span>的一个集合族<span class="math inline">\(\mathcal{U}\)</span>,存在一个包含<span class="math inline">\(\mathcal{U}\)</span>的最小<span class="math inline">\(\sigma\)</span>代数<span class="math inline">\(\mathcal{H}_\mathcal{U}\)</span>,即<br />
-<span class="math display">\[
-\mathcal{H}_\mathcal{U}=\cap\{\mathcal{H}:\mathcal{H}为\Omega上的\sigma代数，\mathcal{U}\subset\mathcal{H}\}
-\]</span>
-，称<span class="math inline">\(\mathcal{H}_{\mathcal{U}}\)</span>是由<span class="math inline">\(\mathcal{U}\)</span>生成的<span class="math inline">\(\sigma\)</span>代数（包含<span class="math inline">\(\mathcal{U}\)</span>的最小集合，所以做了交集）。</p>
-<p>例如，<span class="math inline">\(\mathcal{U}\)</span>是拓扑空间<span class="math inline">\(\Omega\)</span>的所有开子集构成的集合(如<span class="math inline">\(\Omega=\mathbf{R}^n\)</span>)，那么<span class="math inline">\(\mathcal{B}=\mathcal{H}_\mathcal{U}\)</span>称为<span class="math inline">\(\Omega\)</span>上的Borel <span class="math inline">\(\sigma\)</span>代数。对任意元素<span class="math inline">\(B\in\mathcal{B}\)</span>称为Borel可测集。<span class="math inline">\(\mathcal{B}\)</span>包含所有的开子集、所有的闭子集、所有的可数个闭子集的并集以及所有的可数个这种并集的交集等等。</p>
-<p>设<span class="math inline">\((\Omega,\mathcal{F},P)\)</span>是给定的概率空间，如果<br />
-<span class="math display">\[
-Y^{-1}(U):=\{\omega\in\Omega;Y(\omega)\in U\}\in\mathcal{F}
-\]</span>
-对所有开集<span class="math inline">\(U\in\mathbf{R}^n\)</span>（或等价地，对所有Borel集<span class="math inline">\(U\in\mathbf{R}^n\)</span>）均成立，那么函数<span class="math inline">\(Y:\Omega\rightarrow\mathbf{R}^n\)</span>称为<span class="math inline">\(\mathcal{F}\)</span>可测的。（这实际上有点像 Y是一个随机变量？）</p>
-<p>若<span class="math inline">\(X:\Omega\rightarrow \mathbf{R}^n\)</span>是任意一个函数，那么由<span class="math inline">\(X\)</span>生成的<span class="math inline">\(\sigma\)</span>代数<span class="math inline">\(\mathcal{H}_X\)</span>是<span class="math inline">\(\Omega\)</span>上的包含所有形如<span class="math inline">\(X^{-1}(U)\)</span>（<span class="math inline">\(U\in\mathbf{R}^n\)</span>为开集）的最小<span class="math inline">\(\sigma\)</span>代数。不难证明<br />
-<span class="math display">\[
-\mathcal{H}_X=\{X^{-1}(B);B\in\mathcal{B}\},
-\]</span>
-这里<span class="math inline">\(\mathcal{B}\)</span>是<span class="math inline">\(\mathbf{R}^n\)</span>上的Borel <span class="math inline">\(\sigma\)</span>代数。显然<span class="math inline">\(X\)</span>是<span class="math inline">\(\mathcal{H}_X\)</span>可测的，而<span class="math inline">\(\mathcal{H}_X\)</span>是具有上述性质的最小<span class="math inline">\(\sigma\)</span>代数。（可以当作事件域？）</p>
-<p><strong>引理2.1.2</strong></p>
-<p>如果<span class="math inline">\(X,Y:\Omega\rightarrow\mathbf{R}^n\)</span>是两个给定的函数，<span class="math inline">\(Y\)</span>为<span class="math inline">\(\mathcal{H}_X\)</span>可测的充要条件是存在一个Borel可测函数<span class="math inline">\(g:\mathbf{R}^n\rightarrow\mathbf{R}^n\)</span>使得<span class="math inline">\(Y=g(X)\)</span>.</p>
-<p>下面，设<span class="math inline">\((\Omega,\mathcal{F},P)\)</span>是一个给定的完备概率空间，一个随机变量<span class="math inline">\(X\)</span>是一个<span class="math inline">\(\mathcal{F}\)</span>可测函数<span class="math inline">\(X:\Omega\rightarrow\mathbf{R}^n\)</span>.每个随机变量诱导了<span class="math inline">\(\mathbf{R}^n\)</span>上的概率测度<span class="math inline">\(\mu_X\)</span>,定义为<br />
-<span class="math display">\[
-\mu_X(B)=P(X^{-1}(B)),
-\]</span>
-<span class="math inline">\(\mu_X\)</span>称为<span class="math inline">\(X\)</span>的分布（！！！）。（<span class="math inline">\(B\)</span>是随机变量映射的像，<span class="math inline">\(X:\Omega\rightarrow\mathcal{B}\)</span>）</p>
-<p>如果<span class="math inline">\(\int_{\Omega}|X(\omega)|dP(\omega)&lt;\infty\)</span>,那么<br />
-<span class="math display">\[
-E[X]:=\int_{\Omega}X(\omega)dP(\omega)=\int_{\mathbf{R}^n}xd\mu_X(x)
-\]</span>
-称为<span class="math inline">\(X\)</span>的期望。更一般地，如果<span class="math inline">\(f:\mathbf{R^n}\rightarrow\mathbf{R}\)</span>是Borel可测的，且<span class="math inline">\(\int_{\Omega}|f(X(\omega))|dP(\omega)&lt;\infty\)</span>,那么<br />
-<span class="math display">\[
-E[f(X)]:=\int_{\Omega}f(X(\omega))dP(\omega)=\int_{\mathbf{R}^n}f(x)d\mu_X(x).
-\]</span></p>
-<div id="lp空间" class="section level4 hasAnchor" number="5.2.1.1">
-<h4><span class="header-section-number">5.2.1.1</span> <span class="math inline">\(L^p\)</span>空间<a href="stochastic.html#lp空间" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>如果<span class="math inline">\(X:\Omega \rightarrow\mathbf{R}^n\)</span>是一个随机变量，<span class="math inline">\(p\in[1,\infty)\)</span>是一个常数，定义<span class="math inline">\(X\)</span>上的<span class="math inline">\(L^p\)</span>范数<span class="math inline">\(||X||_p:\)</span><br />
-<span class="math display">\[
-||X||_p=||X||_{L^p(P)}=(\int_\Omega|X(\omega)|^pdP(\omega))^{\frac{1}{p}}.
-\]</span>
-如果<span class="math inline">\(p=\infty\)</span>,定义<br />
-<span class="math display">\[
-||X||_{\infty}=||X||_{L^{\infty}(P)}=\text{inf}\{N\in\mathbf{R};|X(\omega)|\leq N\, a.s.\},
-\]</span>
-相应的<span class="math inline">\(L^p\)</span>空间定义为<br />
-<span class="math display">\[
-L^p(P)=L^p(\Omega)=\{X:\Omega\rightarrow\mathbf{R}^n;||X||_p&lt;\infty\},
-\]</span>
-在该范数定义下，<span class="math inline">\(L^p\)</span>空间是Banach空间即完备的赋范空间。如果<span class="math inline">\(p=2\)</span>,空间<span class="math inline">\(L^2(P)\)</span>是一个Hilbert空间，即完备的内积空间，其中内积<br />
-<span class="math display">\[
-(X,Y)_{L^2(P)}:=E[X\cdot Y],\quad X,Y\in L^2(P).
-\]</span>
-<strong>定义2.1.3</strong></p>
-<p>两个子集<span class="math inline">\(A,B\in\mathcal{F}\)</span>称为独立的，如果<br />
-<span class="math display">\[
-P(A\cap B)=P(A)\cdot P(B).
-\]</span>
-集族<span class="math inline">\(\mathcal{A}=\{\mathcal{H_i};i\in I\}\)</span>,如果<br />
-<span class="math display">\[
-P(H_{i_1}\cap \dots \cap H_{i_k})=P(H_{i_1}) \cdots P(H_{i_k}),
-\]</span>
-对<span class="math inline">\(\forall H_{i_1}\in \mathcal{H_{i_1}},...,H_{i_k}\in\mathcal{H_{i_k}}\)</span>成立，<span class="math inline">\(i_1,i_2,...i_k\)</span>互不相同。</p>
-<p>如果由随机变量族<span class="math inline">\(X_i,i\in I\)</span>生成的<span class="math inline">\(\sigma\)</span>代数<span class="math inline">\(\mathcal{H}_{X_i}\)</span>构成的集族是独立的，那么随机变量族也是独立的。</p>
-<p>度过两个随机变量<span class="math inline">\(X,Y:\omega\rightarrow\mathbf{R}\)</span>是独立的，假设<span class="math inline">\(E[|X|]&lt;\infty,E[|Y|]&lt;\infty\)</span>，则<span class="math inline">\(E[XY]=E[X]E[Y]\)</span>.</p>
-<p><strong>定义2.1.4</strong></p>
-<p>随机过程是带参数的一族随机变量：<span class="math inline">\(\{X_t\}_{t\in T}\)</span>定义于概率空间<span class="math inline">\((\Omega,\mathcal{H},P)\)</span>上，取值于<span class="math inline">\(\mathbf{R}^n\)</span>中。</p>
-<p>参数空间<span class="math inline">\(T\)</span>通常是射线<span class="math inline">\([0,\infty).\)</span>注意对每个固定的<span class="math inline">\(t\in T\)</span>,有随机变量<br />
-<span class="math display">\[
-\omega\rightarrow X_t(\omega);\quad \omega\in \Omega.
-\]</span>
-另一方面，固定<span class="math inline">\(\omega\in \Omega\)</span>,可以考虑函数<br />
-<span class="math display">\[
-t\rightarrow X_t(\omega);\quad t\in T,
-\]</span>
-称之为<span class="math inline">\(X_t\)</span>的路径。</p>
-<p>一般地，可以直观地把<span class="math inline">\(t\)</span>当作时间，而每个<span class="math inline">\(\omega\)</span>可认为单个的“质子”或者“实验”。<span class="math inline">\(X_t(\omega)\)</span>表示在时刻<span class="math inline">\(t\)</span>时质子（实验）<span class="math inline">\(\omega\)</span>的位置（或结果）。有时可以用<span class="math inline">\(X(t,\omega)\)</span>代替<span class="math inline">\(X_t(\omega)\)</span>，因此可以把随机过程看作一个从<span class="math inline">\(T\times\Omega\)</span>到<span class="math inline">\(\mathbf{R}^n\)</span>的函数，随机过程关于<span class="math inline">\((t,\omega)\)</span>二元可测的。</p>
-<p>最后注意到，可以认为，对每个<span class="math inline">\(\omega\)</span>，函数<span class="math inline">\(t\rightarrow X_t(\omega)\)</span>是从<span class="math inline">\(T\)</span>到<span class="math inline">\(\mathbf{R}^n\)</span>的函数，因此可认为<span class="math inline">\(\Omega\)</span>是空间<span class="math inline">\(\widetilde{\Omega}=(\mathbf{R}^n)^T\)</span>(即从<span class="math inline">\(T\)</span>到<span class="math inline">\(\mathbf{R}^n\)</span>的所有的函数全体集合)的子集。此时，<span class="math inline">\(\sigma\)</span>代数<span class="math inline">\(\mathcal{F}\)</span>将包含下述形式集合生成的<span class="math inline">\(\sigma\)</span>代数<span class="math inline">\(\mathcal{B}\)</span>:<br />
-<span class="math display">\[
-\{\omega;\omega(t_1)\in F_1,...,\omega(t_k)\in F_k\},\quad F_i\subset \mathbf{R}^n为Borel集
-\]</span>
-因此，我们可以将随机过程视为可测空间<span class="math inline">\(((\mathbf{R}^n)^T,\mathcal{B})\)</span>上的一个概率测度<span class="math inline">\(P\)</span>.</p>
-<p>过程<span class="math inline">\(X=\{X_t\}_{t\in T}\)</span>的有限维分布是定义在<span class="math inline">\(\mathbf{R}^{nk},k=1,2,...\)</span>上的测度<span class="math inline">\(\mu_{t_1,...,t_k}\)</span>,其中<br />
-<span class="math display">\[
-\mu_{t_1,...,t_k}(F_1\times F_2\times \dots F_k)=P[X_{t_1}\in F_1,...,X_{t_k}\in F_k];t_i\in T,
-\]</span>
-<span class="math inline">\(F_1,...,F_k\)</span>定义为<span class="math inline">\(\mathbf{R}^n\)</span>中的Borel集。</p>
-<p>反之，给定<span class="math inline">\(\mathbf{R}^{nk},k=1,2,...\)</span>上的概率测度<span class="math inline">\(\nu_{t_1,...,t_k}\)</span>以后，能否构造一个随机过程<span class="math inline">\(\{Y_t\}_{t\in T}\)</span>使得<span class="math inline">\(\nu_{t_1,...,t_k}\)</span>作为它的有限维分布？</p>
-<p><strong>定理2.1.5（Kolmogorov存在定理）</strong></p>
-<p>对任意的<span class="math inline">\(t_1,...,t_k\in T,k\in\mathbf{N},\)</span>设<span class="math inline">\(\nu_{t_1,...,t_k}\)</span>为<span class="math inline">\(\mathbf{R}^{nk}\)</span>上的概率测度，满足</p>
-<ul>
-<li><p>(K1) <span class="math inline">\(\nu_{t_{\sigma(1)},...,t_{\sigma(k)}}(F_1\times...\times F_k)=\nu_{t_1,...,t_k}(F_{\sigma^{-1}(1)}\times...\times F_{\sigma^{-1}(k)})\)</span>其中<span class="math inline">\(\sigma\)</span>为<span class="math inline">\(\{1,2,...,k\}\)</span>的任意一个排列。</p></li>
-<li><p>(K2) <span class="math inline">\(\nu_{t_1,...,t_k}(F_1\times ...\times F_k)=\nu_{t_{\sigma(1)},...,t_{\sigma(k)},t_{\sigma_{k+1}},...,t_{\sigma_{k+m}}}(F_1\times...\times F_k\times \mathbf{R}^n\times...\mathbf{R}^n)\)</span>,对任意<span class="math inline">\(m\in\mathbf{N},\)</span>此处右边总共有<span class="math inline">\(k+m\)</span>个因素。</p>
-<p>则存在一个概率空间<span class="math inline">\((\Omega,\mathcal{F},P)\)</span>和<span class="math inline">\(\Omega\)</span>上的随机过程<span class="math inline">\(\{X_t\},X_t:\Omega\rightarrow \mathbf{R}^n\)</span>.对任意的<span class="math inline">\(t_i\in T,k\in\mathbf{N}\)</span>及任意的Borel集<span class="math inline">\(F_i\)</span>满足<br />
-<span class="math display">\[
-\mu_{t_1,...,t_k}(F_1\times F_2\times \dots F_k)=P[X_{t_1}\in F_1,...,X_{t_k}\in F_k].
-\]</span></p></li>
-</ul>
-</div>
-</div>
-<div id="布朗运动brownian-motion" class="section level3 hasAnchor" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span> 布朗运动（Brownian Motion）<a href="stochastic.html#布朗运动brownian-motion" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>为了构造<span class="math inline">\(\{B_t\}_{t\geq0}\)</span>,由Kolmogorov存在定理，只需要指定一族概率测度<span class="math inline">\(\{\nu_{t_1,...,t_k}\}\)</span>满足条件(K1),(K2)且这些测度与观察到的花粉表现一致：固定<span class="math inline">\(x\in\mathbf{R}^n\)</span>,定义
-<span class="math display">\[
-p(t,x,y)=(2\pi t)^{-\frac{n}{2}}\cdot \exp \Big ( -\frac{|x-y|^2}{2t}\Big),\quad y\in\mathbf{R}^n,t&gt;0.
-\]</span>
-如果<span class="math inline">\(0\leq t_1\leq t_2\leq ... \leq t_k\)</span>，在<span class="math inline">\(\mathbf{R}^{nk}\)</span>上定义一个测度<span class="math inline">\(\nu_{t_1,...,t_k}\)</span>使得
-<span class="math display">\[
-\begin{aligned}
-&amp;\nu_{t_1,...,t_k}(F_1\times ...\times F_k)\\
-=&amp;\int_{F_1\times...\times F_k}p(t_1,x,x_1)p(t_2-t_1,x_2,x_2)\cdots p(t_k-t_{k-1},x_{k-1},x_k)dx_1\cdots dx_k,
-\end{aligned}
-\]</span>
-此处<span class="math inline">\(dy=dy_1\cdots dy_k\)</span>为Lebesgue测度，<span class="math inline">\(p(0,x,y)dy=\delta_x(y)\)</span>是在<span class="math inline">\(x\)</span>处的单位质点。</p>
-<p>​ 利用(K1)，把它延拓到所有<span class="math inline">\(t_i\)</span>的有限序列。由于对<span class="math inline">\(\forall t\geq0,\int_{\mathbf{R}^n}p(t,x,y)dy=1,\)</span>故(K2)满足，由Kolmogorow定理，存在一个概率空间<span class="math inline">\((\Omega,\mathcal{F},P^x)\)</span>和一个<span class="math inline">\(\Omega\)</span>上的随机过程<span class="math inline">\(\{B_t\}_{t\geq0},\)</span>使得<span class="math inline">\(B_t\)</span>的有限维分布为上式，即
-<span class="math display">\[
-\begin{aligned}
-&amp;P^x(B_{t_1}\in F_1,...,B_{t_k}\in F_k)\\
-=&amp;\int_{F_1\times...\times F_k}p(t_1,x,x_1)p(t_2-t_1,x_2,x_2)\cdots p(t_k-t_{k-1},x_{k-1},x_k)dx_1\cdots dx_k.
-\end{aligned}
-\]</span></p>
-<p>​ <strong>定义2.2.1</strong></p>
-<p>​ 上述过程称为初值为<span class="math inline">\(x\)</span>的布朗运动的修正，注意<span class="math inline">\(P^x(B_0=x)=1\)</span>.</p>
-<p>​ 下面叙述布朗运动的基本性质：</p>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(B_t\)</span>是一个Gauss过程，即对所有的<span class="math inline">\(0\leq t_1\leq...t_k,\)</span>随机变量<span class="math inline">\(Z=(B_{t_1},...,B_{t_k})\in \mathbf{R}^{nk}\)</span>是服从多重正态分布的，即存在一个向量<span class="math inline">\(M\in \mathbf{R}^{nk}\)</span>和一个半正定矩阵<span class="math inline">\(C=[c_{jm}]\in\mathbf{B}^{nk\times nk}\)</span>使得
-<span class="math display">\[
-E^x\Big[\exp\Big(i\sum_{j=1}^{nk}u_jZ_j\Big)\Big]=\exp\Big(-\frac{1}{2}\sum_{j,m}u_jc_{jm}u_m+i\sum_{j}u_jM_j\Big)
-\]</span>
-对所有的<span class="math inline">\(u=(u_1,...,u_{nk})\in \mathbf{R}^{nk}\)</span>成立，这里的<span class="math inline">\(i\)</span>是虚数单位，<span class="math inline">\(E^x\)</span>表示关于概率<span class="math inline">\(P^x\)</span>​所取的数学期望。
-<span class="math display">\[
-M=E^x[Z]
-\]</span>
-是<span class="math inline">\(Z\)</span>的均值，
-<span class="math display">\[
-c_{jm}=E^x[(Z_j-M_j)(Z_m-M_m)]
-\]</span>
-是<span class="math inline">\(Z\)</span>的协方差矩阵。</p>
-<p>​ 经过计算可知，
-<span class="math display">\[
-M=E^x[Z]=(x,x,...,x)\in\mathbf{R}^{nk},
-\]</span></p>
-<p><span class="math display">\[
-\begin{aligned}
-C=
-\begin{pmatrix}
-t_1I_n &amp; t_1I_n &amp;...&amp;t_1I_n\\
-t_1I_n &amp; t_2I_n &amp;...&amp;t_2I_n\\
-\vdots &amp; \vdots&amp; &amp;\vdots\\
-t_1I_n&amp;t_2I_n&amp;...&amp;t_kI_n
-\end{pmatrix}，
-\end{aligned}
-\]</span></p></li>
-</ol>
-<p>因此
-<span class="math display">\[
-E^x[B_t]=x, \quad \text{for all}\,\,t\geq0
-\]</span>
-及
-<span class="math display">\[
-E^x[(B_t-x)^2]=nt,\quad E^x[(B_t-x)(B_s-x)]=n\,\min(s,t),
-\]</span>
-而且，如果<span class="math inline">\(t\geq s,\)</span>则有
-<span class="math display">\[
-E^x[(B_t-B_s)^2]=n(t-s).
-\]</span></p>
-<ol start="2" style="list-style-type: decimal">
-<li><span class="math inline">\(B_t\)</span>具有独立增量，即对任意的<span class="math inline">\(0\leq t_1&lt;t_2&lt;...&lt;t_k,\)</span>
-<span class="math display">\[
-B_{t_1},B_{t_2}-B_{t_1},...,B_{t_k}-B_{t_{k-1}}是独立的.
-\]</span></li>
-</ol>
+<div id="盈余过程建模" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> 盈余过程建模<a href="RLreinsurance.html#盈余过程建模" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 
 </div>
 </div>
@@ -601,8 +413,8 @@ B_{t_1},B_{t_2}-B_{t_1},...,B_{t_k}-B_{t_{k-1}}是独立的.
           </div>
         </div>
       </div>
-<a href="qrm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="english.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mulreinsurance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datawhale.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

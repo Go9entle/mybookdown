@@ -23,6 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
+<meta name="date" content="2025-03-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -30,7 +31,7 @@
   
   
 <link rel="prev" href="cdc.html"/>
-<link rel="next" href="datawhale.html"/>
+<link rel="next" href="RLreinsurance.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -199,7 +200,18 @@ div.csl-indent {
 <li class="chapter" data-level="1.2.5" data-path="rlforfin.html"><a href="rlforfin.html#固定策略下的mdp价值函数"><i class="fa fa-check"></i><b>1.2.5</b> 固定策略下的MDP价值函数</a></li>
 <li class="chapter" data-level="1.2.6" data-path="rlforfin.html"><a href="rlforfin.html#最优价值函数和最优策略"><i class="fa fa-check"></i><b>1.2.6</b> 最优价值函数和最优策略</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="rlforfin.html"><a href="rlforfin.html#dynamicprogram"><i class="fa fa-check"></i><b>1.3</b> 动态规划算法</a></li>
+<li class="chapter" data-level="1.3" data-path="rlforfin.html"><a href="rlforfin.html#dynamicprogram"><i class="fa fa-check"></i><b>1.3</b> 动态规划算法</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rlforfin.html"><a href="rlforfin.html#planning-vs-learning"><i class="fa fa-check"></i><b>1.3.1</b> Planning vs Learning</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rlforfin.html"><a href="rlforfin.html#不动点理论"><i class="fa fa-check"></i><b>1.3.2</b> 不动点理论</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rlforfin.html"><a href="rlforfin.html#贝尔曼策略算子以及策略评估算法"><i class="fa fa-check"></i><b>1.3.3</b> 贝尔曼策略算子以及策略评估算法</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rlforfin.html"><a href="rlforfin.html#贪心策略"><i class="fa fa-check"></i><b>1.3.4</b> 贪心策略</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rlforfin.html"><a href="rlforfin.html#策略提升"><i class="fa fa-check"></i><b>1.3.5</b> 策略提升</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rlforfin.html"><a href="rlforfin.html#策略迭代算法"><i class="fa fa-check"></i><b>1.3.6</b> 策略迭代算法</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rlforfin.html"><a href="rlforfin.html#贝尔曼最优性算子与值迭代算法"><i class="fa fa-check"></i><b>1.3.7</b> 贝尔曼最优性算子与值迭代算法</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rlforfin.html"><a href="rlforfin.html#从最优值函数到最优策略"><i class="fa fa-check"></i><b>1.3.8</b> 从最优值函数到最优策略</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rlforfin.html"><a href="rlforfin.html#广义策略迭代"><i class="fa fa-check"></i><b>1.3.9</b> 广义策略迭代</a></li>
+</ul></li>
 <li class="chapter" data-level="1.4" data-path="rlforfin.html"><a href="rlforfin.html#dynassall"><i class="fa fa-check"></i><b>1.4</b> 动态资产配置和消费</a>
 <ul>
 <li class="chapter" data-level="1.4.1" data-path="rlforfin.html"><a href="rlforfin.html#个人财务的优化"><i class="fa fa-check"></i><b>1.4.1</b> 个人财务的优化</a></li>
@@ -245,6 +257,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="english.html"><a href="english.html"><i class="fa fa-check"></i><b>6</b> 英语</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="english.html"><a href="english.html#week2"><i class="fa fa-check"></i><b>6.1</b> week2</a></li>
+<li class="chapter" data-level="6.2" data-path="english.html"><a href="english.html#week3"><i class="fa fa-check"></i><b>6.2</b> week3</a></li>
 </ul></li>
 <li class="part"><span><b>III 讨论班报告</b></span></li>
 <li class="chapter" data-level="7" data-path="cdc.html"><a href="cdc.html"><i class="fa fa-check"></i><b>7</b> Optimal strategies for collective defined contribution plans when the stock and labor markets are co-integrated（股票和劳动力市场协同整合时集体确定缴款计划的最优策略）</a>
@@ -280,46 +293,56 @@ div.csl-indent {
 <li class="chapter" data-level="8.2.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#setting-and-theoretical-results"><i class="fa fa-check"></i><b>8.2.1</b> Setting and theoretical results</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="RLreinsurance.html"><a href="RLreinsurance.html"><i class="fa fa-check"></i><b>9</b> A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#rlreabstract"><i class="fa fa-check"></i><b>9.1</b> Abstract</a></li>
+<li class="chapter" data-level="9.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#rlreintro"><i class="fa fa-check"></i><b>9.2</b> Introduction</a></li>
+<li class="chapter" data-level="9.3" data-path="RLreinsurance.html"><a href="RLreinsurance.html#rlremodel"><i class="fa fa-check"></i><b>9.3</b> Model Description</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#离散时间框架"><i class="fa fa-check"></i><b>9.3.1</b> 离散时间框架</a></li>
+<li class="chapter" data-level="9.3.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#盈余过程建模"><i class="fa fa-check"></i><b>9.3.2</b> 盈余过程建模</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>IV 课外学习笔记</b></span></li>
-<li class="chapter" data-level="9" data-path="datawhale.html"><a href="datawhale.html"><i class="fa fa-check"></i><b>9</b> Datawhale Quant</a>
+<li class="chapter" data-level="10" data-path="datawhale.html"><a href="datawhale.html"><i class="fa fa-check"></i><b>10</b> Datawhale Quant</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="datawhale.html"><a href="datawhale.html#investquant"><i class="fa fa-check"></i><b>9.1</b> 投资与量化投资</a></li>
-<li class="chapter" data-level="9.2" data-path="datawhale.html"><a href="datawhale.html#finmarket"><i class="fa fa-check"></i><b>9.2</b> 金融市场的基本概念</a>
+<li class="chapter" data-level="10.1" data-path="datawhale.html"><a href="datawhale.html#investquant"><i class="fa fa-check"></i><b>10.1</b> 投资与量化投资</a></li>
+<li class="chapter" data-level="10.2" data-path="datawhale.html"><a href="datawhale.html#finmarket"><i class="fa fa-check"></i><b>10.2</b> 金融市场的基本概念</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="datawhale.html"><a href="datawhale.html#monetaryfin"><i class="fa fa-check"></i><b>9.2.1</b> 货币金融学</a></li>
-<li class="chapter" data-level="9.2.2" data-path="datawhale.html"><a href="datawhale.html#investfin"><i class="fa fa-check"></i><b>9.2.2</b> 投资学</a></li>
+<li class="chapter" data-level="10.2.1" data-path="datawhale.html"><a href="datawhale.html#monetaryfin"><i class="fa fa-check"></i><b>10.2.1</b> 货币金融学</a></li>
+<li class="chapter" data-level="10.2.2" data-path="datawhale.html"><a href="datawhale.html#investfin"><i class="fa fa-check"></i><b>10.2.2</b> 投资学</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="datawhale.html"><a href="datawhale.html#stockdataget"><i class="fa fa-check"></i><b>9.3</b> 股票数据获取</a>
+<li class="chapter" data-level="10.3" data-path="datawhale.html"><a href="datawhale.html#stockdataget"><i class="fa fa-check"></i><b>10.3</b> 股票数据获取</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="datawhale.html"><a href="datawhale.html#股票数据常见指标介绍"><i class="fa fa-check"></i><b>9.3.1</b> 股票数据常见指标介绍</a></li>
-<li class="chapter" data-level="9.3.2" data-path="datawhale.html"><a href="datawhale.html#baostock的基础数据获取"><i class="fa fa-check"></i><b>9.3.2</b> Baostock的基础数据获取</a></li>
+<li class="chapter" data-level="10.3.1" data-path="datawhale.html"><a href="datawhale.html#股票数据常见指标介绍"><i class="fa fa-check"></i><b>10.3.1</b> 股票数据常见指标介绍</a></li>
+<li class="chapter" data-level="10.3.2" data-path="datawhale.html"><a href="datawhale.html#baostock的基础数据获取"><i class="fa fa-check"></i><b>10.3.2</b> Baostock的基础数据获取</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="datawhale.html"><a href="datawhale.html#quantselect"><i class="fa fa-check"></i><b>9.4</b> 量化选股策略</a>
+<li class="chapter" data-level="10.4" data-path="datawhale.html"><a href="datawhale.html#quantselect"><i class="fa fa-check"></i><b>10.4</b> 量化选股策略</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="datawhale.html"><a href="datawhale.html#fctsctm"><i class="fa fa-check"></i><b>9.4.1</b> 因子选股模型</a></li>
+<li class="chapter" data-level="10.4.1" data-path="datawhale.html"><a href="datawhale.html#fctsctm"><i class="fa fa-check"></i><b>10.4.1</b> 因子选股模型</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="causal.html"><a href="causal.html"><i class="fa fa-check"></i><b>10</b> 格兰格因果性</a>
+<li class="chapter" data-level="11" data-path="causal.html"><a href="causal.html"><i class="fa fa-check"></i><b>11</b> 格兰格因果性</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="causal.html"><a href="causal.html#causal-intro"><i class="fa fa-check"></i><b>10.1</b> 介绍</a></li>
-<li class="chapter" data-level="10.2" data-path="causal.html"><a href="causal.html#causal-def"><i class="fa fa-check"></i><b>10.2</b> 格兰格因果性的定义</a></li>
+<li class="chapter" data-level="11.1" data-path="causal.html"><a href="causal.html#causal-intro"><i class="fa fa-check"></i><b>11.1</b> 介绍</a></li>
+<li class="chapter" data-level="11.2" data-path="causal.html"><a href="causal.html#causal-def"><i class="fa fa-check"></i><b>11.2</b> 格兰格因果性的定义</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>11</b> 中文图书Bookdown模板的基本用法</a>
+<li class="chapter" data-level="12" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>12</b> 中文图书Bookdown模板的基本用法</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="usage.html"><a href="usage.html#usage-ins"><i class="fa fa-check"></i><b>11.1</b> 安装设置</a></li>
-<li class="chapter" data-level="11.2" data-path="usage.html"><a href="usage.html#usage-writing"><i class="fa fa-check"></i><b>11.2</b> 编写自己的内容</a>
+<li class="chapter" data-level="12.1" data-path="usage.html"><a href="usage.html#usage-ins"><i class="fa fa-check"></i><b>12.1</b> 安装设置</a></li>
+<li class="chapter" data-level="12.2" data-path="usage.html"><a href="usage.html#usage-writing"><i class="fa fa-check"></i><b>12.2</b> 编写自己的内容</a>
 <ul>
-<li class="chapter" data-level="11.2.1" data-path="usage.html"><a href="usage.html#usage-writing-struct"><i class="fa fa-check"></i><b>11.2.1</b> 文档结构</a></li>
-<li class="chapter" data-level="11.2.2" data-path="usage.html"><a href="usage.html#usage-writing-fig"><i class="fa fa-check"></i><b>11.2.2</b> 图形自动编号</a></li>
-<li class="chapter" data-level="11.2.3" data-path="usage.html"><a href="usage.html#usage-writing-tab"><i class="fa fa-check"></i><b>11.2.3</b> 表格自动编号</a></li>
-<li class="chapter" data-level="11.2.4" data-path="usage.html"><a href="usage.html#usage-writing-math"><i class="fa fa-check"></i><b>11.2.4</b> 数学公式编号</a></li>
-<li class="chapter" data-level="11.2.5" data-path="usage.html"><a href="usage.html#文献引用与文献列表"><i class="fa fa-check"></i><b>11.2.5</b> 文献引用与文献列表</a></li>
+<li class="chapter" data-level="12.2.1" data-path="usage.html"><a href="usage.html#usage-writing-struct"><i class="fa fa-check"></i><b>12.2.1</b> 文档结构</a></li>
+<li class="chapter" data-level="12.2.2" data-path="usage.html"><a href="usage.html#usage-writing-fig"><i class="fa fa-check"></i><b>12.2.2</b> 图形自动编号</a></li>
+<li class="chapter" data-level="12.2.3" data-path="usage.html"><a href="usage.html#usage-writing-tab"><i class="fa fa-check"></i><b>12.2.3</b> 表格自动编号</a></li>
+<li class="chapter" data-level="12.2.4" data-path="usage.html"><a href="usage.html#usage-writing-math"><i class="fa fa-check"></i><b>12.2.4</b> 数学公式编号</a></li>
+<li class="chapter" data-level="12.2.5" data-path="usage.html"><a href="usage.html#文献引用与文献列表"><i class="fa fa-check"></i><b>12.2.5</b> 文献引用与文献列表</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="usage.html"><a href="usage.html#usage-output"><i class="fa fa-check"></i><b>11.3</b> 转换</a>
+<li class="chapter" data-level="12.3" data-path="usage.html"><a href="usage.html#usage-output"><i class="fa fa-check"></i><b>12.3</b> 转换</a>
 <ul>
-<li class="chapter" data-level="11.3.1" data-path="usage.html"><a href="usage.html#usage-gitbook"><i class="fa fa-check"></i><b>11.3.1</b> 转换为网页</a></li>
-<li class="chapter" data-level="11.3.2" data-path="usage.html"><a href="usage.html#usage-pdfbook"><i class="fa fa-check"></i><b>11.3.2</b> 生成PDF</a></li>
-<li class="chapter" data-level="11.3.3" data-path="usage.html"><a href="usage.html#usage-website"><i class="fa fa-check"></i><b>11.3.3</b> 上传到网站</a></li>
+<li class="chapter" data-level="12.3.1" data-path="usage.html"><a href="usage.html#usage-gitbook"><i class="fa fa-check"></i><b>12.3.1</b> 转换为网页</a></li>
+<li class="chapter" data-level="12.3.2" data-path="usage.html"><a href="usage.html#usage-pdfbook"><i class="fa fa-check"></i><b>12.3.2</b> 生成PDF</a></li>
+<li class="chapter" data-level="12.3.3" data-path="usage.html"><a href="usage.html#usage-website"><i class="fa fa-check"></i><b>12.3.3</b> 上传到网站</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -352,7 +375,9 @@ div.csl-indent {
 <p>论文原文<em>Optimal multidimensional reinsurance policies under a common shock dependency structure</em>点击<a href="https://go9entle.github.io/myresearch/OMR.pdf">这里</a>查看。</p>
 </blockquote>
 <p><strong>再保险</strong>是指以下保险公司为避免自己遭遇损失和风险而向另一家保险公司投保的过程。</p>
-<p>本文中，作者考虑一种共同冲击依赖结构用于对再保险公司的盈余过程进行建模，目标是针对再保险策略向量最大化目标函数，即随时间积分的预期折现盈余水平。</p>
+<p>在本文中，我们考虑一家在多个相关业务线上运营的保险公司。我们假设每条业务线的风险过程都服从Cramér–Lundberg风险模型，并采用共同冲击（common shock）依赖结构来描述不同业务线可能会同时发生索赔的情况。
+作者考虑一种共同冲击依赖结构用于对再保险公司的盈余过程进行建模，目标是针对再保险策略向量最大化目标函数，即随时间积分的预期折现盈余水平。</p>
+<p>保险公司通过再保险策略向再保险公司转移部分风险，本文的目标是利用动态规划方法，最大化某一目标函数（即随时间积分的期望贴现盈余）。我们将最优目标函数（价值函数）描述为满足相应Hamilton–Jacobi–Bellman（HJB）方程及一定边界条件的唯一解。此外文章还提出了一种数值算法，用于计算目标函数的最优解，并得到相应的最优再保险策略。</p>
 <div id="common-shock-model" class="section level3 hasAnchor" number="8.1.1">
 <h3><span class="header-section-number">8.1.1</span> Common shock model<a href="mulreinsurance.html#common-shock-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>考虑一家运营于<span class="math inline">\(n\)</span>个相互依赖保险业务线的保险公司。事实上，索赔可能同时发生在多个业务线上，例如，一次车祸可能对汽车和司机造成损害。因此，我们假设有<span class="math inline">\(m\)</span>个源，其中每个源的发生会导致一个或多个业务线发生索赔。图<a href="mulreinsurance.html#fig:csm">8.1</a></p>
@@ -363,7 +388,7 @@ div.csl-indent {
 </p>
 </div>
 <p>需要注意的是源1和源4都会在第一条业务线发生索赔，但这些索赔的概率分布可能不同。</p>
-<p>更准确地说，考虑一个概率空间<span class="math inline">\((\Omega,\mathcal{E},P)\)</span>,在此空间中我们考虑具有参数<span class="math inline">\(\beta_i\)</span>的独立Poisson过程<span class="math inline">\(\{N_i(t):t\geq0\}\)</span>,用于描述源<span class="math inline">\(i\in\{1,2,...,m\}\)</span>中事件的发生频率。将源<span class="math inline">\(i\)</span>在业务线<span class="math inline">\(j\)</span>上的第<span class="math inline">\(k\)</span>次索赔大小表示为随机变量<span class="math inline">\(Y_{ijk}\)</span>.假设<span class="math inline">\(\{Y_{ijk}:i\in\{1,2,...,m\},j\in A_i,k\in\mathbb{N}\}\)</span>是独立的随机变量，其中<span class="math inline">\(A_i\subset\{1,2,...,n\}\)</span>是源<span class="math inline">\(i\)</span>影响的业务线的集合，<span class="math inline">\(Y_{ijk}\)</span>具有累积分布函数<span class="math inline">\(F^Y_{ij}\)</span>和有限的均值<span class="math inline">\(\mu_{ij}\)</span>。因此源<span class="math inline">\(i\)</span>(固定<span class="math inline">\(i\)</span>)在时间<span class="math inline">\(t\)</span>之前造成的总索赔金额为</p>
+<p>更准确地说，考虑一个概率空间<span class="math inline">\((\Omega,\mathcal{E},P)\)</span>,在此空间中我们考虑具有参数<span class="math inline">\(\beta_i\)</span>的独立Poisson过程<span class="math inline">\(\{N_i(t):t\geq0\}\)</span>,用于描述源<span class="math inline">\(i\in\{1,2,...,m\}\)</span>中事件的发生频率。将源<span class="math inline">\(i\)</span>在业务线<span class="math inline">\(j\)</span>上的第<span class="math inline">\(k\)</span>次索赔大小表示为随机变量<span class="math inline">\(Y_{ijk}\)</span>.假设<span class="math inline">\(\{Y_{ijk}:i\in\{1,2,...,m\},j\in A_i,k\in\mathbb{N}\}\)</span>对于第<span class="math inline">\(k\)</span>次是独立的随机变量，其中<span class="math inline">\(A_i\subset\{1,2,...,n\}\)</span>是源<span class="math inline">\(i\)</span>影响的业务线的集合，<span class="math inline">\(Y_{ijk}\)</span>具有累积分布函数<span class="math inline">\(F^Y_{ij}\)</span>和有限的均值<span class="math inline">\(\mu_{ij}\)</span>。因此源<span class="math inline">\(i\)</span>(固定<span class="math inline">\(i\)</span>)在时间<span class="math inline">\(t\)</span>之前造成的总索赔金额为</p>
 <p><span class="math display">\[
 \sum_{k=1}^{N_i(t)}\sum_{j\in A_i}Y_{ijk},\quad i=1,2,...,m
 \]</span></p>
@@ -379,7 +404,7 @@ p=\sum_{j=1}^np_j,\quad p_j=(1+\eta_j)\sum_{i=1}^m\beta_i\mu_{ij}I_{A_i}(j), \ta
 <ul>
 <li><p><span class="math inline">\(p_j\)</span>是业务线<span class="math inline">\(j\)</span>的保费；</p></li>
 <li><p><span class="math inline">\(\eta_j\)</span>是与业务线<span class="math inline">\(j\)</span>相关的相对安全载荷因子，表示对风险的附加费用；</p></li>
-<li><p><span class="math inline">\(\beta_i\)</span>是源<span class="math inline">\(i\)</span>在业务线<span class="math inline">\(j\)</span>上的平均索赔大小；</p></li>
+<li><p><span class="math inline">\(\beta_i\)</span>是源<span class="math inline">\(i\)</span>的平均发生次数；</p></li>
 <li><p><span class="math inline">\(\mu_{ij}\)</span>是源<span class="math inline">\(i\)</span>在业务线<span class="math inline">\(j\)</span>上的平均索赔大小。</p></li>
 <li><p><span class="math inline">\(I_{A_i}(j)\)</span>是示性函数，表示如果业务线 <span class="math inline">\(j\)</span> 受源 <span class="math inline">\(i\)</span> 影响，则 <span class="math inline">\(I_{A_i}(j)=1\)</span>，否则为 <span class="math inline">\(0\)</span>.</p></li>
 </ul>
@@ -403,7 +428,7 @@ p(\boldsymbol{u})=p-\sum_{j=1}^nq_j(u_j),\quad \boldsymbol{u}\in \mathcal{U}
 <p><span class="math display">\[
 q_j(u_j)=(1+\theta_j)\sum_{i=1}^m\beta_i\mathbb{E}(Y_{ijk}-r_j(u_j,Y_{ijk}))I_{A_i}(j)
 \]</span></p>
-<p>其中<span class="math inline">\(\theta_j&gt;\eta_j\)</span>是安全载荷因子，<span class="math inline">\(p\)</span>在<a href="mulreinsurance.html#eq:omr2">(8.2)</a>中定义，<span class="math inline">\(r_j(u_j,Y_{ijk})是再保险公司承担的索赔金额，且\)</span>=_1_2…<span class="math inline">\(是\)</span>^n<span class="math inline">\(中一个子集。对于比例再保险\)</span>U_j=[0,1]<span class="math inline">\(而对于损失超额再保险\)</span>U_j=[0,].$</p>
+<p>其中<span class="math inline">\(\theta_j&gt;\eta_j\)</span>是安全载荷因子，<span class="math inline">\(p\)</span>在<a href="mulreinsurance.html#eq:omr2">(8.2)</a>中定义，<span class="math inline">\(r_j(u_j,Y_{ijk})\)</span>是保险公司按照再保险策略需要承担的索赔金额，且<span class="math inline">\(\mathcal{U}=\mathcal{U}_1\times\mathcal{U}_2\times ...\times\mathcal{U_n}\)</span>是<span class="math inline">\(\mathbb{R}^n\)</span>中一个子集。对于比例再保险<span class="math inline">\(U_j=[0,1]\)</span>而对于损失超额再保险<span class="math inline">\(U_j=[0,\infty].\)</span></p>
 </div>
 <div id="the-value-function" class="section level4 hasAnchor" number="8.1.1.2">
 <h4><span class="header-section-number">8.1.1.2</span> The value function<a href="mulreinsurance.html#the-value-function" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -447,6 +472,8 @@ H_g(x,\boldsymbol{u})=x+p(\boldsymbol{u})g&#39;(x)-(\delta+\beta)g(x)+\sum_{i=1}
 <p>论文原文<em>Multivariate risk aversion utility, application to ESG investments</em>点击<a href="https://go9entle.github.io/myresearch/MRAU.pdf">这里</a>查看。</p>
 </blockquote>
 <p><strong>ESG</strong>(Environmental, social, and governance) 是优先考虑环境问题、社会问题和公司治理的投资原则的简写。考虑ESG的投资有时被称为<em>负责任的投资</em>（responsible investing）或者<em>影响力投资</em>（impact investing）。</p>
+<p>期望效用理论（EUT）的基础自从Von Neumann和Morgenstern于20世纪50年代初的开创性工作以来就存在了，Neumann 和 Morgenstern（1953）。该理论迅速成为投资组合优化的主要分支之一。Merton在70年代基于几何布朗运动并使用其中一个广泛的效用函数家庭——超双曲绝对风险厌恶（HARA）效用，提出了连续时间下的直观解，Merton（1971）。我们在EUT框架下使用一类多元效用，类似于Cobb-Douglas效用函数（参见Rasmussen（2011）第3.4节，Campi和Owen（2011）），我们称之为多元常数相对风险厌恶（M-CRRA）。我们认为投资者在财富的不同来源上可能不会以相同的风险厌恶水平来考虑或对待所有的风险来源。市场中的某些风险来源（例如投资组合中的行业或资产类别）可能受到更大的关注、反感或带来较低的满意度；因此，投资者应具备为任何给定的风险来源附加合适风险厌恶水平的灵活性。有关各种资产类别的实证风险厌恶水平，可以参考Conine、McDonald和Tamarkin（2017）表1中的研究。多属性效用函数中对不同来源和满意度水平的研究也已被探讨，参见Kihlstrom和Mirman（1974）以及Dorfleitner和Krapp（2007）。在这种背景下，我们可以将资产类别（或一组股票）的风险视为一个属性。</p>
+<p>尽管我们的假设较为简单，但多元效用也可以解释为：一方面，投资者对资产类别的偏好；另一方面，对风险的偏好。这两者是不同的概念，但在效用理论中，风险偏好常常超越了资产类别偏好，这使得后者只是简单地在分析中包括或排除资产类别，这通常对于投资者来说并不理想。将资产类别偏好与风险偏好结合的一个有趣例子是环境、社会和公司治理（ESG）投资主题。在过去20年中，ESG驱动的投资规模已增长到超过30万亿美元的资产管理规模，全球可持续投资资产在2018年飙升至30万亿美元（2019年），并且未来呈现出明显的增长趋势。为了ESG的目的，企业在三个方面进行评估：首先是它们在环境目标方面的工作，其次是它们对某些社会运动的支持，最后是公司是否按照多样性、公平性和包容性运动进行治理，即ESG（环境、社会和治理）。许多方法已经被设计用来衡量企业对ESG目标的对齐情况，这被称为“ESG评分”，参见Whelan（2021）对超过1000项不同评分研究的回顾。除了企业/公司/股票的“ESG评分”，我们还应该考虑投资者的“ESG口味”（资产类别偏好，属性偏好），这可以解释为投资者对其投资组合中股票的ESG评分的喜好或反感。</p>
 <p>本文使用多变量或多属性效用的概念，将不同的风险规避水平与不同的财富来源（例如行业、股票、资产类别）联系起来。</p>
 <p>本文的目标是通过风险厌恶水平将投资者的ESG偏好纳入投资组合优化分析中。在ESG文献中，资产类别偏好和风险厌恶这两个话题通常被分开处理，本文提供一种更简化的替代方法，不仅具有闭式解还具备潜在的推广性。为了简化问题，将股票分为<span style="color: green;">绿色股票</span>和<span style="color: brown;">棕色股票</span>（这两种属性的股票对投资者的吸引程度不同），因此有两种可能的风险厌恶水平。这里的“绿色”指的是公司为社会创造积极的外部效益（即具有良好的ESG评分），而“棕色”则带来负面外部效益，即低ESG评分。本文中的结果可以适应ESG评分与风险厌恶水平之间更灵活的关系。</p>
 <p>关于ESG投资组合优化主要有两条研究路线，一条依赖于预期效用理论（EUT），另一条则基于均值方差理论（MVT）。于ESG投资组合优化这一主题的新颖性以及其不断发展，下面简要提及一些当前的研究。</p>
@@ -501,7 +528,7 @@ u(X_{1,T},X_{2,T})=sign(\alpha_1)\frac{(X_{1,T})^{\alpha_1}}{\alpha_1}\frac{(X_{
 其中<span class="math inline">\(0&lt;\alpha_1\leq\alpha_2&lt;1\)</span>或者<span class="math inline">\(\alpha_2\leq\alpha_1&lt;0.\)</span>注意，<span class="math inline">\(u(X_{1,T}, X_{2,T})\)</span> 是凹的（Hessian 矩阵是半负定的），并且在每个变量上是递增的. Arrow–Pratt系数用于衡量绝对风险厌恶度。其依赖于变量的财富水平：</p>
 <ul>
 <li><p>对绿色投资的风险厌恶系数为<span class="math inline">\(-\frac{\frac{\partial^2u}{\partial X_1^2}}{\frac{\partial u}{\partial X_1}}=\frac{1-\alpha_1}{X_1}\)</span>;</p></li>
-<li><p>对棕色投资的风险厌恶系数为<span class="math inline">\(\frac{\frac{\partial^2u}{\partial X_2^2}}{\frac{\partial u}{\partial X_2}}=\frac{1-\alpha_2}{X_2}.\)</span></p></li>
+<li><p>对棕色投资的风险厌恶系数为<span class="math inline">\(-\frac{\frac{\partial^2u}{\partial X_2^2}}{\frac{\partial u}{\partial X_2}}=\frac{1-\alpha_2}{X_2}.\)</span></p></li>
 </ul>
 <p>这个问题的价值函数为：</p>
 <p><span class="math display" id="eq:mrau2">\[
@@ -584,16 +611,13 @@ V(X_{1,t},X_{2,t})&amp;=sign(\alpha_1)\frac{X_t^{\alpha_1}}{\alpha_1\alpha_2}\ex
 </div>
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="cdc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="datawhale.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="RLreinsurance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -641,7 +665,8 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "subsection",
+"toc_collapsed": true
 }
 });
 });

@@ -269,12 +269,15 @@ knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.3y
 **定理**
 
 Markov决策过程包括以下内容：  
+
 - 可数状态集合$\mathcal{S}$（称为状态空间），终止状态集合$\mathcal{T}\subset \mathcal{S}$,以及可数动作集合$\mathcal{A}$（称为动作空间）。
 - 时间索引的环境生成随机状态序列$S_t\in\mathcal{S}$（时间步$t=0,1,2,...$），时间索引的环境生成奖励随机变量序列$R_t\in\mathcal{D}$（$\mathcal{D}$是$\mathbb{R}$的可数子集），以及时间索引的智能体可控动作序列$A_t\in\mathcal{A}$  
+
 - Markov性  
   \begin{equation*}
   P[(R_{t+1},S_{t+1})|(S_t,A_t,S_{t-1},A_{t-1},...,S_0,A_0)]=P[   (R_{t+1},S_{t+1})|(S_t,A_t)]\text{ for all }t\geq 0
   \end{equation*}
+  
 - 终止：如果某个时间步$T$的状态$S_T\in\mathcal{T}$,则该序列结果在时间步$T$终止。
 
 
@@ -299,6 +302,7 @@ $$
 \sum_{s'\in\mathcal{S}}\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,a,r,s')=1\text{ for all }s\in\mathcal{N},a\in\mathcal{A}
 $$
 这又可以通过状态-奖励转移概率函数$\mathcal{P}_R$来表征，给定$\mathcal{P}_R$的规范，我们可以构造  
+
 - 状态转移概率函数：  
   $$
     \mathcal{P}:\mathcal{N\times A\times S}\rightarrow [0,1]
@@ -440,7 +444,7 @@ $$
 Q^\pi(s,a)=\mathbb{E}_{\pi,\mathcal{P}_R}[G_t|(S_t=s,A_t=a)]\text{ for all }s\in\mathcal{N},a\in\mathcal{A} \text{ for all }t=0,1,2,...
 $$
 
-为了避免术语混淆，我们将$V^\pi$称为策略$\pi$地**状态-价值函数**（尽管通常简称为价值函数），以区别于**动作-价值函数**$Q^\pi$.解释$Q^\pi(s,a)$的方式是，它是从给定非终止状态$s$出发，首先采取动作$a$，然后遵循策略$\pi$的期望回报。通过这种解释，我们可以将$V^\pi(s)$视作$Q^\pi(s,a)$的“加权平均”（对于所有从非终止状态$s$出发的所有可能动作$a$）,权重等于给定状态$s$的动作$a$的概率（即$\pi(s,a)$）。具体来说：  
+为了避免术语混淆，我们将$V^\pi$称为策略$\pi$的**状态-价值函数**（尽管通常简称为价值函数），以区别于**动作-价值函数**$Q^\pi$.解释$Q^\pi(s,a)$的方式是，它是从给定非终止状态$s$出发，首先采取动作$a$，然后遵循策略$\pi$的期望回报。通过这种解释，我们可以将$V^\pi(s)$视作$Q^\pi(s,a)$的“加权平均”（对于所有从非终止状态$s$出发的所有可能动作$a$）,权重等于给定状态$s$的动作$a$的概率（即$\pi(s,a)$）。具体来说：  
 
 \begin{equation}
 V^\pi(s)=\sum_{a\in\mathcal{A}}\pi(s,a)\cdot Q^\pi(s,a)\text{ for all }s\in\mathcal{N} (\#eq:4-2)
@@ -511,6 +515,7 @@ $$
 方程\@ref(eq:4-8)被称为**MDP动作-价值函数贝尔曼最优性方程**。  
 方程\@ref(eq:4-7)、\@ref(eq:4-5)、\@ref(eq:4-6)和\@ref(eq:4-8)统称为**MDP贝尔曼最优性方程**。我们应该强调，当有人说 MDP贝尔曼方程或简称为贝尔曼方程时，除非他们明确说明，否则他们指的是 MDP 贝尔曼最优性方程（通常是 MDP 状态-价值函数贝尔曼最优性方程）。这是因为 MDP 贝尔曼最优性方程解决了马尔可夫决策过程的最终目的——识别最优价值函数和实现最优价值函数的相关策略（即使我们能够解决 MDP 控制问题）。  
 我们需要强调的是，贝尔曼最优性方程并没有直接给出计算最优质函数或实现最优质函数的策略的具体方法——它们只是阐述了最优值函数的一个强大数学性质，这一性质帮助我们提出动态规划或者强化学习的算法来计算最优值函数及其相关的策略。  
+
 我们一直在使用“实现最优值函数的策略/策略组合”这个词，但我们还没有给出这样的策略的明确定义。事实上，正如之前提到的，从$V^*$的定义来看并不清楚是否存在这样的策略能实现$V^*$（因为可以设想不同的策略$\pi$对于不同的状态$s\in\mathcal{N}$实现$V^\pi(s)$最大化）。因此我们定义最优策略$\pi^*:\mathcal{N\times A}\rightarrow [0,1]$主导所有其他策略的策略，在价值函数上优于所有其他策略。形式化地说  
 
 $$
@@ -542,8 +547,398 @@ $$
 
 ## 动态规划算法 {#dynamicprogram}  
 
+### Planning vs Learning 
+
+在本书中，我们将从人工智能的角度探讨预测与控制（并且我们将特别使用人工智能的术语）。我们将区分没有马尔可夫决策过程（MDP）环境模型的算法（没有访问概率转移（$\mathcal{P}_R$）函数）与有马尔可夫决策过程环境模型的算法（意味着我们可以通过显式的概率分布表示或仅通过采样模型访问$\mathcal{P}_R$）。前者（没有模型访问的算法）被称为学习算法，以反映人工智能代理需要与真实世界环境互动（例如，一个机器人学习在实际森林中导航）并从其通过与环境互动获得的数据（遇到的状态、采取的行动、观察到的奖励）中学习价值函数的事实。后者（有MDP环境模型的算法）被称为规划算法，以反映人工智能代理不需要与真实世界环境互动，实际上是通过模型预测各种行动选择的未来状态/奖励的概率场景，并基于预测的结果求解所需的价值函数。在学习和规划中，贝尔曼方程是驱动算法的基本概念，但算法的细节通常会使它们看起来相当不同。本章将仅关注**规划算法**，实际上将只关注一种称为*动态规划*的规划算法子类。
+
+### 不动点理论
+
+**定义**  
+一个函数$f:\mathcal{X\rightarrow X}$的不动点是指一个$x\in\mathcal{X},$使得满足方程$x=f(x).$
 
 
+### 贝尔曼策略算子以及策略评估算法
+
+本节介绍第一个动态规划算法即*策略评估算法*。策略评估算法解决了在固定策略$\pi$下计算有限Markov决策过程（MDP）的价值函数的问题（即有限MDP的预测问题）。我们知道这等价于计算$\pi$隐式的有限Markov奖励过程（MRP）的价值函数。为了避免符号混淆，注意对符号的$\pi$上标表示它是指$\pi$隐式MRP的符号。预测问题的具体定义如下
+
+设MDP（以及$\pi$隐式的MRP）的状态集为$\mathcal{S}=\{s_1,...,s_n\}$,不失一般性，设$\mathcal{N}=(s_1,...,s_m)$为非终止状态。我们给定一个固定策略$\pi:\mathcal{N\times A}\rightarrow [0,1]$.我们还给定$\pi$隐式的MRP转移概率函数：
+
+$$
+\mathcal{P}_R^\pi:\mathcal{N\times D\times S}\rightarrow [0,1]
+$$
+该函数以数据结构的形式提供（因为状态是有限的，且每个非终止状的下一状态和奖励转移对也是有限的）。预测问题就是计算在固定策略$\pi$下评估的MDP的价值函数（等价于$\pi$隐式MRP的价值函数），我们用$V^\pi:\mathcal{N}\rightarrow \mathbb{R}$来表示。
+
+根据前面的内容，通过从$\mathcal{P}_R^\pi$中提取隐式Markov过程的转移概率函数$\mathcal{P}^\pi:\mathcal{N\times S}\rightarrow [0,1]$和奖励函数$\mathcal{R}^\pi:\mathcal{N}\rightarrow \mathbb{R},$我们可以对价值函数$V^\pi:\mathcal{N}\rightarrow \mathbb{R}$(表示为列向量$\boldsymbol{V}^\pi\in\mathbb{R}^m$)执行以下计算来求解这个预测问题：
+
+$$
+\boldsymbol{V}^\pi=(\boldsymbol{I}_m-\gamma \boldsymbol{\mathcal{P}}^\pi)^{-1}\cdot \boldsymbol{\mathcal{R}}^\pi
+$$
+其中$\boldsymbol{I}_m$是$m$阶的单位矩阵，列向量$\boldsymbol{\mathcal{R}}^\pi\in\mathbb{R}^m$表示$\mathcal{R}^\pi,\boldsymbol{\mathcal{P}}^\pi$是一个$m$阶的矩阵代表$\mathcal{P}^\pi$（其中的行和列对应非终止状态）。然而当$m$很大时这种计算方式不能很好地扩展，因此我们需要寻找一个数值算法来解这个MRP贝尔曼方程
+
+$$
+\boldsymbol{V}^\pi=\boldsymbol{\mathcal{R}}^\pi+\gamma \boldsymbol{\mathcal{P}}^\pi\cdot \boldsymbol{V}^\pi
+$$
+我们定义**贝尔曼策略算子**$\boldsymbol{B}^\pi:\mathbb{R}^m\rightarrow \mathbb{R}^m$为
+
+$$
+\boldsymbol{B}^\pi(\boldsymbol{V})=\boldsymbol{\mathcal{R}}^\pi+\gamma \boldsymbol{\mathcal{P}}^\pi\cdot \boldsymbol{V}^\pi
+\text{ for any vector }\boldsymbol{V} \text{ in the vector space }\mathbb{R}^m (\#eq:5-1) 
+$$
+因此，MRP贝尔曼方程就可以表示为
+
+$$
+\boldsymbol{V}^\pi=\boldsymbol{B}^\pi(\boldsymbol{V}^\pi)
+$$
+这意味着$\boldsymbol{V}^\pi$是贝尔曼策略算子$\boldsymbol{B}^\pi$地一个不动点！注意，贝尔曼策略算子可以推广到非有限MDP地情况，并且$\boldsymbol{V}^\pi$仍然是各种感兴趣的推广的不动点。然而，由于本章重点是开发有限MDP算法因此仍然使用上述狭义的（方程\@ref(eq:5-1)）定义。此外，为了证明本章基于不动点的动态规划算法的正确性，我们假设折扣因子$\gamma<1$.
+
+我们希望提出一种度量使得$\boldsymbol{B}^\pi$是一个压缩映射从而能够利用Banach不动点定理，通过反复应用贝尔曼策略算子$\boldsymbol{B}^\pi$来解决这个预测问题。对于任何值函数$\boldsymbol{V}\in\mathbb{R}^m$（这表示$V:\mathcal{N}\rightarrow \mathbb{R}$），我们将表达任何状态$s\in\mathcal{N}$的值为$\boldsymbol{V}(s)$.
+
+我们的度量$d:\mathbb{R}^m\times \mathbb{R}^m\rightarrow\mathbb{R} $将是$L^\infty$范数，定义为：
+
+$$
+d(\boldsymbol{X},\boldsymbol{Y})=\Vert\boldsymbol{X}-\boldsymbol{Y} \Vert_{\infty}=\max_{s\in\mathcal{N}}\vert(\boldsymbol{X}-\boldsymbol{Y})(s)\vert
+$$
+$\boldsymbol{B}^\pi$是在无穷范数下的压缩映射，这是因为对于所有的$\boldsymbol{X},\boldsymbol{Y}\in\mathbb{R}^m,$我们有
+
+$$
+\max_{s\in\mathcal{N}}\vert \boldsymbol{B}^\pi(\boldsymbol{X})-\boldsymbol{B}^\pi(\boldsymbol{Y})(s)\vert=\gamma\cdot\max_{s\in\mathcal{N}}\vert(\boldsymbol{P}^\pi\cdot(\boldsymbol{X}-\boldsymbol{Y})(s))\vert\leq \gamma  \cdot\max_{s\in\mathcal{N}}\vert(\boldsymbol{X}-\boldsymbol{Y})(s)\vert
+$$
+因此调用Banach不动点定理就证明了下面的定理
+
+**定理（策略评估收敛定理）**：  
+对于一个有限的MDP，若$\vert\mathcal{N}\vert=m,\gamma<1,$如果$\boldsymbol{V}^\pi\in\mathbb{R}^m$是在固定策略$\pi:\mathcal{N\times A}\rightarrow [0,1]$下评估的价值函数，则$\boldsymbol{V}^\pi$是贝尔曼策略算子$\boldsymbol{B}^\pi$的唯一不动点，并且：
+
+$$
+\lim_{i\rightarrow \infty}(\boldsymbol{B}^\pi)^i(\boldsymbol{V}_0)\rightarrow \text{ for all starting Value Functions }\boldsymbol{V}_0\in\mathbb{R}^m
+$$
+
+
+这给我们提供了以下的迭代算法（称为固定策略$\pi$下的策略评估算法）：
+
+- 从任意$\boldsymbol{V}_0\in\mathbb{R}^m$开始
+
+- 对于每次迭代$i=0,1,...,$计算：  
+    $$
+    \boldsymbol{V}_{i+1}=\boldsymbol{B}^\pi(\boldsymbol{V}_{i})=\boldsymbol{\mathcal{R}}^\pi+\gamma \boldsymbol{\mathcal{P}}^\pi\cdot \boldsymbol{V}_i
+    $$
+
+- 当$d(\boldsymbol{V}_{i},\boldsymbol{V}_{i+1})=\max_{s\in\mathcal{N}}$\vert (\boldsymbol{V}_i-\boldsymbol{V}_{i+1})(s) \vert$足够小时停止算法。
+
+
+请注意，尽管我们将贝尔曼策略算子$\boldsymbol{B}^\pi$定义为作用于$\pi$隐式的MRP值函数，但我们也可将其看作作用于MDP的值函数。为了支持MDP的视角，我们将方程\@ref(eq:5-1)重新表达为MDP转移/奖励规范如下所示
+
+$$
+\boldsymbol{B}^\pi(s)=\sum_{a\in\mathcal{A}}\pi(s,a)\cdot\mathcal{R}(s,a)+\gamma\sum_{a\in\mathcal{A}} \pi(s,a)\sum_{s'\in\mathcal{N}}\mathcal{P}(s,a,s')\cdot \boldsymbol{V}(s')\text{ for all }s\in\mathcal{N} (\#eq:5-2)
+$$
+如果给定MRP的非终止状态数$m,$则每次迭代的运行时间为$O(m^2).$注意，要从给定的MDP和给定的策略构建MRP需要$O(m^2\cdot k)$次运算，其中$k=|\mathcal{A}|.$
+
+### 贪心策略
+
+我们之前提到过要展示三种动态规划算法。第一种策略评估如上一节所见。解决了MDP预测问题。接下来两节中介绍的两种将会解决MDP控制问题，本节是从预测到控制的一个过渡，在这一节中，我们定义了一个函数，该函数通过“贪心”技术来改进值函数或者策略。形式上，贪心策略函数
+
+$$
+G:\mathbb{R}^m\rightarrow (\mathcal{N\rightarrow A})
+$$
+将一个值函数$\boldsymbol{V}$(表示为向量)映射到一个确定性策略$\pi':$
+
+$$
+G(\boldsymbol{V})(s):\pi_D'(s)=\mathop{\arg\max}_{a\in\mathcal{A}}\{\mathcal{R}(s,a)+\gamma\cdot\sum_{s'\in\mathcal{N}}\mathcal{P}(s,a,s')\cdot\boldsymbol{V}(s')  \} \text{ for all }s\in\mathcal{N} (\#eq:5-3)
+$$
+请注意，对于任何特定的$s,$如果两个或多个动作$a$实现了$\mathcal{R}(s,a)+\gamma\cdot\sum_{s'\in\mathcal{N}}\mathcal{P}(s,a,s')\cdot\boldsymbol{V}(s')$的最大化,那我们将使用任意一个动作打破平局并分配一个单一的动作$a$来作为上述$\arg\max$操作的输出。下面使用一个等效的表达式(来指导代码)
+
+$$
+G(\boldsymbol{V})(s)=\mathop{\arg\max}_{a\in\mathcal{A}}\left\{\sum_{s'\in\mathcal{S}}\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,a,r,s')\cdot(r+\gamma\cdot \boldsymbol{W}(s'))\right\}\text{ for all }s\in\mathcal{N} (\#eq:5-4)
+$$
+其中$\boldsymbol{W}\in\mathbb{R}^n$定义为
+
+
+\begin{equation}
+\boldsymbol{W}(s)=\begin{cases}
+\boldsymbol{V}(s')&\text{ if }s'\in\mathcal{N}\\
+0&\text{ if }s'\in\mathcal{T=S-N}
+\end{cases}
+\end{equation}
+
+注意在方程\@ref(eq:5-4)中必须使用$\mathcal{P}_R$，我们需要考虑到所有状态$s'\in\mathcal{S}$的转移而不是方程\@ref(eq:5-3)中$s'\in\mathcal{N}$的状态。因此，我们需要小心处理$s'\in\mathcal{T}$的转移。
+
+“贪心”一次来源于“贪心算法”，意味着一种算法通过在局部做出最优选择期望能接近全局最优解。在这里，贪心策略意味着如果我们有一个策略$\pi$及其对应的值函数$\boldsymbol{V}^\pi$(假设通过策略评估算法获得)，那么应用贪心策略函数$G$到$\boldsymbol{V}^\pi$将得到一个确定性策略$\pi_D',$它预期在某种意义上比$\pi$更好，具体而言即$\boldsymbol{V}^{\pi'_D}$要优于$\boldsymbol{V}^\pi$.
+
+### 策略提升
+
+像“更好”、“提升”这样的术语指的是值函数或者策略（后者指的是评估给定策略的MDP的值函数）。那么，什么叫做值函数$X:\mathcal{N}\rightarrow \mathbb{R}$比$Y:\mathcal{N}\rightarrow \mathbb{R}$更好呢？下面的定义给出了答案
+
+**定义（值函数的比较）**  
+我们说对于一个有限的MDP，值函数$X$比值函数$Y$更好，记作$X\geq Y,$当且仅当
+
+$$
+X(s)\geq Y(s)\quad \forall s\in\mathcal{N}
+$$
+如果我们处理的是有限的MDP（具有$m$个非终止状态），我们会将值函数表示为向量的形式$\boldsymbol{X},\boldsymbol{Y}\in\mathbb{R}^m.$
+
+因此，每当你听到更好的值函数或者改进的值函数这样的术语时，应该理解为值函数在每个状态下都不比它所比较的值函数更差。
+
+那么，什么是$\pi_D'=G(\boldsymbol{V}^\pi)$比$\pi$更好呢？下面是Richard Bellman的一个重要定理，给出了明确的解释：
+
+**定理（策略改进定理）**：对于一个有限的MDP，对于任意策略$\pi$,都有：
+
+$$
+\boldsymbol{V}^{\pi_D'}=\boldsymbol{V}^{G(\boldsymbol{V}^{\pi})}\geq \boldsymbol{V}^{\pi}
+$$
+这个证明基于应用贝尔曼策略算子在给定MDP的值函数上的作用（注意这种MDP视角下的贝尔曼策略算子在\@ref(eq:5-2)中表示）。我们首先注意到，反复应用贝尔曼策略算子$B^{\pi_D'}$从值函数$\boldsymbol{V}^\pi$开始，最终会收敛到$\boldsymbol{V}^{\pi_D'}.$形式上，
+
+$$
+\lim_{i\rightarrow \infty}(B^{\pi_D'})^i(\boldsymbol{V}^\pi)=\boldsymbol{V}^{\pi_D'}
+$$
+因此证明的关键是证明
+
+$$
+(B^{\pi_D'})^{i+1}(\boldsymbol{V}^\pi)\geq (B^{\pi_D'})^i(\boldsymbol{V}^\pi)\quad \forall i=0,1,2,...
+$$
+这意味着通过反复应用贝尔曼策略算子得到一个不下降的值函数序列，随着反复应用，会不断改善直到收敛到值函数$\boldsymbol{V}^{\pi_D'}$.
+
+策略改进定理为我们提供了用来解决MDP控制问题的第一个动态规划算法（称为策略迭代）。策略迭代算法是Ronald Howard（1960）提出的。
+
+### 策略迭代算法
+
+策略提升定理的证明向我们展示了怎么从一个关于策略$\pi$的值函数$\boldsymbol{V}^\pi$出发，通过贪婪策略改进生成策略$\pi_D'=G(\boldsymbol{V})$,然后以$\boldsymbol{V}^\pi$为起始价值函数进行策略评估（使用策略$\pi_D'$），得到改进后的价值函数$\boldsymbol{V}^{\pi_D'}$,该价值函数优于我们最初的价值函数$\boldsymbol{V}^\pi.$现在需要注意的是，我们可以重复这一过程，从$\pi_D',\boldsymbol{V}^{\pi_D'}$出发，进一步改进策略$\pi_D''$及其相关的改进价值函数$\boldsymbol{V}^{\pi_D''}$,我们可以继续这种方式，生成进一步改进的策略及其相关的价值函数，直到无法再改进为止。这种将策略改进与使用改进策略进行策略评估相结合的方法被称为**策略迭代算法**。
+
+- 从任意价值函数$\boldsymbol{V}_0\in\mathbb{R}^m$开始；
+
+- 迭代$j=0,1,2,...,$在每次迭代中计算：  
+  - 确定性策略:$\pi_{j+1}=G(\boldsymbol{V}_j)$  
+  - 价值函数：$\boldsymbol{V}_{j+1}=\lim_{i\rightarrow \infty}(B^{\pi_{j+1}})(\boldsymbol{V}_j)$  
+- 当$d(\boldsymbol{V}_i,\boldsymbol{V}_{i+1})=\max_{s\in\mathcal{N}} |(\boldsymbol{V}_i-\boldsymbol{V}_{i+1})(s)|$足够小，停止算法。
+
+因此，当价值函数无法进一步改进时，算法终止，当这种情况发生时，以下等式应成立：
+
+$$
+\boldsymbol{V}_j=(B^{G(\boldsymbol{V_j})})^i(\boldsymbol{V}_j)=\boldsymbol{V}_{j+1}\text{ for all }i=0,1,2,...
+$$
+特别地，当$i=1$时有：
+
+$$
+\boldsymbol{V}_j(s)=B^{G(\boldsymbol{V_j})}(\boldsymbol{V}_j)(s)=\mathcal{R}(s,G(\boldsymbol{V}_j)(s))+\gamma\sum_{s'\in\mathcal{N}}\mathcal{P}(s,G(\boldsymbol{V_j})(s),s')\cdot \boldsymbol{V_j}(s')\text{ for all }s\in\mathcal{N}
+$$
+由方程\@ref(eq:5-3)可知，我们对于每个$s\in\mathcal{N},\pi_{j+1}(s)=G(\boldsymbol{V_j})(s)$是最大化$\{ \mathcal{R}(s,a)+\gamma\sum_{s'}\mathcal{P}(s,a,s')\cdot \boldsymbol{V_j}(s') \}$的动作，因此
+
+$$
+\boldsymbol{V_j}(s)=\max_{a\in\mathcal{A}}\left\{ \mathcal{R}(s,a)+\gamma\sum_{s'\in\mathcal{N}}\mathcal{P}(s,a,s')\cdot\boldsymbol{V_j}(s') \right\}\text{ for all }s\in\mathcal{N}
+$$
+但这实际上是MDP状态-价值函数贝尔曼最优性方程，这意味着$\boldsymbol{V}_j=\boldsymbol{V}^*,$即当$\boldsymbol{V}_{j+1}=\boldsymbol{V}_j$时，策略迭代算法已收敛到最优价值函数。策略迭代算法收敛时的确定性策略$\pi_j:\mathcal{N\rightarrow A}$是一个最优策略，因为$\boldsymbol{Y}_{\pi_j}=\boldsymbol{V}_j\approx \boldsymbol{V}^*$,这意味着用确定性策略$\pi_j$评估MDP可以实现最优价值函数。这表明策略迭代算法解决了MDP控制问题。这证明了以下定理：
+
+**定理（策略迭代收敛定理）：** 对于具有$|\mathcal{N}|=m,\gamma<1$的有限MDP，策略迭代算法收敛到最优价值函数$\boldsymbol{V}^*\in\mathbb{R}^m$以及一个确定性最优策略$\pi_D^*:\mathcal{N\rightarrow A}$，无论我们从哪个价值函数$\boldsymbol{V}_0$开始算法。
+
+
+
+### 贝尔曼最优性算子与值迭代算法
+
+通过对方程\@ref(eq:5-3)进行微调（将$\arg\max$改为$\max$）,我们定义贝尔曼最优性算子：
+
+$$
+B^*:\mathbb{R}^m\rightarrow \mathbb{R}^m
+$$
+作为向量空间$\mathbb{R}^m$中向量（表示价值函数）的以下非线性变换：
+
+$$
+B^*(\boldsymbol{V})(s)=\max_{a\in\mathcal{A}}\left\{ \mathcal{R}(s,a)+\gamma\sum_{s\in\mathcal{N}}\mathcal{P}(s,a,s')\cdot \boldsymbol{V}(s')\right\}\text{ for all }s\in\mathcal{N} (\#eq:5-5)
+$$
+我们将在数学推导中使用方程\@ref(eq:5-5),但我们需要一个不同但等价的表达式来指导代码，使用接口操作的是$\mathcal{P}_R$并非$\mathcal{P,R}$,等价表达式如下：
+
+$$
+B^*(\boldsymbol{V})(s)=\max_{a\in\mathcal{A}}\left\{ \sum_{s\in\mathcal{N}}\sum_{r\in\mathcal{D}}\mathcal{P}_R(s,a,r,s')\cdot 
+(r+\gamma\boldsymbol{W}(s'))
+\right\}\text{ for all }s\in\mathcal{N} (\#eq:5-6)
+$$
+其中$\boldsymbol{W}\in\mathbb{R}^n$定义为
+
+
+\begin{equation}
+\boldsymbol{W}(s)=\begin{cases}
+\boldsymbol{V}(s')&\text{ if }s'\in\mathcal{N}\\
+0&\text{ if }s'\in\mathcal{T=S-N}
+\end{cases}
+\end{equation}
+
+注意在方程\@ref(eq:5-6)中，由于我们需要考虑到所有状态$s'\in\mathcal{S}$的转移而不是方程\@ref(eq:5-3)中$s'\in\mathcal{N}$的状态。因此，我们需要小心处理$s'\in\mathcal{T}$的转移。
+
+对于每一个$s\in\mathcal{N},$在\@ref(eq:5-5)中产生的最大化动作$a\in\mathcal{A}$是由确定性策略$\pi_D$在\@ref(eq:5-3)中规定的动作。因此，如果我们使用贪婪策略$G(\boldsymbol{V})$在任何价值函数上应用贝尔曼策略算子，它应该与应用贝尔曼最优性算子相同，因此：
+
+$$
+B^{G(\boldsymbol{V})}(\boldsymbol{V})=B^*(\boldsymbol{V})\text{ for all }\boldsymbol{V}\in\mathbb{R}^m (\#eq:5-7)
+$$
+特别地，通过将$\boldsymbol{V}$转化为策略$\pi$的价值函数$\boldsymbol{V}^\pi$,我们得到：
+
+$$
+B^{G(\boldsymbol{V}^\pi)}(\boldsymbol{V}^\pi)=B^*(\boldsymbol{V}^\pi)
+$$
+这是策略评估第一阶段的一个简洁表示，其中使用了改进的策略$G(\boldsymbol{V}^\pi)$（注意贝尔曼策略算子、贝尔曼最优性算子和贪婪策略函数如何在这个方程中结合在一起）。
+
+正如贝尔曼策略算子$B^\pi$是由MDP贝尔曼策略方程（等价于MRP贝尔曼方程）所驱动的，贝尔曼最优性算子$B^*$是由MDP状态-价值函数贝尔曼最优性方程（重新陈述如下）所驱动的
+
+$$
+\boldsymbol{V}^*(s)=\max_{a\in\mathcal{A}}\left\{\mathcal{R}(s,a)+\gamma\sum_{s'\in\mathcal{N}}\mathcal{P}(s,a,s')\cdot\boldsymbol{V}^*(s')\right\}\text{ for all }s\in\mathcal{N}
+$$
+因此，我们可以简洁地将MDP状态-价值函数贝尔曼最优性方程表示为：
+
+$$
+\boldsymbol{V^*}=B^*(\boldsymbol{V^*})
+$$
+这意味着$\boldsymbol{V^*}$是贝尔曼最优性算子$B^*$地一个不动点。
+
+需要注意的是，我们提供的贪婪策略函数和贝尔曼最优性算子的定义可以推广到非有限MDP，因此我们可以推广方程\@ref(eeq:5-7)，并且$\boldsymbol{V^*}$是贝尔曼最优性算子的不动点的陈述仍然成立。然而，在本章中由于我们专注于开发有限 MDP 的算法，因此我们将坚持为有限 MDP 提供的定义。
+
+正如我们证明$B^\pi$是一个压缩函数一样，我们希望证明$B^*$也是一个压缩函数（在$L^\infty$范数下），以便我们可以利用Banach不动点定理，并通过迭代应用贝尔曼最优性算子$B^*$来解决控制问题。因此，我们需要证明对于所有$\boldsymbol{X},\boldsymbol{Y}\in\mathbb{R}^m:$
+
+$$
+\max_{s\in\mathcal{N}}|(B^*(\boldsymbol{X})-B*(\boldsymbol{Y}))(s)|\leq \gamma\cdot \max_{s\in\mathcal{N}}|(\boldsymbol{X}-\boldsymbol{Y})(s)|
+$$
+这个证明比之前为$B^\pi$所做的证明要难一些，这里需要利用$B^*$的两个关键性质，单调性和常数平移性：对于所有的$\boldsymbol{X}\in\mathbb{R}^m,c\in\mathbb{R},B^*(\boldsymbol{X}+c)(s)=B^*(\boldsymbol{X})(s)+\gamma c$对于所有的$s\in\mathcal{N}$.证明暂时略去，调用Banach不动点定理证明下面的定理：
+
+**定理（值迭代收敛定理）：**对于具有$|\mathcal{N}|=m,\gamma<1$的有限MDP，如果$\boldsymbol{V}^*\in\mathbb{R}^m$是最优值函数，则$\boldsymbol{V}^*$是贝尔曼最优性算子$B^*$的唯一不动点，并且：
+
+$$
+\lim_{i\rightarrow \infty}(B^*)^i(\boldsymbol{V}_0)\rightarrow \boldsymbol{V}^*\text{ for all staring Value Function }\boldsymbol{V}_0\in\mathbb{R}^m
+$$
+
+这为我们提供了以下迭代算法，称为**值迭代算法**，有Richard Bellman提出：
+
+- 从任意价值函数$\boldsymbol{V}_0$开始;
+
+- 迭代$i=0,1,2,...,$在每次迭代中计算：  
+  $$
+  \boldsymbol{V}_{i+1}(s)=B^*(\boldsymbol{V}_i)(s)\text{ for all }s\in\mathcal{N}
+  $$
+
+- 当$d(\boldsymbol{V}_i,\boldsymbol{V}_{i+1})=\max_{s\in\mathcal{N}} |(\boldsymbol{V}_i-\boldsymbol{V}_{i+1})(s)|$足够小，停止算法。
+
+### 从最优值函数到最优策略
+
+需要注意的是，策略迭代算法在每次迭代中都会生成一个策略及其对应的价值函数。因此，最终当我们收敛到最优值函数$\boldsymbol{V}_j=\boldsymbol{V}^*$时，策略迭代算法总会有一个确定性策略$\pi_j$与$\boldsymbol{V}_j$相关联，使得：
+
+$$
+\boldsymbol{V}_j=\boldsymbol{V}^{\pi_j}=\boldsymbol{V}^*
+$$
+我们将$\pi_j$称为最优策略$\pi^*,$即产生最优值函数$\boldsymbol{V}^*$的策略，即
+
+$$
+\boldsymbol{V}^{\pi^*}=\boldsymbol{V}^*
+$$
+然而，值迭代算法没有与之相关联的策略，因为整个算法缺乏策略表示，仅操作价值函数。因此，现在的问题是：当值迭代手来难道最优价值函数$\boldsymbol{V}_i=\boldsymbol{V}^*$,我们如何获得一个最优策略使得：
+
+$$
+\boldsymbol{V}^{\pi^*}=\boldsymbol{V}_i=\boldsymbol{V}^*
+$$
+答案在于贪婪策略函数$G.$方程\@ref(eq:5-7)告诉我们：
+
+$$
+B^{G(\boldsymbol{V})}(\boldsymbol{V})=B^*(\boldsymbol{V})\text{ for all }\boldsymbol{V}\in\mathbb{R}^m
+$$
+将$\boldsymbol{V}$特化为$\boldsymbol{V}^*$,我们得到
+
+$$
+B^{G(\boldsymbol{V}^*)}(\boldsymbol{V}^*)=B^*(\boldsymbol{V}^*)
+$$
+但我们又指导$\boldsymbol{V}^*$是贝尔曼算子$B^*$的不动点，因此
+
+$$
+B^{G(\boldsymbol{V}^*)}(\boldsymbol{V}^*)=\boldsymbol{V}^*
+$$
+这表明，用确定性贪婪策略$G(\boldsymbol{V}^*)$(使用贪婪策略函数从最优价值函数创建的策略)评估MDP，实际上实现了最优价值函数$\boldsymbol{V}^*.$换句话说，$G(\boldsymbol{V}^*)$是我们一直在寻找的确定性最优策略$\pi^*.$
+
+### 广义策略迭代
+
+本节中将深入探讨策略迭代算法的结构，并展示如何将其结构推广到更一般的情况。让我们首先从二维布局的角度来看策略迭代中价值函数从初始值函数$\boldsymbol{V}_0$到最终价值函数$\boldsymbol{V}^*$的演进过程。
+
+**策略迭代的二维布局**
+
+策略迭代的演进过程可以用以下二维布局表示：
+
+$$
+\begin{align}
+\pi_1=G(\boldsymbol{V}_0),\boldsymbol{V}_0\rightarrow B^{\pi_1}(\boldsymbol{V}_0)\rightarrow &... (B^{\pi_1})^i(\boldsymbol{V}_0)\rightarrow... \boldsymbol{V}^{\pi_1}=\boldsymbol{V}_1\\
+\pi_2=G(\boldsymbol{V}_1),\boldsymbol{V}_1\rightarrow B^{\pi_2}(\boldsymbol{V}_1)\rightarrow &... (B^{\pi_2})^i(\boldsymbol{V}_1)\rightarrow... \boldsymbol{V}^{\pi_2}=\boldsymbol{V}_2\\
+&...\\
+&...\\
+\pi_{j+1}=G(\boldsymbol{V}_j),\boldsymbol{V}_j\rightarrow B^{\pi_{j+1}}(\boldsymbol{V}_j)\rightarrow &... (B^{\pi_{j+1}})^i(\boldsymbol{V}_j)\rightarrow... \boldsymbol{V}^{\pi_{j+1}}=\boldsymbol{V}_j\\
+
+
+\end{align}
+$$
+每一行代表在特定策略下价值函数的演进过程。每一行从使用贪婪策略函数$G$创建策略开始，其余部分是通过对该策略应用贝尔曼策略算子$B^\pi$指导收敛到该策略的价值函数。因此每一行以策略改进开始，其余部分是策略评估。注意，每一行的结束通过贪婪策略函数$G$与下一行的开始无缝衔接！
+
+**策略迭代的三重循环**
+
+策略迭代算法实际上包含三重循环：
+
+1. 最外层循环：遍历二维布局中的每一行（每次迭代生成一个改进的策略）。
+
+2. 中间层循环：遍历每一行中的列（每次迭代应用贝尔曼策略算子，即策略评估的迭代）。
+
+3. 最内层循环：遍历所有状态$s\in\mathcal{N},$因为在应用贝尔曼策略算子更新价值函数时需要遍历所有状态（在应用贪婪策略函数改进策略时也需要遍历所有状态）。
+
+**策略迭代的高层次视角**
+
+从更高层次来看，策略迭代时策略评估和策略改进交替进行的过程：
+
+- **策略评估**：根据当前策略生成价值函数。
+
+- **策略改进**：根据当前价值函数生成贪婪策略（相对于前一个策略有所改进）。
+
+这种交替过程使得价值函数和策略逐渐趋于一致，直到最终收敛。
+
+**策略迭代的可视化**  
+
+下图展示了策略迭代中价值函数和策略的演进过程。图中：  
+
+- 下部的线（策略线）：表示策略的演进。
+
+- 上部的线（价值函数线）：表示价值函数的演进。
+
+- 指向价值函数线的箭头：表示对给定策略$\pi$的策略评估，生成价值函数$\boldsymbol{V}^\pi$.
+
+- 指向策略线的箭头：表示从价值函数$\boldsymbol{V}^\pi$生成贪婪策略$\pi'=G(\boldsymbol{V}^\pi)$.
+
+策略评估和策略改进是“竞争”的——它们“朝不同方向推动”，但最终目标是使价值函数和策略趋于一致。
+
+**广义策略迭代**
+
+广义策略迭代（Generalized Policy Iteration, GPI）是 Sutton 和 Barto 在其强化学习书中强调的一个重要概念，它统一了所有动态规划（DP）和强化学习（RL）算法的变体。GPI 的核心思想是：
+
+- 策略评估：可以使用任何策略评估方法
+
+- 策略改进：可以使用任何策略改进方法（不一定是经典策略迭代算法中的方法）。
+
+GPI 的关键在于，策略评估和策略改进不需要完全达到它们各自追求的一致性目标。例如：
+
+- 策略评估：可以只进行几次贝尔曼策略评估，而不是完全收敛到$V^{\pi}$.
+
+- 策略改进：可以只更新部分状态的策略，而不是所有状态。
+
+**值迭代作为GPI的实例**
+
+值迭代是 GPI 的一个具体实例。在值迭代中，每次迭代只应用一次贝尔曼策略算子，然后进行策略改进。其二维布局如下：
+
+$$
+
+$$
+
+在值迭代中，策略改进步骤保持不变，但策略评估简化为仅应用一次贝尔曼策略算子。
+
+广义策略迭代是强化学习中最核心的概念之一。几乎所有强化学习控制算法都可以视为 GPI 的特例。例如，在某些简单的强化学习控制算法中：
+
+- 策略评估：只对单个状态进行。
+
+- 策略改进：也只对单个状态进行。
+
+这些算法本质上是单状态策略评估和单状态策略改进的交替序列。
+
+**总结**
+
+- 贝尔曼方程和广义策略迭代是强化学习中最重要的两个概念。
+
+- GPI 的核心思想是交替进行某种形式的策略评估和策略改进。
+
+- GPI 统一了动态规划和强化学习的各种算法，是理解强化学习控制问题的基础。
 
 
 ## 动态资产配置和消费 {#dynassall}  
@@ -615,12 +1010,10 @@ $$
 - 时间$t$的动作为$(\pi_t,c_t)$  
 
 - 时间$t<T$时的单位时间奖励为：  
-
   $$
   U(c_t)=\frac{c_t^{1-\gamma}}{1-\gamma}
   $$
-  在终端时刻$T$的奖励为  
-  
+  在终端时刻$T$的奖励为   
   $$
   B(T)\cdot U(W_T)=\epsilon^\gamma\cdot \frac{W_T^{1-\gamma}}{1-\gamma}
   $$
@@ -711,14 +1104,14 @@ c^*(t,W_t)&=
 (\#eq:8-15)
 \end{align}
 
-同时有了$f(t)$的表达式。$V^*(t,W_t)$的表达式也就迎刃而解了。注意$f(t)>0$对于所有$0\leq t<T,\forall \nv,$确保了$W_t>0,c_t^*>0,\frac{\partial^2V^*}{\partial W_t^2}<0$.这确保了约束条件$W_t>0,c_t\geq0$得以满足，同时二阶条件得以满足。解决Merton的投资组合问题的一个非常重要的经验教训是HJB公式是关键，这种解法为类似的连续时间随机控制问题提供了模板。
+同时有了$f(t)$的表达式。$V^*(t,W_t)$的表达式也就迎刃而解了。注意$f(t)>0$对于所有$0\leq t<T,\forall \nu,$确保了$W_t>0,c_t^*>0,\frac{\partial^2V^*}{\partial W_t^2}<0$.这确保了约束条件$W_t>0,c_t\geq0$得以满足，同时二阶条件得以满足。解决Merton的投资组合问题的一个非常重要的经验教训是HJB公式是关键，这种解法为类似的连续时间随机控制问题提供了模板。
 
 ### Merton投资组合问题解的直觉
 
 $\pi^*$是个常数，代表无论财富如何年龄如何，都该将相同的财富比例投资于风险资产。
 而$c^*$中风险资产的超额回报$(\mu-r)$出现在分子上，$\sigma,\gamma$出现在坟墓上，波动率越大或者风险厌恶程度更高，自然会减少投资于风险资产，而当我们还年轻时我们希望消费的少一些，但是快死了的时候会增加消费（因为最优策略是死得一贫如洗，假设没有遗产）。
 
-将最优策略\@ref(eq:8-14)和\@ref(eq:8-15)代入财富过程\ref@(eq:8-1)，可以得到进行最优资产配置和最优消费的时候，财富过程为
+将最优策略\@ref(eq:8-14)和\@ref(eq:8-15)代入财富过程\@ref(eq:8-1)，可以得到进行最优资产配置和最优消费的时候，财富过程为
 
 $$
 dW_t^*=(r+\frac{(\mu-r)^2}{\sigma^2\gamma}-\frac{1}{f(t)})\cdot W_t^* \cdot dt+\frac{\mu-r}{\sigma\gamma}\cdot W_t^* \cdot dZ_t (\#eq:8-17)
@@ -751,7 +1144,7 @@ $$
 $$
 我们将这个问题表述为一个连续状态和连续动作的离散时间有限时域MDP，并准确指定其转移状态、奖励和折现因子，然后我们的目标是求解MDP控制问题找到最优策略。
 
-有限时域MDP的终止时间为$T$,因此所有时间$t=T$的状态都是终止状态。时间步$t=0,1,...,T$的状态$s_t\in\mathcal{S_}_t$包含财富$W_t.$决策$a_t\in\mathcal{A}_t$是对风险投资的投资量$x_t,$因此每个时间步对无风险投资的投资量为$W_t-x_t.$时间步$t$的确定性策略$\pi_t$记为$\pi_t(W_t)=x_t,$同样，时间步$t$时最优确定性策略$\pi_t^*$记为$\pi_t^*(W_t)=x^*_t.$
+有限时域MDP的终止时间为$T$,因此所有时间$t=T$的状态都是终止状态。时间步$t=0,1,...,T$的状态$s_t\in\mathcal{S}_t$包含财富$W_t.$决策$a_t\in\mathcal{A}_t$是对风险投资的投资量$x_t,$因此每个时间步对无风险投资的投资量为$W_t-x_t.$时间步$t$的确定性策略$\pi_t$记为$\pi_t(W_t)=x_t,$同样，时间步$t$时最优确定性策略$\pi_t^*$记为$\pi_t^*(W_t)=x^*_t.$
 
 我们将$t$到$t+1$的风险资产单步回报的随机变量记为$Y_t\sim N(\mu,\sigma^2)$对于所有的$t=0,1,...,T-1.$因此
 
@@ -768,7 +1161,6 @@ $$
 
 $$
 V_t^*(W_t)=\max_{\pi} V_t^\pi(W_t)=\max_\pi\left\{\mathbb{E}_\pi\left[ -\frac{e^{-aW_T}}{a}\mid (t,W_t) \right] \right\}
-
 $$
 贝尔曼最优方程为(当$t=0,1,...,T-2$时)
 

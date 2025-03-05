@@ -1,7 +1,7 @@
 ---
 title: "GOGENTLE's NOTEBOOK"
 author: "gogentle"
-date: "2025/02/20"
+date: "2025-03-05"
 description: "这是用R的bookdown功能制作的课堂笔记。"
 documentclass: book
 classoption: oneside
@@ -61,6 +61,22 @@ $$
 依次使用改成“Common HTML”，“SVG”等是否可以变成正常显示。
 
 本篇笔记一直在慢慢编写当中，且前期一些语法不够规范导致公式显示不正常，正在随缘修改中。另外发现bookdown生成的网页支持公式的长度有限，所以有些公式可能无法全部展示。
+
+定理能否成功显示？？
+
+::: {.theorem #pyth name="Pythagorean theorem"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
+:::
+
+::: {.theorem #pyth2 name="Pythagorean theorem2"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
+:::
 
 ## 为什么要写课程笔记 {-}  
 很遗憾本科期间没有养成多用电脑多上网的习惯，上个学期本来是新的开始却也没有好好听讲，导致没什么收获。这个学期希望通过做笔记的形式多学一点东西，虽然可能也不会有多少收获，聊以填充这略显枯燥的研究生生活吧！

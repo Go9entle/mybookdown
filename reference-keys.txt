@@ -1,3 +1,5 @@
+thm:pyth
+thm:pyth2
 eq:bellman
 fig:mdp
 eq:4-1
@@ -9,6 +11,13 @@ eq:4-6
 eq:4-7
 eq:4-8
 eq:4-9
+eq:5-1
+eq:5-2
+eq:5-3
+eq:5-4
+eq:5-5
+eq:5-6
+eq:5-7
 eq:8-1
 eq:8-2
 eq:8-3
@@ -65,6 +74,15 @@ markov决策过程策略-markov奖励过程
 固定策略下的mdp价值函数
 最优价值函数和最优策略
 dynamicprogram
+planning-vs-learning
+不动点理论
+贝尔曼策略算子以及策略评估算法
+贪心策略
+策略提升
+策略迭代算法
+贝尔曼最优性算子与值迭代算法
+从最优值函数到最优策略
+广义策略迭代
 dynassall
 个人财务的优化
 merton投资组合问题及其解决
@@ -92,6 +110,7 @@ lp空间
 布朗运动brownian-motion
 english
 week2
+week3
 cdc
 introduction-1
 相关工作
@@ -113,6 +132,12 @@ the-value-function
 hjb-equation
 mrau
 setting-and-theoretical-results
+RLreinsurance
+rlreabstract
+rlreintro
+rlremodel
+离散时间框架
+盈余过程建模
 datawhale
 investquant
 finmarket
