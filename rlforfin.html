@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-05" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,6 +49,7 @@
 
 
 
+<link href="libs/codefolding-lua-1.1/codefolding-lua.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
@@ -291,7 +292,9 @@ div.csl-indent {
 <li class="chapter" data-level="8.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#mrau"><i class="fa fa-check"></i><b>8.2</b> 应用于ESG投资的多元风险厌恶效用</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#setting-and-theoretical-results"><i class="fa fa-check"></i><b>8.2.1</b> Setting and theoretical results</a></li>
+<li class="chapter" data-level="8.2.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#numerical-analysis-and-discussion"><i class="fa fa-check"></i><b>8.2.2</b> Numerical analysis and discussion</a></li>
 </ul></li>
+<li class="chapter" data-level="8.3" data-path="mulreinsurance.html"><a href="mulreinsurance.html#conclusion"><i class="fa fa-check"></i><b>8.3</b> Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="RLreinsurance.html"><a href="RLreinsurance.html"><i class="fa fa-check"></i><b>9</b> A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning</a>
 <ul>
@@ -301,7 +304,26 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="9.3.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#离散时间框架"><i class="fa fa-check"></i><b>9.3.1</b> 离散时间框架</a></li>
 <li class="chapter" data-level="9.3.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#盈余过程建模"><i class="fa fa-check"></i><b>9.3.2</b> 盈余过程建模</a></li>
+<li class="chapter" data-level="9.3.3" data-path="RLreinsurance.html"><a href="RLreinsurance.html#引入再保险机制"><i class="fa fa-check"></i><b>9.3.3</b> 引入再保险机制</a></li>
+<li class="chapter" data-level="9.3.4" data-path="RLreinsurance.html"><a href="RLreinsurance.html#优化目标"><i class="fa fa-check"></i><b>9.3.4</b> 优化目标</a></li>
 </ul></li>
+<li class="chapter" data-level="9.4" data-path="RLreinsurance.html"><a href="RLreinsurance.html#a-hybrid-framework-for-generative-models-and-reinforcement-learning-in-reinsurance-optimization"><i class="fa fa-check"></i><b>9.4</b> A Hybrid Framework for Generative Models and Reinforcement Learning in Reinsurance Optimization</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#使用vae生成索赔模型"><i class="fa fa-check"></i><b>9.4.1</b> 使用VAE生成索赔模型</a></li>
+<li class="chapter" data-level="9.4.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#强化学习用于序列决策"><i class="fa fa-check"></i><b>9.4.2</b> 强化学习用于序列决策</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="RLreinsurance.html"><a href="RLreinsurance.html#comprehensive-evaluation-of-optimization-frameworks"><i class="fa fa-check"></i><b>9.5</b> Comprehensive Evaluation of Optimization Frameworks</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#仿真配置和初始参数"><i class="fa fa-check"></i><b>9.5.1</b> 仿真配置和初始参数</a></li>
+<li class="chapter" data-level="9.5.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#训练指标和盈余轨迹分析"><i class="fa fa-check"></i><b>9.5.2</b> 训练指标和盈余轨迹分析</a></li>
+<li class="chapter" data-level="9.5.3" data-path="RLreinsurance.html"><a href="RLreinsurance.html#基准表现和比较分析"><i class="fa fa-check"></i><b>9.5.3</b> 基准表现和比较分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="RLreinsurance.html"><a href="RLreinsurance.html#applicability-to-reinsurance-optimization"><i class="fa fa-check"></i><b>9.6</b> Applicability to Reinsurance Optimization</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#生成模型在不同分布下的表现分析"><i class="fa fa-check"></i><b>9.6.1</b> 生成模型在不同分布下的表现分析</a></li>
+<li class="chapter" data-level="9.6.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#样本外表现和敏感性分析"><i class="fa fa-check"></i><b>9.6.2</b> 样本外表现和敏感性分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="RLreinsurance.html"><a href="RLreinsurance.html#结论与未来工作"><i class="fa fa-check"></i><b>9.7</b> 结论与未来工作</a></li>
 </ul></li>
 <li class="part"><span><b>IV 课外学习笔记</b></span></li>
 <li class="chapter" data-level="10" data-path="datawhale.html"><a href="datawhale.html"><i class="fa fa-check"></i><b>10</b> Datawhale Quant</a>
@@ -387,6 +409,7 @@ P[S_{t+1}|S_t,S_{t-1},...,S_0]=P[S_{t+1}|S_t]\text{ for all }t\geq 0.
 \]</span>
 这就被成为Markov性。</p>
 <p>书中还给出了相应的代码</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="rlforfin.html#cb3-1" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
 <span id="cb3-2"><a href="rlforfin.html#cb3-2" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-3"><a href="rlforfin.html#cb3-3" tabindex="-1"></a></span>
@@ -404,13 +427,17 @@ P[S_{t+1}|S_t,S_{t-1},...,S_0]=P[S_{t+1}|S_t]\text{ for all }t\geq 0.
 <span id="cb3-15"><a href="rlforfin.html#cb3-15" tabindex="-1"></a>    <span class="kw">def</span> next_state(<span class="va">self</span>, state:State) <span class="op">-&gt;</span> State:</span>
 <span id="cb3-16"><a href="rlforfin.html#cb3-16" tabindex="-1"></a>        up_move: <span class="bu">int</span> <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, <span class="va">self</span>.up_prob(state),<span class="dv">1</span>)[<span class="dv">0</span>] <span class="co">#生成随机移动 up_move = 0 or 1</span></span>
 <span id="cb3-17"><a href="rlforfin.html#cb3-17" tabindex="-1"></a>        <span class="cf">return</span> Process1.State(price<span class="op">=</span>state.price <span class="op">+</span> up_move <span class="op">*</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span>) <span class="co"># 若up_move = 1, 则价格上升1，若为0价格下降1</span></span></code></pre></div>
+</details>
 <p>接下来，我们使用 Python 的生成器功能（使用<code>yield</code>）编写一个简单的模拟器，如下所示：</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="rlforfin.html#cb4-1" tabindex="-1"></a><span class="kw">def</span> simulation(process, start_state):</span>
 <span id="cb4-2"><a href="rlforfin.html#cb4-2" tabindex="-1"></a>    state <span class="op">=</span> start_state</span>
 <span id="cb4-3"><a href="rlforfin.html#cb4-3" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
 <span id="cb4-4"><a href="rlforfin.html#cb4-4" tabindex="-1"></a>        <span class="cf">yield</span> state</span>
 <span id="cb4-5"><a href="rlforfin.html#cb4-5" tabindex="-1"></a>        state <span class="op">=</span> process.next_state(state)</span></code></pre></div>
+</details>
 <p>现在我们可以使用此模拟器函数生成采样轨迹。在下面的代码中，我们从 <code>start_price</code>的价格<span class="math inline">\(X_0\)</span>​开始，在<code>time_steps</code>时间步长内生成<code>num_traces</code>个采样轨迹。使用 Python 的生成器功能，我们可以使用<code>itertools.islice</code>函数“懒惰地”执行此操作。</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="rlforfin.html#cb5-1" tabindex="-1"></a><span class="im">import</span> itertools</span>
 <span id="cb5-2"><a href="rlforfin.html#cb5-2" tabindex="-1"></a><span class="kw">def</span> process1_price_traces(</span>
 <span id="cb5-3"><a href="rlforfin.html#cb5-3" tabindex="-1"></a> start_price: <span class="bu">int</span>,</span>
@@ -425,7 +452,8 @@ P[S_{t+1}|S_t,S_{t-1},...,S_0]=P[S_{t+1}|S_t]\text{ for all }t\geq 0.
 <span id="cb5-12"><a href="rlforfin.html#cb5-12" tabindex="-1"></a>        np.fromiter((s.price <span class="cf">for</span> s <span class="kw">in</span> itertools.islice(</span>
 <span id="cb5-13"><a href="rlforfin.html#cb5-13" tabindex="-1"></a>         simulation(process, start_state),</span>
 <span id="cb5-14"><a href="rlforfin.html#cb5-14" tabindex="-1"></a>            time_steps <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb5-15"><a href="rlforfin.html#cb5-15" tabindex="-1"></a>     )), <span class="bu">float</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_traces)])</span></code></pre></div></li>
+<span id="cb5-15"><a href="rlforfin.html#cb5-15" tabindex="-1"></a>     )), <span class="bu">float</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_traces)])</span></code></pre></div>
+</details></li>
 <li><p><span class="math display">\[
 P[X_{t+1}=X_t+1]=\begin{cases}
 0.5(1-\alpha_2(X_t-X_{t-1}))&amp;\text{  if }t&gt;0\\
@@ -589,7 +617,9 @@ V(s)=&amp;\mathbb{E}[R_{t+1}|S_t=s]+\gamma\cdot\mathbb{E}[R_{t+2}|S_t=s]+...\\
 我们的任务是最大化每个状态的期望回报（即最大化价值函数）。在一般情况下，这似乎是一个非常困难的问题，因为存在循环的相互作用。一方面，动作依赖于状态；另一方面，下一个状态/奖励的概率依赖于动作和状态。此外，动作可能会对奖励产生延迟影响，如何区分不同时间步的动作对未来奖励的影响也是一个挑战。如果没有动作和奖励之间的直接对应关系，我们如何控制动作以最大化期望累积奖励？为了回答这个问题，我们需要建立一些符号和理论。在我们正式定义马尔可夫决策过程框架及其相关（优雅的）理论之前，让我们先设定一些术语。</p>
 <p><strong>人工智能视角下的MDP</strong><br />
 使用人工智能的语言，我们说在每个时间步<span class="math inline">\(t,\)</span><strong>智能体（Agent）</strong>（我们设计的算法）观察到状态<span class="math inline">\(S_t,\)</span>然后智能体执行动作<span class="math inline">\(A_t,\)</span>之后环境（Environment）（在看到<span class="math inline">\(S_t,A_t\)</span>后）生成一个随机对<span class="math inline">\((S_{t+1},R_{t+1})\)</span>。接着，智能体观察到下一个状态<span class="math inline">\(S_{t+1}\)</span>，循环重复直到达到终止状态。这种循环相互作用如图<a href="rlforfin.html#fig:mdp">1.1</a>所示</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="rlforfin.html#cb6-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;https://Go9entle.github.io/picx-images-hosting/image.3yekzoaheh.webp&quot;</span>)</span></code></pre></div>
+</details>
 <div class="figure"><span style="display:block;" id="fig:mdp"></span>
 <img src="https://Go9entle.github.io/picx-images-hosting/image.3yekzoaheh.webp" alt="Markov Decision Process"  />
 <p class="caption">
@@ -1005,7 +1035,7 @@ B^{G(\boldsymbol{V}^\pi)}(\boldsymbol{V}^\pi)=B^*(\boldsymbol{V}^\pi)
 \boldsymbol{V^*}=B^*(\boldsymbol{V^*})
 \]</span>
 这意味着<span class="math inline">\(\boldsymbol{V^*}\)</span>是贝尔曼最优性算子<span class="math inline">\(B^*\)</span>地一个不动点。</p>
-<p>需要注意的是，我们提供的贪婪策略函数和贝尔曼最优性算子的定义可以推广到非有限MDP，因此我们可以推广方程<a href="#eeq:5-7"><strong>??</strong></a>，并且<span class="math inline">\(\boldsymbol{V^*}\)</span>是贝尔曼最优性算子的不动点的陈述仍然成立。然而，在本章中由于我们专注于开发有限 MDP 的算法，因此我们将坚持为有限 MDP 提供的定义。</p>
+<p>需要注意的是，我们提供的贪婪策略函数和贝尔曼最优性算子的定义可以推广到非有限MDP，因此我们可以推广方程<a href="rlforfin.html#eq:5-7">(1.17)</a>，并且<span class="math inline">\(\boldsymbol{V^*}\)</span>是贝尔曼最优性算子的不动点的陈述仍然成立。然而，在本章中由于我们专注于开发有限 MDP 的算法，因此我们将坚持为有限 MDP 提供的定义。</p>
 <p>正如我们证明<span class="math inline">\(B^\pi\)</span>是一个压缩函数一样，我们希望证明<span class="math inline">\(B^*\)</span>也是一个压缩函数（在<span class="math inline">\(L^\infty\)</span>范数下），以便我们可以利用Banach不动点定理，并通过迭代应用贝尔曼最优性算子<span class="math inline">\(B^*\)</span>来解决控制问题。因此，我们需要证明对于所有<span class="math inline">\(\boldsymbol{X},\boldsymbol{Y}\in\mathbb{R}^m:\)</span></p>
 <p><span class="math display">\[
 \max_{s\in\mathcal{N}}|(B^*(\boldsymbol{X})-B*(\boldsymbol{Y}))(s)|\leq \gamma\cdot \max_{s\in\mathcal{N}}|(\boldsymbol{X}-\boldsymbol{Y})(s)|

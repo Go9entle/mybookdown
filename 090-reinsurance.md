@@ -235,14 +235,14 @@ $$
 \begin{align}
 \pi_{2}^*&=\frac{\lambda_2}{(1-\alpha_2)\sqrt{1-\rho^2}},\\
 \pi_1^*&=\frac{\lambda_1}{1-\alpha_1}-\frac{\lambda_2\sigma_2\rho}{\sigma_1(1-\alpha_2)\sqrt{1-\rho^2}};\\
-V(X_{1,t},X_{2,t})&=sign(\alpha_1)\frac{X_t^{\alpha_1}}{\alpha_1\alpha_2}\exp\{b(T-t)\},\\
+V(X_{1,t},X_{2,t})&=sign(\alpha_1)\frac{X_{1,t}^{\alpha_1}X_{2,t}^{\alpha_2}}{\alpha_1\alpha_2}\exp\{b(T-t)\},\\
 \text{where }b&=\frac{1}{2}\left( \frac{\sigma_1^2\lambda_1^2\alpha_1}{1-\alpha_1}+\frac{\sigma_2^2\lambda_2^2\alpha_2}{1-\alpha_2}\right).
 \end{align}
 
 **Proof**
 
 <div class="figure">
-<img src="https://github.com/Go9entle/picx-images-hosting/raw/master/IMG_0750.45tlwttsw.webp" alt="Proof of Proposition"  />
+<img src="https://Go9entle.github.io/picx-images-hosting/IMG_0751.7sncx0qmuk.webp" alt="Proof of Proposition"  />
 <p class="caption">(\#fig:unnamed-chunk-1)Proof of Proposition</p>
 </div>
 
@@ -252,77 +252,134 @@ V(X_{1,t},X_{2,t})&=sign(\alpha_1)\frac{X_t^{\alpha_1}}{\alpha_1\alpha_2}\exp\{b
 
 我们接下来强调一下这一结果和背景中的几个重要方面：
 
-1. 如果$\rho$趋近于1（或 -1），$\pi_2$会趋向于$\infty$，而 $\pi_1$ 会趋向于 $-\infty$（或 $\infty$）。这与$\alpha_1=\alpha_2$ 的情况相同。其背后的逻辑是，在极限情况下，可以创造出比现金账户更优的无风险投资组合。这也解释了协方差矩阵可逆的假设。
+1. 如果$\rho$趋近于1（或 -1），$\pi_2$会趋向于$\infty$，而 $\pi_1$ 会趋向于$-\infty$（或 $\infty$）。这与$\alpha_1=\alpha_2$的情况相同。其背后的逻辑是，在极限情况下，可以创造出比现金账户更优的无风险投资组合。这也解释了协方差矩阵可逆的假设。
 
 2. 该工作可以扩展到 $N$ 个资产，假设风险厌恶结构为 $0 < \alpha_1 \leq ⋯ \leq \alpha_n < 1 $或 $\alpha_n \leq ⋯ \leq \alpha_1< 0，$并且效用函数为：
 
-$$
-   u(X_{1,T}, … , X_{n,T}) =
+  $$
+  u(X_{1,T}, … , X_{n,T}) =
    \begin{cases}
    \text{sign}(\alpha₁) \prod_{i=1}^{N}\frac{ (X_{i,T})^{\alpha_i}}{ \alpha_i}, & N\text{ even} \\
    \quad\quad\prod_{i=1}^{N} \frac{(X_{i,T})^{\alpha_i}} { \alpha_i}, & N\text{ odd}
    \end{cases}
-$$
+  $$
 
-​	对于股票，最方便的表示方法是使用下三角矩阵，以分离独立的风险因子 $W_i,i=1,2,...,N$，这些因子驱动着各个属性 （记为$X_i,i=1,2,...,N$），其方程为：
+  对于股票，最方便的表示方法是使用下三角矩阵，以分离独立的风险因子$W_i,i=1,2,...,N$，这些因子驱动着各个属性 （记为$X_i,i=1,2,...,N$），其方程为：
 
-$$
-   \frac{dS_{i,t}}{S_{i,t}} = \left( r + \sum_{j=1}^{i} \sigma_i \lambda_j \sigma_j \rho_{ij} \right) dt + \sigma_i \left( \sum_{j=1}^{i} \rho_{ij} dW_{j,t} \right)
-$$
+  $$
+    \frac{dS_{i,t}}{S_{i,t}} = \left( r + \sum_{j=1}^{i} \sigma_i \lambda_j \sigma_j \rho_{ij} \right) dt + \sigma_i \left( \sum_{j=1}^{i} \rho_{ij} dW_{j,t} \right)
+  $$
  	用矩阵表示形式为：
 
 $$
    dS_t = diag(S_t) \left( (r + diag(\sigma) diag(\lambda) A) dt + diag(\sigma) A dW_t \right)
 $$
 
-​	其中 $S_t,W_t,\lambda$ 和$\sigma$是向量，$A$代表协方差矩阵$\rho=A'A$的下三角分解。这导致了一个方便的自融资条件的表示：
+  其中 $S_t,W_t,\lambda$和$\sigma$是向量，$A$代表协方差矩阵$\rho=A'A$的下三角分解。这导致了一个方便的自融资条件的表示：
 
-\begin{align}
-   \frac{dX_t}{X_t} &= \sum_{i=1}^{N} \pi_{i,t} \frac{dS_{i,t}}{S_{i,t}} + \left( 1 - \sum_{i=1}^{N} \pi_{i,t} \right) \frac{dB_t}{B_t}\\
-   &=\sum_{i=1}^N\pi_{i,t}\sum_{j=1}^i\sigma_i\rho_{ij}(\lambda_j\sigma_j dt+d W_{j,t})+\frac{dB_t}{B_t}
-\end{align}
+  \begin{align}
+    \frac{dX_t}{X_t} &= \sum_{i=1}^{N} \pi_{i,t} \frac{dS_{i,t}}{S_{i,t}} + \left( 1 -    \sum_{i=1}^{N} \pi_{i,t} \right) \frac{dB_t}{B_t}\\
+   &=\sum_{i=1}^N\pi_{i,t}\sum_{j=1}^i\sigma_i\rho_{ij}(\lambda_j\sigma_j dt+d     W_{j,t})+\frac{dB_t}{B_t}
+  \end{align}
 
-​	通过使用 $d\log X_t=rdt+\sum_{j=1}^N d\log X_{j,t}$ₜ，可以表示为各个独立财富（属性）$X_j:j=1,...,N$：
+  通过使用 $d\log X_t=rdt+\sum_{j=1}^N d\log X_{j,t}$ₜ，可以表示为各个独立财富（属性）$X_j:j=1,...,N$：
 
-$$
+  $$
    \frac{dX_{j,t}}{X_{j,t}} = \bar{\pi}_j (\lambda_j \sigma_j dt + dW_{j,t})
-$$
+  $$
 
-​	其中 $\bar{\pi}_j = \sum_{i=j}^{N} \pi_{i,t} \sigma_i \rho_{ij}$。
-
-​	该问题现在可以通过 $\bar{\pi} = (\bar{\pi}_1, … , \bar{\pi}_N)' $ 轻松求解，且 $\bar{\pi}_j = \frac{\lambda_j}{(1 - \alpha_j) \sigma_j},j=1,..,N$，然后通过矩阵表示法将其转换回$\pi$，即 $\bar{\pi} = A' diag(\sigma) \pi$。
+  其中 $\bar{\pi}_j = \sum_{i=j}^{N} \pi_{i,t} \sigma_i \rho_{ij}$。  
+  该问题现在可以通过 $\bar{\pi} = (\bar{\pi}_1, … , \bar{\pi}_N)' $ 轻松求解，且 $\bar{\pi}_j = \frac{\lambda_j}{(1 - \alpha_j) \sigma_j},j=1,..,N$，然后通过矩阵表示法将其转换回$\pi$，即 $\bar{\pi} = A' diag(\sigma) \pi$。
 
 3. 在存在两组股票的情况下：$S_1,...,S_{N_1}$和$S_{N_1+1},...,S_N$，每组具有不同的风险厌恶系数 $\alpha_A$和$\alpha_B$，分别对应之前提到的符号表示方法，我们可以写出以下方程：
 
-\begin{align}
-   &d \log X_{A,t} = \sum_{j=1}^{N₁} \log X_{j,t}\\
-   &d \log X_{B,t} = \sum_{j=N₁+1}^{N} \log X_{j,t}\\
-   &d \log X_t = r dt + d \log X_{A,t} + d \log X_{B,t}
-\end{align}
+  \begin{align}
+    &d \log X_{A,t} = \sum_{j=1}^{N₁} \log X_{j,t}\\
+    &d \log X_{B,t} = \sum_{j=N₁+1}^{N} \log X_{j,t}\\
+    &d \log X_t = r dt + d \log X_{A,t} + d \log X_{B,t}
+  \end{align}
 
-​	解决方法将与之前类似，通过分组$\alpha_1=...=\alpha_{N_1}=\alpha_A$ 和$\alpha_{N_1+1}=...=\alpha_N=\alpha_B$。
+  解决方法将与之前类似，通过分组$\alpha_1=...=\alpha_{N_1}=\alpha_A$ 和$\alpha_{N_1+1}=...=\alpha_N=\alpha_B$。
 
 4. 有趣的是，我们可以重写\@ref(eq:mrau1)使用“棕色股票”作为“绿色股票”的驱动因素，模型为：
 
-\begin{equation}
-\begin{split}
-   \frac{dS_{2,t}}{S_{2,t}}& = (r + \lambda_{22} \sigma_2^2) dt + \sigma_2 dW_{3,t}\\
-   \frac{dS_{1,t}}{S_{1,t}} &= \left( r + \lambda_{22} \sigma_1 \sigma_2 \rho + \lambda_{11} \sigma_1^2 \sqrt{1 - \rho^2} \right) dt + \sigma_1 \left( \rho dW_{3,t} + \sqrt{1 - \rho^2} dW_{4,t} \right)\\
-   &= (r + \lambda_1 \sigma_1^2) dt + \sigma_1 dW_{5,t}\\ 
-\end{split}
-(\#eq:mrau3)
-\end{equation}
+  \begin{equation}
+  \begin{split}
+    \frac{dS_{2,t}}{S_{2,t}}& = (r + \lambda_{22} \sigma_2^2) dt + \sigma_2 dW_{3,t}\\
+    \frac{dS_{1,t}}{S_{1,t}} &= \left( r + \lambda_{22} \sigma_1 \sigma_2 \rho +     \lambda_{11} \sigma_1^2 \sqrt{1 - \rho^2} \right) dt + \sigma_1 \left( \rho dW_{3,t} +    \sqrt{1 - \rho^2} dW_{4,t} \right)\\
+    &= (r + \lambda_1 \sigma_1^2) dt + \sigma_1 dW_{5,t}\\ 
+  \end{split}
+  (\#eq:mrau3)
+  \end{equation}
 
-​	其中关系为：
-$$
+  其中关系为：
+  
+  $$
    \lambda_1 \sigma_1 = \lambda_{22} \sigma_2 \rho + \lambda_{11} \sigma_1 \sqrt{1 - \rho^2}
+  $$
+  理论同样成立，但解决方法有所不同。两者的区别在于，投资者如何在风险厌恶的角度解释绿色股票和棕色股票之间的共同/共享风险（相关部分）。模型\@ref(eq:mrau1)将其视为绿色股票的较低风险厌恶，而模型\@ref(eq:mrau3)则假设它与棕色股票的风险厌恶相同（即更高的风险厌恶）。
+
+
+### Numerical analysis and discussion
+
+本节研究不同风险厌恶程度和相关性对最优资产配置的影响，以及使用流行的次优策略所造成的财富等价损失（CEL）。我们假设标准的年化参数设置为$\sigma_1=0.35,\sigma_2=0.4,\rho=0.5,r=0.01,\lambda_1=0.8,\lambda_2=0.5$.这意味着资产1和资产2的预期回报分别为$\mu_1=r+\lambda_1\sigma_1^2=0.108,\mu_2=r+\lambda_1\sigma_1\sigma_2\rho+\lambda_2\sigma_2^2\sqrt{1-\rho^2}=0.1353.$
+
+
+``` r
+knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp")
+knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp")
+```
+
+<div class="figure">
+<img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" />
+<p class="caption">(\#fig:mraufig1)Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1.</p>
+</div>
+
+图\@ref(fig:mraufig1)左侧展示了固定$\alpha_1=0.6$时$\alpha_2$的变化对股票配置的影响，右侧则是固定$\alpha_1=-1,\alpha_2$从-1变动至-5.在这两种情况下，将更高的风险厌恶水平赋予棕色股票会显著增加对绿色股票的配置，同时棕色股票的投资大幅下降。
+
+
+``` r
+knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp")
+knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp")
+```
+
+<div class="figure">
+<img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in correlation for, left uses $\alpha_1$ = 0.6, $\alpha_2$= 0.3, right with $\alpha_1$= −1, $\alpha_2$= −5." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in correlation for, left uses $\alpha_1$ = 0.6, $\alpha_2$= 0.3, right with $\alpha_1$= −1, $\alpha_2$= −5." width="50%" />
+<p class="caption">(\#fig:mraufig2)Optimal allocation versus changes in correlation for, left uses $\alpha_1$ = 0.6, $\alpha_2$= 0.3, right with $\alpha_1$= −1, $\alpha_2$= −5.</p>
+</div>
+
+图\@ref(fig:mraufig2)显示了两只股票之间的相关性对最优配置的影响。左侧固定$\alpha_10=0.6,\alpha_2=0.1,$右侧固定$\alpha_1=-1,\alpha_2=-5.$我们可以看到，负相关会导致绿色投资的配置显著增加。这一点特别重要，因为气候变化可能会导致绿色股票和棕色股票的表现出现负相关。
+
+接下来，我们研究了由于缺乏构建最优解决方案的知识，投资者在保持相同的风险厌恶水平下，使用次优策略所产生的财富等价损失（CEL）。由于使用相同的风险厌恶水平得到的配置是次优的，因此会导致效用损失。我们将使用次优策略得到的价值函数记作$V^s$，然后定义 CEL 为满足以下方程的标量$q$：
+
 $$
+V(t,X_0(1-q),1)=V^s(t,X_0,1)
+$$
+我们使用HJB方程利用$\pi_1,\pi_2$作为次优的常数策略，得到：
 
-​	理论同样成立，但解决方法有所不同。两者的区别在于，投资者如何在风险厌恶的角度解释绿色股票和棕色股票之间的共同/共享风险（相关部分）。模型\@ref(eq:mrau1)将其视为绿色股票的较低风险厌恶，而模型\@ref(eq:mrau3)则假设它与棕色股票的风险厌恶相同（即更高的风险厌恶）。
+$$
+V^s(t,X,1)=sign(\alpha_1)\frac{X^{\alpha_1}v^s(t)}{\alpha_1\alpha_2}\\
+v^s(t)=\exp\{b^s(T-t)\}
+$$
+其中
 
+$$
+\begin{align}
+b^s=&(\pi_1\lambda_1\sigma_1^2+\pi_2\lambda_1\sigma_1\sigma_2\rho)\alpha_1+\frac{1}{2}(\pi_1\sigma_1+\pi_2\sigma_2\rho)^2(\alpha_1-1)\alpha_1\\
+&+\pi_2\lambda_2\sigma_2\sqrt{1-\rho^2}\alpha_2+\frac{1}{2}\pi_2^2\sigma_2^2(1-\rho^2)(\alpha_2-1)\alpha_2
+\end{align}
+$$
+于是我们得到：
 
+$$
+q=1-\exp\left\{ \frac{1}{\alpha_1}(b^s-b)(T-t)\right\}.
+$$
+其中$b=\frac{1}{2}\left(\frac{\alpha_1\sigma_1^2\lambda_1^2}{1-\alpha_1}+\frac{\alpha_2\sigma_2^2\lambda_2^2}{1-\alpha_2} \right)$
 
+图(暂时未能复现)显示，由于保持相同风险厌恶策略，投资者可能面临高达 65% 的财富损失。这可以从右侧图中看到，在考虑棕色投资的风险厌恶度为$\alpha_2=-6$ 时，投资者需要 65% 更少的初始财富来匹配一个风险厌恶度为$\alpha_2=-6$ 的投资者的表现，而后者使用的是由$\alpha_1=-1$ 推导出的配置。
 
+## Conclusion
 
-
+本研究使用多重风险厌恶效用的概念，也称为多属性效用，开辟了 ESG 投资的新方向。在假设投资者对棕色投资赋予更高的风险厌恶而对绿色投资赋予较低风险厌恶的前提下，我们得出了封闭形式的直观解，解决了预期效用设置下的最优配置和价值函数。这使我们能够探索两种风险厌恶设置在 ESG 投资中的含义，且选取了合理的股票参数进行研究。
+该研究可以扩展到多个方向，不仅可以考虑其他多变量效用、每个风险厌恶下的多资产情况以及更丰富、更现实的模型来描述基础资产，还可以将 ESG 应用扩展到其他提出的考虑 ESG 偏好和评分的形式。
 

@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-05" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,6 +49,7 @@
 
 
 
+<link href="libs/codefolding-lua-1.1/codefolding-lua.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
@@ -291,7 +292,9 @@ div.csl-indent {
 <li class="chapter" data-level="8.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#mrau"><i class="fa fa-check"></i><b>8.2</b> 应用于ESG投资的多元风险厌恶效用</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#setting-and-theoretical-results"><i class="fa fa-check"></i><b>8.2.1</b> Setting and theoretical results</a></li>
+<li class="chapter" data-level="8.2.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#numerical-analysis-and-discussion"><i class="fa fa-check"></i><b>8.2.2</b> Numerical analysis and discussion</a></li>
 </ul></li>
+<li class="chapter" data-level="8.3" data-path="mulreinsurance.html"><a href="mulreinsurance.html#conclusion"><i class="fa fa-check"></i><b>8.3</b> Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="RLreinsurance.html"><a href="RLreinsurance.html"><i class="fa fa-check"></i><b>9</b> A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning</a>
 <ul>
@@ -301,7 +304,26 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="9.3.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#离散时间框架"><i class="fa fa-check"></i><b>9.3.1</b> 离散时间框架</a></li>
 <li class="chapter" data-level="9.3.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#盈余过程建模"><i class="fa fa-check"></i><b>9.3.2</b> 盈余过程建模</a></li>
+<li class="chapter" data-level="9.3.3" data-path="RLreinsurance.html"><a href="RLreinsurance.html#引入再保险机制"><i class="fa fa-check"></i><b>9.3.3</b> 引入再保险机制</a></li>
+<li class="chapter" data-level="9.3.4" data-path="RLreinsurance.html"><a href="RLreinsurance.html#优化目标"><i class="fa fa-check"></i><b>9.3.4</b> 优化目标</a></li>
 </ul></li>
+<li class="chapter" data-level="9.4" data-path="RLreinsurance.html"><a href="RLreinsurance.html#a-hybrid-framework-for-generative-models-and-reinforcement-learning-in-reinsurance-optimization"><i class="fa fa-check"></i><b>9.4</b> A Hybrid Framework for Generative Models and Reinforcement Learning in Reinsurance Optimization</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#使用vae生成索赔模型"><i class="fa fa-check"></i><b>9.4.1</b> 使用VAE生成索赔模型</a></li>
+<li class="chapter" data-level="9.4.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#强化学习用于序列决策"><i class="fa fa-check"></i><b>9.4.2</b> 强化学习用于序列决策</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="RLreinsurance.html"><a href="RLreinsurance.html#comprehensive-evaluation-of-optimization-frameworks"><i class="fa fa-check"></i><b>9.5</b> Comprehensive Evaluation of Optimization Frameworks</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#仿真配置和初始参数"><i class="fa fa-check"></i><b>9.5.1</b> 仿真配置和初始参数</a></li>
+<li class="chapter" data-level="9.5.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#训练指标和盈余轨迹分析"><i class="fa fa-check"></i><b>9.5.2</b> 训练指标和盈余轨迹分析</a></li>
+<li class="chapter" data-level="9.5.3" data-path="RLreinsurance.html"><a href="RLreinsurance.html#基准表现和比较分析"><i class="fa fa-check"></i><b>9.5.3</b> 基准表现和比较分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="RLreinsurance.html"><a href="RLreinsurance.html#applicability-to-reinsurance-optimization"><i class="fa fa-check"></i><b>9.6</b> Applicability to Reinsurance Optimization</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#生成模型在不同分布下的表现分析"><i class="fa fa-check"></i><b>9.6.1</b> 生成模型在不同分布下的表现分析</a></li>
+<li class="chapter" data-level="9.6.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#样本外表现和敏感性分析"><i class="fa fa-check"></i><b>9.6.2</b> 样本外表现和敏感性分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="RLreinsurance.html"><a href="RLreinsurance.html#结论与未来工作"><i class="fa fa-check"></i><b>9.7</b> 结论与未来工作</a></li>
 </ul></li>
 <li class="part"><span><b>IV 课外学习笔记</b></span></li>
 <li class="chapter" data-level="10" data-path="datawhale.html"><a href="datawhale.html"><i class="fa fa-check"></i><b>10</b> Datawhale Quant</a>

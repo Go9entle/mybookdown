@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-05" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,6 +49,7 @@
 
 
 
+<link href="libs/codefolding-lua-1.1/codefolding-lua.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
@@ -291,7 +292,9 @@ div.csl-indent {
 <li class="chapter" data-level="8.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#mrau"><i class="fa fa-check"></i><b>8.2</b> 应用于ESG投资的多元风险厌恶效用</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#setting-and-theoretical-results"><i class="fa fa-check"></i><b>8.2.1</b> Setting and theoretical results</a></li>
+<li class="chapter" data-level="8.2.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#numerical-analysis-and-discussion"><i class="fa fa-check"></i><b>8.2.2</b> Numerical analysis and discussion</a></li>
 </ul></li>
+<li class="chapter" data-level="8.3" data-path="mulreinsurance.html"><a href="mulreinsurance.html#conclusion"><i class="fa fa-check"></i><b>8.3</b> Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="RLreinsurance.html"><a href="RLreinsurance.html"><i class="fa fa-check"></i><b>9</b> A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning</a>
 <ul>
@@ -301,7 +304,26 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="9.3.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#离散时间框架"><i class="fa fa-check"></i><b>9.3.1</b> 离散时间框架</a></li>
 <li class="chapter" data-level="9.3.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#盈余过程建模"><i class="fa fa-check"></i><b>9.3.2</b> 盈余过程建模</a></li>
+<li class="chapter" data-level="9.3.3" data-path="RLreinsurance.html"><a href="RLreinsurance.html#引入再保险机制"><i class="fa fa-check"></i><b>9.3.3</b> 引入再保险机制</a></li>
+<li class="chapter" data-level="9.3.4" data-path="RLreinsurance.html"><a href="RLreinsurance.html#优化目标"><i class="fa fa-check"></i><b>9.3.4</b> 优化目标</a></li>
 </ul></li>
+<li class="chapter" data-level="9.4" data-path="RLreinsurance.html"><a href="RLreinsurance.html#a-hybrid-framework-for-generative-models-and-reinforcement-learning-in-reinsurance-optimization"><i class="fa fa-check"></i><b>9.4</b> A Hybrid Framework for Generative Models and Reinforcement Learning in Reinsurance Optimization</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#使用vae生成索赔模型"><i class="fa fa-check"></i><b>9.4.1</b> 使用VAE生成索赔模型</a></li>
+<li class="chapter" data-level="9.4.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#强化学习用于序列决策"><i class="fa fa-check"></i><b>9.4.2</b> 强化学习用于序列决策</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="RLreinsurance.html"><a href="RLreinsurance.html#comprehensive-evaluation-of-optimization-frameworks"><i class="fa fa-check"></i><b>9.5</b> Comprehensive Evaluation of Optimization Frameworks</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#仿真配置和初始参数"><i class="fa fa-check"></i><b>9.5.1</b> 仿真配置和初始参数</a></li>
+<li class="chapter" data-level="9.5.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#训练指标和盈余轨迹分析"><i class="fa fa-check"></i><b>9.5.2</b> 训练指标和盈余轨迹分析</a></li>
+<li class="chapter" data-level="9.5.3" data-path="RLreinsurance.html"><a href="RLreinsurance.html#基准表现和比较分析"><i class="fa fa-check"></i><b>9.5.3</b> 基准表现和比较分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="RLreinsurance.html"><a href="RLreinsurance.html#applicability-to-reinsurance-optimization"><i class="fa fa-check"></i><b>9.6</b> Applicability to Reinsurance Optimization</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="RLreinsurance.html"><a href="RLreinsurance.html#生成模型在不同分布下的表现分析"><i class="fa fa-check"></i><b>9.6.1</b> 生成模型在不同分布下的表现分析</a></li>
+<li class="chapter" data-level="9.6.2" data-path="RLreinsurance.html"><a href="RLreinsurance.html#样本外表现和敏感性分析"><i class="fa fa-check"></i><b>9.6.2</b> 样本外表现和敏感性分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="RLreinsurance.html"><a href="RLreinsurance.html#结论与未来工作"><i class="fa fa-check"></i><b>9.7</b> 结论与未来工作</a></li>
 </ul></li>
 <li class="part"><span><b>IV 课外学习笔记</b></span></li>
 <li class="chapter" data-level="10" data-path="datawhale.html"><a href="datawhale.html"><i class="fa fa-check"></i><b>10</b> Datawhale Quant</a>
@@ -401,8 +423,383 @@ div.csl-indent {
 </div>
 <div id="盈余过程建模" class="section level3 hasAnchor" number="9.3.2">
 <h3><span class="header-section-number">9.3.2</span> 盈余过程建模<a href="RLreinsurance.html#盈余过程建模" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-
+<p>财务盈余定义为保险公司资产与负债之间的差额，并随着时间推移在索赔发生和保费收取的基础上演变。盈余过程使用改进的Cramer-Lundberg框架进行建模，这是精算科学中的基础方法。</p>
+<p>这<span class="math inline">\(N_i\)</span>为第<span class="math inline">\(i\)</span>个时间间隔<span class="math inline">\([t_{i-1},t_i)\)</span>内的索赔数量，模型具有参数为<span class="math inline">\(\lambda\Delta t_i\)</span>的Poisson随机变量，其中<span class="math inline">\(\Delta t_i=t_i-t_{i-1}.\)</span>每个索赔<span class="math inline">\(X_{ij}\)</span>假定为独立同分布的，盈余过程定义为</p>
+<p><span class="math display" id="eq:rlre21">\[
+S_{i+1}=S_i+c\Delta t_i-\sum_{j=1}^{N_i}X_{ij}, \tag{9.1}
+\]</span>
+其中</p>
+<ul>
+<li><p><span class="math inline">\(S_t\)</span>:时间<span class="math inline">\(t\)</span>时的盈余，</p></li>
+<li><p><span class="math inline">\(c\)</span>:单位时间的保费率，计算公式为：<br />
+<span class="math display" id="eq:rlre22">\[
+c=(1+\theta)\lambda \mathbb{E}[X], \tag{9.2}
+\]</span>
+其中<span class="math inline">\(\theta&gt;0\)</span>为安全载荷系数，确保了盈利性和偿付能力。</p></li>
+</ul>
+<p>该公式提供了盈余演变的动态表示，允许对财务稳定性和风险缓解策略进行严格分析。</p>
 </div>
+<div id="引入再保险机制" class="section level3 hasAnchor" number="9.3.3">
+<h3><span class="header-section-number">9.3.3</span> 引入再保险机制<a href="RLreinsurance.html#引入再保险机制" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>再保险是风险分担的重要工具，使得保险公司能够将其部分责任转移给再保险公司。本框架结合了多种再保险安排，以适应不同的风险配置和操作需求。</p>
+<p><strong>比例再保险</strong></p>
+<p>在比例再保险中，保险公司保留每个索赔的固定比例<span class="math inline">\(\alpha,\)</span>剩余部分由再保险公司承担，此时盈余过程修改为</p>
+<p><span class="math display" id="eq:rlre23">\[
+S_{i+1}=S_i+c\Delta t_i-\sum_{j=1}^{N_i}\alpha X_{ij}, \tag{9.3}
+\]</span>
+其中<span class="math inline">\(\alpha\in[0,1]\)</span>称为表示保留率，这种简单的方法在风险保留和成本效率之间取得平衡。</p>
+<p><strong>分层再保险</strong></p>
+<p>分层再保险将索赔分为预定义的层级，每个层级具有不同的保留率。对于索赔<span class="math inline">\(X_{ij},\)</span>其保留的损失表示为：</p>
+<p><span class="math display" id="eq:rlre24">\[
+L_{ij}=\sum_{k=1}^K\alpha_k\min(\max(X_{ij}-a_k,0),b_k-a_k), \tag{9.4}
+\]</span>
+其中：</p>
+<ul>
+<li><p><span class="math inline">\([a_k,b_k]\)</span>:第<span class="math inline">\(k\)</span>层的边界，</p></li>
+<li><p><span class="math inline">\(\alpha_k\)</span>:第<span class="math inline">\(k\)</span>层的保留率，</p></li>
+<li><p><span class="math inline">\(K:\)</span>层级总数</p></li>
+</ul>
+<p>这种结构能够实现战略性的风险分担，在优化成本效益的同时缓解高严重度的损失。</p>
+<p><strong>动态再保险调整</strong></p>
+<p>为了应对市场条件和监管要求i的变化，本框架引入了动态调整保留率和层级边界：</p>
+<p><span class="math display" id="eq:rlre26" id="eq:rlre25">\[\begin{align}
+&amp;\alpha_k(t_i)=\alpha_k^{\text{base}}+\delta_k(t_i), \tag{9.5}\\
+&amp;a_k(t_i)=a_k^{\text{base}}+\Delta a_k(t_i),b_k(t_i)=b_k^{\text{base}}+\Delta b_k(t_i), \tag{9.6}
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(\delta_k(t_i),\Delta a_k(t_i),\Delta b_k(t_i)\)</span>是由强化学习代理提供的时间依赖性调整。这些动态能力增强了框架对随机和时间不确定性的适应性。</p>
+</div>
+<div id="优化目标" class="section level3 hasAnchor" number="9.3.4">
+<h3><span class="header-section-number">9.3.4</span> 优化目标<a href="RLreinsurance.html#优化目标" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>主要目标是最大化终期盈余<span class="math inline">\(S_n,\)</span>考虑保费、索赔和再保险成本：</p>
+<p><span class="math display" id="eq:rlre27">\[
+\max_{\alpha_k,a_k,b_k}\mathbb{E}[U(S_n)]. \tag{9.7}
+\]</span>
+该优化受到以下约束的限制：</p>
+<ol style="list-style-type: decimal">
+<li><p>破产概率约束：财务破产的概率不得超过预定的阈值：<br />
+<span class="math display" id="eq:rlre28">\[
+\mathbb{P}(S_i&lt;0 \text{ for any }i=0,1,...,n)\leq \psi_{target}. \tag{9.8}
+\]</span></p></li>
+<li><p>预算约束：总再保险保费成本必须保持在指定的限额内：</p></li>
+</ol>
+<p><span class="math display" id="eq:rlre29">\[
+  P=\sum_{k=1}^K(1+\theta_k)\beta_k\mathbb{E}[r_k(X)]\leq P_{max}. \tag{9.9}
+  \]</span>
+其中<span class="math inline">\(\beta_k=1-\alpha_k,r_k(X)\)</span>表示由第<span class="math inline">\(k\)</span>层覆盖的索赔。</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>层级结构约束：层级边界必须保持不重叠：<br />
+<span class="math display" id="eq:rlre210">\[
+a_{k+1}\geq b_k,\quad \forall k. \tag{9.10}
+\]</span></p></li>
+<li><p>保留率边界：保留率必须满足<span class="math inline">\(0\leq \alpha_k\leq 1,\forall k\)</span>,这些约束确保了财务稳定性、合规性和资源分配的效率。</p></li>
+</ol>
+</div>
+</div>
+<div id="a-hybrid-framework-for-generative-models-and-reinforcement-learning-in-reinsurance-optimization" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> A Hybrid Framework for Generative Models and Reinforcement Learning in Reinsurance Optimization<a href="RLreinsurance.html#a-hybrid-framework-for-generative-models-and-reinforcement-learning-in-reinsurance-optimization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>（生成模型与强化学习在再保险优化中的混合框架）</p>
+<p>再保险组合管理需要在不确定的条件下平衡财务稳定性、合规性和风险缓解。本节介绍了一个混合框架，将生成式 AI 模型，特别是变分自编码器（VAE），与强化学习（RL）结合，使用近端策略优化（PPO）进行优化。该框架通过结合合成数据生成和序列决策，解决了数据稀缺、随机索赔动态和市场条件变化等挑战。这种混合方法能够实现适应性强且动态的再保险优化，同时确保在管理多样化风险配置时具备可扩展性和稳健性。</p>
+<div id="使用vae生成索赔模型" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> 使用VAE生成索赔模型<a href="RLreinsurance.html#使用vae生成索赔模型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>变分自编码器（VAE）作为所提框架的生成核心，旨在建模历史保险索赔的统计特性。VAE 通过生成合成索赔场景来解决数据稀缺问题，这些场景能够捕捉到观察到的数据模式和潜在的极端事件。</p>
+<div id="机器学习架构和组成部分" class="section level4 hasAnchor" number="9.4.1.1">
+<h4><span class="header-section-number">9.4.1.1</span> 机器学习架构和组成部分<a href="RLreinsurance.html#机器学习架构和组成部分" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>VAE架构包含三个核心组件：</p>
+<ol style="list-style-type: decimal">
+<li><p>编码器：将高维历史索赔数据映射到低维潜在空间。这个神经网络提取了显著特征同时减少了噪声，提供了一个以均值<span class="math inline">\(\mu\)</span>和对数方差<span class="math inline">\(\log(\sigma^2)\)</span>为参数的概率表示。这种潜在表示保证了在建模多样数据分布时的灵活性。</p></li>
+<li><p>潜在空间：潜在空间将每个索赔编码为一个概率分布。通过从这个空间中采样，VAE 生成的合成索赔能够超越观察数据集，同时遵循其统计特性。这种能力对于压力测试和探索稀有、高严重度的损失场景至关重要。</p></li>
+<li><p>解码器：解码器从潜在空间中重建索赔，确保生成的数据与历史索赔的统计特征一致。这个过程保持了现实性，同时引入了受控的变异性，从而能够在多种场景下进行全面的政策测试。</p></li>
+</ol>
+</div>
+<div id="训练目标和损失函数" class="section level4 hasAnchor" number="9.4.1.2">
+<h4><span class="header-section-number">9.4.1.2</span> 训练目标和损失函数<a href="RLreinsurance.html#训练目标和损失函数" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>VAE的训练过程平衡了两个关键目标：</p>
+<ul>
+<li><p>重建保真度：重建损失确保了解码器生成的索赔与输入的历史索赔尽可能接近。这种保真度通过均方误差MSE来量化：<br />
+<span class="math display">\[
+\mathcal{L}_{reconstruction}=\mathbb{E}\left[ \Vert X-\hat{X}\Vert^2 \right].
+\]</span></p></li>
+<li><p>潜在空间正则化：Kullback-Leibler（KL）散度项正则化潜在空间，促进生成的索赔在平滑性和多样性方面的提升：<br />
+<span class="math display">\[
+\mathcal{L}_{KL}=-\frac{1}{2}\sum(1+\log \sigma^2-\mu^2-\sigma^2).
+\]</span></p></li>
+</ul>
+<p>总体损失函数为</p>
+<p><span class="math display">\[
+\mathcal{L}_{VAE}=  \mathcal{L}_{reconstruction}+\beta\cdot \mathcal{L}_{KL}.
+\]</span>
+其中<span class="math inline">\(\beta\)</span>调节正则化的相对权重。</p>
+</div>
+<div id="在再保险优化中的应用" class="section level4 hasAnchor" number="9.4.1.3">
+<h4><span class="header-section-number">9.4.1.3</span> 在再保险优化中的应用<a href="RLreinsurance.html#在再保险优化中的应用" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>VAE 生成的合成索赔通过引入多样化和极端场景，丰富了 RL 训练环境。这扩展的数据集使得 RL 智能体能够在高维、随机的条件下制定有效的策略。通过结合稀有事件，该框架确保了对灾难性损失的抗压能力，并增强了动态市场中的决策制定。</p>
+</div>
+</div>
+<div id="强化学习用于序列决策" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> 强化学习用于序列决策<a href="RLreinsurance.html#强化学习用于序列决策" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>强化学习（RL）是框架的决策核心，通过序列学习来优化再保险策略。该 RL 环境基于 OpenAI Gym 框架，模拟现实的保险操作，包括随机索赔动态、盈余演变和再保险合同调整。</p>
+<div id="状态观察和行动空间" class="section level4 hasAnchor" number="9.4.2.1">
+<h4><span class="header-section-number">9.4.2.1</span> 状态观察和行动空间<a href="RLreinsurance.html#状态观察和行动空间" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>在每个时间步<span class="math inline">\(t,\)</span>RL智能体观察一个状态向量<span class="math inline">\(s_t,\)</span>该向量捕捉了关键的操作指标：</p>
+<p><span class="math display">\[
+s_t=(S_t,\lambda,\{\alpha_k\}_{k=1}^K,\{a_k,b_k\}_{k=1}^K),
+\]</span>
+其中<span class="math inline">\(S_t\)</span>是财富盈余，<span class="math inline">\(\lambda\)</span>表示索赔强度（频率），<span class="math inline">\(\{\alpha_k\}\)</span>是保留率，<span class="math inline">\(\{a_k,b_k\}\)</span>定义了再保险层的边界。</p>
+<p>智能体通过选择行动<span class="math inline">\(a_t\)</span>来调整这些参数，以优化长期的风险分担和财务稳定性。</p>
+</div>
+<div id="奖励结构和策略优化" class="section level4 hasAnchor" number="9.4.2.2">
+<h4><span class="header-section-number">9.4.2.2</span> 奖励结构和策略优化<a href="RLreinsurance.html#奖励结构和策略优化" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>奖励函数鼓励偿付能力和营利性，同时惩罚不利结果：</p>
+<p><span class="math display">\[
+r_t=\log(S_t+\epsilon),
+\]</span>
+其中<span class="math inline">\(\epsilon&gt;0\)</span>确保了数值稳定性。RL智能体通过近端策略优化（PPO）来改进策略<span class="math inline">\(\pi(a_t|s_t),\)</span>最大化累积折现奖励：</p>
+<p><span class="math display">\[
+J(\pi)=\mathbb{E}_{\pi}\left[ \sum_{t=0}^T\gamma^t r_t \right],
+\]</span>
+其中<span class="math inline">\(\gamma\in[0,1]\)</span>用来平衡短期和长期目标。</p>
+</div>
+<div id="与vae生成的场景的集成" class="section level4 hasAnchor" number="9.4.2.3">
+<h4><span class="header-section-number">9.4.2.3</span> 与VAE生成的场景的集成<a href="RLreinsurance.html#与vae生成的场景的集成" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>VAE生成的索赔引入了变异性并进行压力测试，检验 RL 智能体的策略。通过让智能体暴露于极端和稀有事件中，这种集成确保了在高维和不确定环境中的稳健性。</p>
+</div>
+</div>
+</div>
+<div id="comprehensive-evaluation-of-optimization-frameworks" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Comprehensive Evaluation of Optimization Frameworks<a href="RLreinsurance.html#comprehensive-evaluation-of-optimization-frameworks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本节全面评估了所提出的混合再保险优化框架，重点讨论了仿真设置、训练指标和与现有方法的基准表现比较。</p>
+<div id="仿真配置和初始参数" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> 仿真配置和初始参数<a href="RLreinsurance.html#仿真配置和初始参数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>仿真环境设计旨在模拟现实的再保险情景。下表总结了初始参数，保险人的初始盈余设置为20000美元，索赔使用具有平均频率<span class="math inline">\(\lambda=10\)</span>次/年的泊松过程进行建模，索赔大小从对数正态分布中进行抽样，参数为<span class="math inline">\(\mu=3.5,\sigma=1.\)</span>这些合成的索赔数据用于训练VAE，从而生成真实的场景供强化学习使用。表<a href="RLreinsurance.html#tab:rlreinitial">9.1</a>展示了仿真初始设置及参数</p>
+<table>
+<caption><span id="tab:rlreinitial">表9.1: </span>仿真设置和初始参数</caption>
+<colgroup>
+<col width="26%" />
+<col width="45%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">参数</th>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">时间跨度（<span class="math inline">\(T\)</span>）</td>
+<td align="left">10年</td>
+<td align="left">总仿真持续时间</td>
+</tr>
+<tr class="even">
+<td align="left">时间步长（<span class="math inline">\(n\)</span>）</td>
+<td align="left">200</td>
+<td align="left">离散时间区间数</td>
+</tr>
+<tr class="odd">
+<td align="left">初始盈余（<span class="math inline">\(S_0\)</span>）</td>
+<td align="left">20,000美元</td>
+<td align="left">初始财务盈余</td>
+</tr>
+<tr class="even">
+<td align="left">索赔频率（<span class="math inline">\(\lambda\)</span>）</td>
+<td align="left">10次/年</td>
+<td align="left">采用泊松过程建模</td>
+</tr>
+<tr class="odd">
+<td align="left">索赔大小分布</td>
+<td align="left">对数正态（<span class="math inline">\(\mu\)</span> = 3.5, <span class="math inline">\(\sigma\)</span> = 1.0）</td>
+<td align="left">用于RL训练的合成索赔数据</td>
+</tr>
+<tr class="even">
+<td align="left">保留率范围</td>
+<td align="left">[0.2, 0.5]</td>
+<td align="left">再保险保留率的约束</td>
+</tr>
+<tr class="odd">
+<td align="left">再保险层数（<span class="math inline">\(K\)</span>）</td>
+<td align="left">5</td>
+<td align="left">风险分担的层数</td>
+</tr>
+<tr class="even">
+<td align="left">预算限制（Budget max）</td>
+<td align="left">150,000美元</td>
+<td align="left">最大再保险预算</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="训练指标和盈余轨迹分析" class="section level3 hasAnchor" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> 训练指标和盈余轨迹分析<a href="RLreinsurance.html#训练指标和盈余轨迹分析" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>训练指标和盈余轨迹突出展示了PPO智能体优化再保险策略的能力，表<a href="RLreinsurance.html#tab:rlretab2">9.2</a>列出了关键指标，图<a href="RLreinsurance.html#fig:rlrefig3">9.1</a>展示了经过6144个时间步的盈余轨迹。</p>
+<table>
+<caption><span id="tab:rlretab2">表9.2: </span>PPO智能体训练指标</caption>
+<thead>
+<tr class="header">
+<th align="left">指标</th>
+<th align="left">值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">总时间步数</td>
+<td align="left">6144</td>
+</tr>
+<tr class="even">
+<td align="left">平均每回合奖励</td>
+<td align="left">-1070</td>
+</tr>
+<tr class="odd">
+<td align="left">策略梯度损失</td>
+<td align="left">-0.00615</td>
+</tr>
+<tr class="even">
+<td align="left">熵损失</td>
+<td align="left">-21.2</td>
+</tr>
+</tbody>
+</table>
+<p>图<a href="RLreinsurance.html#fig:rlrefig3">9.1</a>显示了PPO智能体的学习过程，初期的波动反映了探索阶段，而随着时间的推移，盈余逐渐稳定，表明智能体在收敛到有效策略。</p>
+<div class="figure"><span style="display:block;" id="fig:rlrefig3"></span>
+<img src="https://Go9entle.github.io/picx-images-hosting/image.3rbdia21sw.webp" alt="Surplus Trajectory Over Time. Early fluctuations diminish as the PPO agent stabilizes surplus above the ruin threshold (red dashed line)."  />
+<p class="caption">
+图9.1: Surplus Trajectory Over Time. Early fluctuations diminish as the PPO agent stabilizes surplus above the ruin threshold (red dashed line).
+</p>
+</div>
+<ul>
+<li><p>平均每回合奖励: -1,070的负值表明盈余波动带来了惩罚，并强调框架对财务稳定性的重视。</p></li>
+<li><p>策略梯度损失: -0.00615的低值显示出策略网络更新稳定且一致，表明学习过程有效。</p></li>
+<li><p>熵损失: -21.2的值表明决策过程中的随机性减少，智能体正从探索阶段转向利用阶段。</p></li>
+</ul>
+</div>
+<div id="基准表现和比较分析" class="section level3 hasAnchor" number="9.5.3">
+<h3><span class="header-section-number">9.5.3</span> 基准表现和比较分析<a href="RLreinsurance.html#基准表现和比较分析" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>框架的表现与现有方法进行了基准对比，包括动态规划、蒙特卡洛模拟、混合深度蒙特卡洛、多目标优化和混合强化学习与生成模型。表<a href="RLreinsurance.html#tab:rlretab3">9.3</a>总结了结果。</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="RLreinsurance.html#cb10-1" tabindex="-1"></a><span class="co"># | echo = False</span></span>
+<span id="cb10-2"><a href="RLreinsurance.html#cb10-2" tabindex="-1"></a><span class="co"># 创建表格的数据</span></span>
+<span id="cb10-3"><a href="RLreinsurance.html#cb10-3" tabindex="-1"></a>benchmark_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb10-4"><a href="RLreinsurance.html#cb10-4" tabindex="-1"></a>  <span class="at">Method =</span> <span class="fu">c</span>(<span class="st">&quot;Dynamic Programming&quot;</span>, <span class="st">&quot;Monte Carlo Simulation&quot;</span>, <span class="st">&quot;Hybrid Deep Monte Carlo&quot;</span>, </span>
+<span id="cb10-5"><a href="RLreinsurance.html#cb10-5" tabindex="-1"></a>             <span class="st">&quot;Multi-Objective Optimization&quot;</span>, <span class="st">&quot;Hybrid RL with Generative Models&quot;</span>),</span>
+<span id="cb10-6"><a href="RLreinsurance.html#cb10-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">Final Surplus ($)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">12487.71</span>, <span class="fl">12803.21</span>, <span class="fl">12973.67</span>, <span class="fl">12467.12</span>, <span class="fl">14280.64</span>),</span>
+<span id="cb10-7"><a href="RLreinsurance.html#cb10-7" tabindex="-1"></a>  <span class="st">`</span><span class="at">Ruin Probability</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>),</span>
+<span id="cb10-8"><a href="RLreinsurance.html#cb10-8" tabindex="-1"></a>  <span class="st">`</span><span class="at">Time (s)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">7.96</span>, <span class="fl">414.27</span>, <span class="fl">411.29</span>, <span class="fl">8.52</span>, <span class="fl">7.92</span>),</span>
+<span id="cb10-9"><a href="RLreinsurance.html#cb10-9" tabindex="-1"></a>  <span class="st">`</span><span class="at">Budget Utilization ($)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">259.99</span>),</span>
+<span id="cb10-10"><a href="RLreinsurance.html#cb10-10" tabindex="-1"></a>  <span class="st">`</span><span class="at">Efficiency</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1568.63</span>, <span class="fl">30.91</span>, <span class="fl">31.54</span>, <span class="fl">1462.96</span>, <span class="fl">1802.60</span>)</span>
+<span id="cb10-11"><a href="RLreinsurance.html#cb10-11" tabindex="-1"></a>)</span>
+<span id="cb10-12"><a href="RLreinsurance.html#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="RLreinsurance.html#cb10-13" tabindex="-1"></a><span class="co"># 使用 knitr::kable 创建表格</span></span>
+<span id="cb10-14"><a href="RLreinsurance.html#cb10-14" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb10-15"><a href="RLreinsurance.html#cb10-15" tabindex="-1"></a>  benchmark_data, </span>
+<span id="cb10-16"><a href="RLreinsurance.html#cb10-16" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb10-17"><a href="RLreinsurance.html#cb10-17" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;各再保险优化方法基准表现&quot;</span></span>
+<span id="cb10-18"><a href="RLreinsurance.html#cb10-18" tabindex="-1"></a>)</span></code></pre></div>
+</details>
+<table>
+<caption><span id="tab:rlretab3">表9.3: </span>各再保险优化方法基准表现</caption>
+<colgroup>
+<col width="29%" />
+<col width="16%" />
+<col width="15%" />
+<col width="8%" />
+<col width="20%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="right">Final.Surplus….</th>
+<th align="right">Ruin.Probability</th>
+<th align="right">Time..s.</th>
+<th align="right">Budget.Utilization….</th>
+<th align="right">Efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Dynamic Programming</td>
+<td align="right">12487.71</td>
+<td align="right">0</td>
+<td align="right">7.96</td>
+<td align="right">NA</td>
+<td align="right">1568.63</td>
+</tr>
+<tr class="even">
+<td align="left">Monte Carlo Simulation</td>
+<td align="right">12803.21</td>
+<td align="right">0</td>
+<td align="right">414.27</td>
+<td align="right">NA</td>
+<td align="right">30.91</td>
+</tr>
+<tr class="odd">
+<td align="left">Hybrid Deep Monte Carlo</td>
+<td align="right">12973.67</td>
+<td align="right">0</td>
+<td align="right">411.29</td>
+<td align="right">NA</td>
+<td align="right">31.54</td>
+</tr>
+<tr class="even">
+<td align="left">Multi-Objective Optimization</td>
+<td align="right">12467.12</td>
+<td align="right">0</td>
+<td align="right">8.52</td>
+<td align="right">NA</td>
+<td align="right">1462.96</td>
+</tr>
+<tr class="odd">
+<td align="left">Hybrid RL with Generative Models</td>
+<td align="right">14280.64</td>
+<td align="right">0</td>
+<td align="right">7.92</td>
+<td align="right">259.99</td>
+<td align="right">1802.60</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="applicability-to-reinsurance-optimization" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> Applicability to Reinsurance Optimization<a href="RLreinsurance.html#applicability-to-reinsurance-optimization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>再保险优化是一个复杂且动态的领域，需要强大、可扩展且适应性强的模型来有效管理财务风险。本研究中提出的混合框架集成了生成建模与强化学习，旨在解决这些挑战。本节评估了该框架在再保险中的适用性，通过分析其在不同索赔分布下的表现，测试其通过样本外和敏感性分析的适应性，并通过压力测试和灾难性事件仿真考察其在极端条件下的稳健性。此外，还评估了框架在不同投资组合规模下的可扩展性，以了解其在大规模再保险运营中的局限性和潜力。</p>
+<p>分析结果显示，框架能够在典型的操作情境下保持盈余稳定并避免破产，同时也识别出改进的空间，特别是在尾部事件建模和大规模投资组合管理方面。该评估为框架在现实世界中的适用性提供了有价值的见解，并为未来的改进方向提供了思路。</p>
+<div id="生成模型在不同分布下的表现分析" class="section level3 hasAnchor" number="9.6.1">
+<h3><span class="header-section-number">9.6.1</span> 生成模型在不同分布下的表现分析<a href="RLreinsurance.html#生成模型在不同分布下的表现分析" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>生成的索赔模型在对数正态、帕累托和组合对数正态-帕累托分布下的表现进行了评估，重点考察其再现关键统计特性。通过Kolmogorov-Smirnov（KS）检验和视觉比较，突出了模型在捕捉中心趋势方面的优势，以及在建模尾部行为时的局限性。准确的尾部建模对于再保险应用至关重要，因为极端索赔对风险评估的影响不成比例。</p>
+<div id="整体模型表现" class="section level4 hasAnchor" number="9.6.1.1">
+<h4><span class="header-section-number">9.6.1.1</span> 整体模型表现<a href="RLreinsurance.html#整体模型表现" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>KS检验结果表明，训练数据与生成数据之间存在显著差异，KS统计量为0.6264，p值为0.0000。最大差异位置（D）为14.7174，表明模型在捕捉极端索赔时存在困难，极端事件对再保险的风险评估至关重要。图4显示了这些差异，尾部区域的低估反映了模型在捕捉高严重性索赔时的不足。</p>
+</div>
+<div id="对数正态分布" class="section level4 hasAnchor" number="9.6.1.2">
+<h4><span class="header-section-number">9.6.1.2</span> 对数正态分布<a href="RLreinsurance.html#对数正态分布" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>对于对数正态分布，KS统计量为0.5896，p值为0.0000，表明训练数据与生成数据之间存在显著差异，尤其是在尾部区域。最大差异位置（D）为12.0666，突出表明模型在再现分布的长尾特性时的挑战。图5显示，虽然模型能够准确再现中心趋势，但大额索赔却未能得到充分体现。针对尾部事件的损失函数和数据增强策略可能会提升模型性能。</p>
+</div>
+<div id="帕累托分布" class="section level4 hasAnchor" number="9.6.1.3">
+<h4><span class="header-section-number">9.6.1.3</span> 帕累托分布<a href="RLreinsurance.html#帕累托分布" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>对于帕累托分布，KS检验结果表明统计量为0.6230，p值为0.0000，反映出模型未能充分表现数据的重尾特性。图6揭示了这些局限，尤其是在再保险应用中至关重要的罕见、高严重性的索赔。通过定制损失函数和在训练时对尾部区域进行过采样，可能会缓解这些不足之处。</p>
+</div>
+<div id="组合对数正态与帕累托分布" class="section level4 hasAnchor" number="9.6.1.4">
+<h4><span class="header-section-number">9.6.1.4</span> 组合对数正态与帕累托分布<a href="RLreinsurance.html#组合对数正态与帕累托分布" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>组合对数正态-帕累托分布进一步揭示了模型的局限性。KS统计量为0.4438，p值为0.0000，证实了尾部的差异，正如图7所示，尽管模型能够有效捕捉分布的中心特性，但罕见和极端事件仍然被低估。通过增加潜在空间维度和引入注重尾部准确性的损失函数，可能会增强模型的稳健性。这对于确保在再保险应用中进行精确建模至关重要，因为极端事件对财务稳定性有重要影响。</p>
+</div>
+</div>
+<div id="样本外表现和敏感性分析" class="section level3 hasAnchor" number="9.6.2">
+<h3><span class="header-section-number">9.6.2</span> 样本外表现和敏感性分析<a href="RLreinsurance.html#样本外表现和敏感性分析" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>通过样本外测试、敏感性分析和结果可视化，评估了生成索赔模型的表现。这一全面评估突出了模型的鲁棒性、对未见数据的泛化能力以及在现实应用中的局限性。样本外测试显示，平均盈余为16,686.73美元，破产概率为0.00%，表明模型能够在仿真保险环境中有效管理盈余。</p>
+<p>图8展示了盈余动态，模型能够保持稳定，不会突破破产阈值-100。这表明模型在平衡保费收取和损失管理方面的成功。</p>
+<p>图9展示了索赔大小分布的比较，表明模型能够再现训练数据的中心趋势。然而，尾部区域的差异表明，在极端事件的建模上仍需要进一步改进。尾部建模对再保险应用至关重要，因为罕见、高严重的索赔会显著影响风险管理和偿付能力评估。</p>
+<p>表4总结了敏感性分析结果，显示了模型在不同参数设置下的稳健性，并保持了较低的破产概率。</p>
+</div>
+</div>
+<div id="结论与未来工作" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> 结论与未来工作<a href="RLreinsurance.html#结论与未来工作" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>所提出的混合框架结合了生成模型和强化学习，代表了再保险优化领域的重大进展。通过将变分自编码器（VAE用于建模索赔分布，并通过近端策略优化（PPO动态调整再保险策略，框架有效应对了高维和随机索赔环境中的关键挑战。实验结果展示了框架在典型操作情境下的稳健性、对变化索赔分布的适应能力和对不同投资组合规模的可扩展性。</p>
+<p>框架在管理财务稳定性和最小化破产概率方面表现突出，通过样本外测试和敏感性分析验证了其稳健性。它能够在适度的压力条件下稳定盈余，并能适应不同的索赔分布，强调了其在现实世界应用中的潜力。压力测试场景，包括高频索赔、类疫情条件和灾难性事件，突出了框架在处理典型索赔和短期财务冲击方面的优势。然而，在持续的灾难性事件下，框架的局限性也显现出来，强调了需要量身定制的再保险结构和动态保费调整。</p>
+<p>可扩展性分析进一步揭示了框架在管理更大规模投资组合时的挑战。尽管模型在小型投资组合中表现强劲，但随着投资组合规模的扩大，由于风险暴露的加剧，其维持盈余的能力有所下降。这些发现强调了适应性再保险策略和风险分担机制的重要性，以确保可扩展性和财务稳定性。</p>
+<p>尽管结果令人鼓舞，框架在极端尾部事件建模上仍存在局限性，这在再保险应用中至关重要。生成模型输出中的尾部差异表明，需要进行改进。潜在的提升包括开发优先考虑尾部准确性的定制损失函数、过采样技术和增强的潜在空间表示。此外，集成动态参数调节和多智能体强化学习等先进优化技术，可能会进一步提高框架的适应性和稳健性。</p>
+<p>未来的研究将重点解决这些局限性，设计更复杂的尾部建模方法，并将框架扩展到多条保险业务。整合市场波动、监管动态和宏观经济条件等外部因素，将进一步增强框架的现实适用性。此外，在大规模、现实世界的保险数据集上部署并验证该框架的实时设置，将对评估其可扩展性和实际相关性至关重要。</p>
+
 </div>
 </div>
 
