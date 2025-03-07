@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2025-03-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -293,8 +293,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#setting-and-theoretical-results"><i class="fa fa-check"></i><b>8.2.1</b> Setting and theoretical results</a></li>
 <li class="chapter" data-level="8.2.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#numerical-analysis-and-discussion"><i class="fa fa-check"></i><b>8.2.2</b> Numerical analysis and discussion</a></li>
+<li class="chapter" data-level="8.2.3" data-path="mulreinsurance.html"><a href="mulreinsurance.html#conclusion"><i class="fa fa-check"></i><b>8.2.3</b> Conclusion</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="mulreinsurance.html"><a href="mulreinsurance.html#conclusion"><i class="fa fa-check"></i><b>8.3</b> Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="RLreinsurance.html"><a href="RLreinsurance.html"><i class="fa fa-check"></i><b>9</b> A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning</a>
 <ul>
@@ -438,7 +438,7 @@ div.csl-indent {
 并且可以用如<code>\@ref(fig:label)</code>的格式引用图形。
 如：</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="usage.html#cb15-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">main=</span><span class="st">&quot;程序生成的测试图形&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="usage.html#cb13-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">main=</span><span class="st">&quot;程序生成的测试图形&quot;</span>)</span></code></pre></div>
 </details>
 <div class="figure"><span style="display:block;" id="fig:u-w-f-ex01"></span>
 <img src="0998-usage_files/figure-html/u-w-f-ex01-1.png" alt="图形说明文字" width="672" />
@@ -460,8 +460,8 @@ div.csl-indent {
 并且可以用如<code>\@ref(tab:label)</code>的格式引用表格。
 如：</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="usage.html#cb16-1" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;自变量&quot;</span><span class="ot">=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="st">&quot;因变量&quot;</span><span class="ot">=</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb16-2"><a href="usage.html#cb16-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(d, <span class="at">caption=</span><span class="st">&quot;表格说明文字&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="usage.html#cb14-1" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;自变量&quot;</span><span class="ot">=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="st">&quot;因变量&quot;</span><span class="ot">=</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb14-2"><a href="usage.html#cb14-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(d, <span class="at">caption=</span><span class="st">&quot;表格说明文字&quot;</span>)</span></code></pre></div>
 </details>
 <table>
 <caption><span id="tab:u-w-tab-ex01">表12.1: </span>表格说明文字</caption>
@@ -554,8 +554,8 @@ div.csl-indent {
 <p>用如下命令将整本书转换成一个每章为一个页面的网站，
 称为gitbook格式：</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="usage.html#cb17-1" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">render_book</span>(<span class="st">&quot;index.Rmd&quot;</span>, </span>
-<span id="cb17-2"><a href="usage.html#cb17-2" tabindex="-1"></a>  <span class="at">output_format=</span><span class="st">&quot;bookdown::gitbook&quot;</span>, <span class="at">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="usage.html#cb15-1" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">render_book</span>(<span class="st">&quot;index.Rmd&quot;</span>, </span>
+<span id="cb15-2"><a href="usage.html#cb15-2" tabindex="-1"></a>  <span class="at">output_format=</span><span class="st">&quot;bookdown::gitbook&quot;</span>, <span class="at">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
 </details>
 <p>为查看结果，
 在<code>_book</code>子目录中双击其中的<code>index.html</code>文件，
@@ -568,8 +568,8 @@ div.csl-indent {
 缺点是导航目录会变得不准确。
 命令如：</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="usage.html#cb18-1" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">preview_chapter</span>(<span class="st">&quot;1001-chapter01.Rmd&quot;</span>,</span>
-<span id="cb18-2"><a href="usage.html#cb18-2" tabindex="-1"></a>  <span class="at">output_format=</span><span class="st">&quot;bookdown::gitbook&quot;</span>, <span class="at">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="usage.html#cb16-1" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">preview_chapter</span>(<span class="st">&quot;1001-chapter01.Rmd&quot;</span>,</span>
+<span id="cb16-2"><a href="usage.html#cb16-2" tabindex="-1"></a>  <span class="at">output_format=</span><span class="st">&quot;bookdown::gitbook&quot;</span>, <span class="at">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
 </details>
 <p>单章的网页可以通过网络浏览器中的“打印”功能，
 选择一个打印到PDF的打印机，
@@ -588,8 +588,8 @@ TinyTeX优点是直接用R命令就可以安装，
 有因为网络不畅通而安装失败的危险。</p>
 <p>为了安装R的tinytex扩展包和单独的TinyTeX编译软件，应运行：</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="usage.html#cb19-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;tinytex&#39;</span>)</span>
-<span id="cb19-2"><a href="usage.html#cb19-2" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="usage.html#cb17-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;tinytex&#39;</span>)</span>
+<span id="cb17-2"><a href="usage.html#cb17-2" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code></pre></div>
 </details>
 <p>安装过程需要从国外的服务器下载许多文件，
 在国内的网络环境下有可能因为网络超时而失败。
@@ -599,7 +599,7 @@ TinyTeX软件包在MS Windows系统中一般会安装在 <code>C:\Users\用户�
 如果需要删除TinyTeX软件包， 只要直接删除那个子目录就可以。</p>
 <p>为了判断TinyTeX是否安装成功， 在RStudio中运行</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="usage.html#cb20-1" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">is_tinytex</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="usage.html#cb18-1" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">is_tinytex</span>()</span></code></pre></div>
 </details>
 <p>结果应为TRUE, 出错或者结果为FALSE都说明安装不成功。
 在编译<code>pdf_book</code>时，可能会需要联网下载LaTeX所需的格式文件。</p>
@@ -611,8 +611,8 @@ TinyTeX软件包在MS Windows系统中一般会安装在 <code>C:\Users\用户�
 可修改模板中的<code>preamble.tex</code>文件。</p>
 <p>转换为PDF的命令如下：</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="usage.html#cb21-1" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">render_book</span>(<span class="st">&quot;index.Rmd&quot;</span>, </span>
-<span id="cb21-2"><a href="usage.html#cb21-2" tabindex="-1"></a>  <span class="at">output_format=</span><span class="st">&quot;bookdown::pdf_book&quot;</span>, <span class="at">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="usage.html#cb19-1" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">render_book</span>(<span class="st">&quot;index.Rmd&quot;</span>, </span>
+<span id="cb19-2"><a href="usage.html#cb19-2" tabindex="-1"></a>  <span class="at">output_format=</span><span class="st">&quot;bookdown::pdf_book&quot;</span>, <span class="at">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
 </details>
 <p>在<code>_book</code>子目录中找到<code>CBook.pdf</code>文件，
 这是转换的结果。

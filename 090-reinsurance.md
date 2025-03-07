@@ -161,7 +161,7 @@ $$
 (\#eq:mrau1)
 \end{equation}
 
-其中$W_{1,t},W_{2,t}$是无关的布朗运动，$\rho\in(-1,1),\sigma_i>0,i=1,2;\lambda_1\sigma_1$是与风险因子$W_1$相关的单位波动率的市场风险价格（Market Price of Risk, MPR），而$\lambda_2\sigma_2$是与风险因子$W_2$相关的市场风险价格。通过下面的式子可以将$W_1,W_2$的MRP与$W_3$的MRP相联系：
+其中$W_{1,t},W_{2,t}$是无关的布朗运动，$\rho\in(-1,1),\sigma_i>0,i=1,2;\lambda_1\sigma_1$是与风险因子$W_1$相关的单位波动率的市场风险价格（Market Price of Risk, MPR），而$\lambda_2\sigma_2$是与风险因子$W_2$相关的市场风险价格。通过下面的式子可以将$W_1,W_2$的MPR与$W_3$的MPR^[注意Market Price of Risk，MPR 市场风险价格与Market Risk Premium 风险溢价进行区分，前者实际上是夏普比率？]相联系：
 
 $$
 \lambda_{22}\sigma_2=\lambda_1\sigma_1\rho+\lambda_2\sigma_2\sqrt{1-\rho^2}.
@@ -254,7 +254,7 @@ V(X_{1,t},X_{2,t})&=sign(\alpha_1)\frac{X_{1,t}^{\alpha_1}X_{2,t}^{\alpha_2}}{\a
 
 1. 如果$\rho$趋近于1（或 -1），$\pi_2$会趋向于$\infty$，而 $\pi_1$ 会趋向于$-\infty$（或 $\infty$）。这与$\alpha_1=\alpha_2$的情况相同。其背后的逻辑是，在极限情况下，可以创造出比现金账户更优的无风险投资组合。这也解释了协方差矩阵可逆的假设。
 
-2. 该工作可以扩展到 $N$ 个资产，假设风险厌恶结构为 $0 < \alpha_1 \leq ⋯ \leq \alpha_n < 1 $或 $\alpha_n \leq ⋯ \leq \alpha_1< 0，$并且效用函数为：
+2. 该工作可以扩展到 $N$ 个资产，假设风险厌恶结构为$0 < \alpha_1 \leq ⋯ \leq \alpha_n < 1 $或$\alpha_n \leq ⋯ \leq \alpha_1< 0，$并且效用函数为：
 
   $$
   u(X_{1,T}, … , X_{n,T}) =
@@ -324,24 +324,12 @@ $$
 
 本节研究不同风险厌恶程度和相关性对最优资产配置的影响，以及使用流行的次优策略所造成的财富等价损失（CEL）。我们假设标准的年化参数设置为$\sigma_1=0.35,\sigma_2=0.4,\rho=0.5,r=0.01,\lambda_1=0.8,\lambda_2=0.5$.这意味着资产1和资产2的预期回报分别为$\mu_1=r+\lambda_1\sigma_1^2=0.108,\mu_2=r+\lambda_1\sigma_1\sigma_2\rho+\lambda_2\sigma_2^2\sqrt{1-\rho^2}=0.1353.$
 
-
-``` r
-knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp")
-knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp")
-```
-
 <div class="figure">
-<img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" />
-<p class="caption">(\#fig:mraufig1)Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1.</p>
+<img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in $\alpha_2$, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in $\alpha_2$, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" />
+<p class="caption">(\#fig:mraufig1)Optimal allocation versus changes in $\alpha_2$, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1.</p>
 </div>
 
 图\@ref(fig:mraufig1)左侧展示了固定$\alpha_1=0.6$时$\alpha_2$的变化对股票配置的影响，右侧则是固定$\alpha_1=-1,\alpha_2$从-1变动至-5.在这两种情况下，将更高的风险厌恶水平赋予棕色股票会显著增加对绿色股票的配置，同时棕色股票的投资大幅下降。
-
-
-``` r
-knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp")
-knitr::include_graphics("https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp")
-```
 
 <div class="figure">
 <img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in correlation for, left uses $\alpha_1$ = 0.6, $\alpha_2$= 0.3, right with $\alpha_1$= −1, $\alpha_2$= −5." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in correlation for, left uses $\alpha_1$ = 0.6, $\alpha_2$= 0.3, right with $\alpha_1$= −1, $\alpha_2$= −5." width="50%" />
@@ -378,7 +366,7 @@ $$
 
 图(暂时未能复现)显示，由于保持相同风险厌恶策略，投资者可能面临高达 65% 的财富损失。这可以从右侧图中看到，在考虑棕色投资的风险厌恶度为$\alpha_2=-6$ 时，投资者需要 65% 更少的初始财富来匹配一个风险厌恶度为$\alpha_2=-6$ 的投资者的表现，而后者使用的是由$\alpha_1=-1$ 推导出的配置。
 
-## Conclusion
+### Conclusion
 
 本研究使用多重风险厌恶效用的概念，也称为多属性效用，开辟了 ESG 投资的新方向。在假设投资者对棕色投资赋予更高的风险厌恶而对绿色投资赋予较低风险厌恶的前提下，我们得出了封闭形式的直观解，解决了预期效用设置下的最优配置和价值函数。这使我们能够探索两种风险厌恶设置在 ESG 投资中的含义，且选取了合理的股票参数进行研究。
 该研究可以扩展到多个方向，不仅可以考虑其他多变量效用、每个风险厌恶下的多资产情况以及更丰富、更现实的模型来描述基础资产，还可以将 ESG 应用扩展到其他提出的考虑 ESG 偏好和评分的形式。

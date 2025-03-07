@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2025-03-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -293,8 +293,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="mulreinsurance.html"><a href="mulreinsurance.html#setting-and-theoretical-results"><i class="fa fa-check"></i><b>8.2.1</b> Setting and theoretical results</a></li>
 <li class="chapter" data-level="8.2.2" data-path="mulreinsurance.html"><a href="mulreinsurance.html#numerical-analysis-and-discussion"><i class="fa fa-check"></i><b>8.2.2</b> Numerical analysis and discussion</a></li>
+<li class="chapter" data-level="8.2.3" data-path="mulreinsurance.html"><a href="mulreinsurance.html#conclusion"><i class="fa fa-check"></i><b>8.2.3</b> Conclusion</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="mulreinsurance.html"><a href="mulreinsurance.html#conclusion"><i class="fa fa-check"></i><b>8.3</b> Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="RLreinsurance.html"><a href="RLreinsurance.html"><i class="fa fa-check"></i><b>9</b> A Hybrid Framework for Reinsurance Optimization: Integrating Generative Models and Reinforcement Learning</a>
 <ul>
@@ -513,7 +513,7 @@ H_g(x,\boldsymbol{u})=x+p(\boldsymbol{u})g&#39;(x)-(\delta+\beta)g(x)+\sum_{i=1}
 \end{split}
 \tag{8.8}
 \end{equation}\]</span></p>
-<p>其中<span class="math inline">\(W_{1,t},W_{2,t}\)</span>是无关的布朗运动，<span class="math inline">\(\rho\in(-1,1),\sigma_i&gt;0,i=1,2;\lambda_1\sigma_1\)</span>是与风险因子<span class="math inline">\(W_1\)</span>相关的单位波动率的市场风险价格（Market Price of Risk, MPR），而<span class="math inline">\(\lambda_2\sigma_2\)</span>是与风险因子<span class="math inline">\(W_2\)</span>相关的市场风险价格。通过下面的式子可以将<span class="math inline">\(W_1,W_2\)</span>的MRP与<span class="math inline">\(W_3\)</span>的MRP相联系：</p>
+<p>其中<span class="math inline">\(W_{1,t},W_{2,t}\)</span>是无关的布朗运动，<span class="math inline">\(\rho\in(-1,1),\sigma_i&gt;0,i=1,2;\lambda_1\sigma_1\)</span>是与风险因子<span class="math inline">\(W_1\)</span>相关的单位波动率的市场风险价格（Market Price of Risk, MPR），而<span class="math inline">\(\lambda_2\sigma_2\)</span>是与风险因子<span class="math inline">\(W_2\)</span>相关的市场风险价格。通过下面的式子可以将<span class="math inline">\(W_1,W_2\)</span>的MPR与<span class="math inline">\(W_3\)</span>的MPR<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>相联系：</p>
 <p><span class="math display">\[
 \lambda_{22}\sigma_2=\lambda_1\sigma_1\rho+\lambda_2\sigma_2\sqrt{1-\rho^2}.
 \]</span></p>
@@ -576,7 +576,7 @@ V(X_{1,t},X_{2,t})&amp;=sign(\alpha_1)\frac{X_{1,t}^{\alpha_1}X_{2,t}^{\alpha_2}
 <p>我们接下来强调一下这一结果和背景中的几个重要方面：</p>
 <ol style="list-style-type: decimal">
 <li><p>如果<span class="math inline">\(\rho\)</span>趋近于1（或 -1），<span class="math inline">\(\pi_2\)</span>会趋向于<span class="math inline">\(\infty\)</span>，而 <span class="math inline">\(\pi_1\)</span> 会趋向于<span class="math inline">\(-\infty\)</span>（或 <span class="math inline">\(\infty\)</span>）。这与<span class="math inline">\(\alpha_1=\alpha_2\)</span>的情况相同。其背后的逻辑是，在极限情况下，可以创造出比现金账户更优的无风险投资组合。这也解释了协方差矩阵可逆的假设。</p></li>
-<li><p>该工作可以扩展到 <span class="math inline">\(N\)</span> 个资产，假设风险厌恶结构为 $0 &lt; _1 ⋯ _n &lt; 1 $或 <span class="math inline">\(\alpha_n \leq ⋯ \leq \alpha_1&lt; 0，\)</span>并且效用函数为：</p></li>
+<li><p>该工作可以扩展到 <span class="math inline">\(N\)</span> 个资产，假设风险厌恶结构为$0 &lt; _1 ⋯ _n &lt; 1 <span class="math inline">\(或\)</span>_n ⋯ _1&lt; 0，$并且效用函数为：</p></li>
 </ol>
 <p><span class="math display">\[
   u(X_{1,T}, … , X_{n,T}) =
@@ -633,21 +633,13 @@ V(X_{1,t},X_{2,t})&amp;=sign(\alpha_1)\frac{X_{1,t}^{\alpha_1}X_{2,t}^{\alpha_2}
 <div id="numerical-analysis-and-discussion" class="section level3 hasAnchor" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Numerical analysis and discussion<a href="mulreinsurance.html#numerical-analysis-and-discussion" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>本节研究不同风险厌恶程度和相关性对最优资产配置的影响，以及使用流行的次优策略所造成的财富等价损失（CEL）。我们假设标准的年化参数设置为<span class="math inline">\(\sigma_1=0.35,\sigma_2=0.4,\rho=0.5,r=0.01,\lambda_1=0.8,\lambda_2=0.5\)</span>.这意味着资产1和资产2的预期回报分别为<span class="math inline">\(\mu_1=r+\lambda_1\sigma_1^2=0.108,\mu_2=r+\lambda_1\sigma_1\sigma_2\rho+\lambda_2\sigma_2^2\sqrt{1-\rho^2}=0.1353.\)</span></p>
-<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="mulreinsurance.html#cb8-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp&quot;</span>)</span>
-<span id="cb8-2"><a href="mulreinsurance.html#cb8-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp&quot;</span>)</span></code></pre></div>
-</details>
 <div class="figure"><span style="display:block;" id="fig:mraufig1"></span>
-<img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in 𝛼2, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" />
+<img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in $\alpha_2$, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in $\alpha_2$, left uses $\alpha_1$ = 0.6, right with $\alpha_1$ = −1." width="50%" />
 <p class="caption">
-图8.3: Optimal allocation versus changes in 𝛼2, left uses <span class="math inline">\(\alpha_1\)</span> = 0.6, right with <span class="math inline">\(\alpha_1\)</span> = −1.
+图8.3: Optimal allocation versus changes in <span class="math inline">\(\alpha_2\)</span>, left uses <span class="math inline">\(\alpha_1\)</span> = 0.6, right with <span class="math inline">\(\alpha_1\)</span> = −1.
 </p>
 </div>
 <p>图<a href="mulreinsurance.html#fig:mraufig1">8.3</a>左侧展示了固定<span class="math inline">\(\alpha_1=0.6\)</span>时<span class="math inline">\(\alpha_2\)</span>的变化对股票配置的影响，右侧则是固定<span class="math inline">\(\alpha_1=-1,\alpha_2\)</span>从-1变动至-5.在这两种情况下，将更高的风险厌恶水平赋予棕色股票会显著增加对绿色股票的配置，同时棕色股票的投资大幅下降。</p>
-<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="mulreinsurance.html#cb9-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp&quot;</span>)</span>
-<span id="cb9-2"><a href="mulreinsurance.html#cb9-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp&quot;</span>)</span></code></pre></div>
-</details>
 <div class="figure"><span style="display:block;" id="fig:mraufig2"></span>
 <img src="https://Go9entle.github.io/picx-images-hosting/image.2obo7r6g6q.webp" alt="Optimal allocation versus changes in correlation for, left uses $\alpha_1$ = 0.6, $\alpha_2$= 0.3, right with $\alpha_1$= −1, $\alpha_2$= −5." width="50%" /><img src="https://Go9entle.github.io/picx-images-hosting/image.99thysar6u.webp" alt="Optimal allocation versus changes in correlation for, left uses $\alpha_1$ = 0.6, $\alpha_2$= 0.3, right with $\alpha_1$= −1, $\alpha_2$= −5." width="50%" />
 <p class="caption">
@@ -678,13 +670,19 @@ q=1-\exp\left\{ \frac{1}{\alpha_1}(b^s-b)(T-t)\right\}.
 其中<span class="math inline">\(b=\frac{1}{2}\left(\frac{\alpha_1\sigma_1^2\lambda_1^2}{1-\alpha_1}+\frac{\alpha_2\sigma_2^2\lambda_2^2}{1-\alpha_2} \right)\)</span></p>
 <p>图(暂时未能复现)显示，由于保持相同风险厌恶策略，投资者可能面临高达 65% 的财富损失。这可以从右侧图中看到，在考虑棕色投资的风险厌恶度为<span class="math inline">\(\alpha_2=-6\)</span> 时，投资者需要 65% 更少的初始财富来匹配一个风险厌恶度为<span class="math inline">\(\alpha_2=-6\)</span> 的投资者的表现，而后者使用的是由<span class="math inline">\(\alpha_1=-1\)</span> 推导出的配置。</p>
 </div>
-</div>
-<div id="conclusion" class="section level2 hasAnchor" number="8.3">
-<h2><span class="header-section-number">8.3</span> Conclusion<a href="mulreinsurance.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="conclusion" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> Conclusion<a href="mulreinsurance.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>本研究使用多重风险厌恶效用的概念，也称为多属性效用，开辟了 ESG 投资的新方向。在假设投资者对棕色投资赋予更高的风险厌恶而对绿色投资赋予较低风险厌恶的前提下，我们得出了封闭形式的直观解，解决了预期效用设置下的最优配置和价值函数。这使我们能够探索两种风险厌恶设置在 ESG 投资中的含义，且选取了合理的股票参数进行研究。
 该研究可以扩展到多个方向，不仅可以考虑其他多变量效用、每个风险厌恶下的多资产情况以及更丰富、更现实的模型来描述基础资产，还可以将 ESG 应用扩展到其他提出的考虑 ESG 偏好和评分的形式。</p>
 
 </div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>注意Market Price of Risk，MPR 市场风险价格与Market Risk Premium 风险溢价进行区分，前者实际上是夏普比率？<a href="mulreinsurance.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
