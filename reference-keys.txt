@@ -143,6 +143,7 @@ introduction-1
 mulreinsurance
 OMR
 common-shock-model
+common-shock-model2
 reinsurance
 the-value-function
 hjb-equation
