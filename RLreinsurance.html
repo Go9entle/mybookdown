@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-09" />
+<meta name="date" content="2025-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -212,6 +212,10 @@ div.csl-indent {
 <li class="chapter" data-level="1.3.7" data-path="rlforfin.html"><a href="rlforfin.html#贝尔曼最优性算子与值迭代算法"><i class="fa fa-check"></i><b>1.3.7</b> 贝尔曼最优性算子与值迭代算法</a></li>
 <li class="chapter" data-level="1.3.8" data-path="rlforfin.html"><a href="rlforfin.html#从最优值函数到最优策略"><i class="fa fa-check"></i><b>1.3.8</b> 从最优值函数到最优策略</a></li>
 <li class="chapter" data-level="1.3.9" data-path="rlforfin.html"><a href="rlforfin.html#广义策略迭代"><i class="fa fa-check"></i><b>1.3.9</b> 广义策略迭代</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rlforfin.html"><a href="rlforfin.html#异步动态规划"><i class="fa fa-check"></i><b>1.3.10</b> 异步动态规划</a></li>
+<li class="chapter" data-level="1.3.11" data-path="rlforfin.html"><a href="rlforfin.html#有限时域的动态规划反向推导"><i class="fa fa-check"></i><b>1.3.11</b> 有限时域的动态规划：反向推导</a></li>
+<li class="chapter" data-level="1.3.12" data-path="rlforfin.html"><a href="rlforfin.html#产品停产停季时的动态定价"><i class="fa fa-check"></i><b>1.3.12</b> 产品停产/停季时的动态定价</a></li>
+<li class="chapter" data-level="1.3.13" data-path="rlforfin.html"><a href="rlforfin.html#推广至非表格算法"><i class="fa fa-check"></i><b>1.3.13</b> 推广至非表格算法</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="rlforfin.html"><a href="rlforfin.html#dynassall"><i class="fa fa-check"></i><b>1.4</b> 动态资产配置和消费</a>
 <ul>
@@ -676,24 +680,24 @@ J(\pi)=\mathbb{E}_{\pi}\left[ \sum_{t=0}^T\gamma^t r_t \right],
 <h3><span class="header-section-number">9.5.3</span> 基准表现和比较分析<a href="RLreinsurance.html#基准表现和比较分析" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>框架的表现与现有方法进行了基准对比，包括动态规划、蒙特卡洛模拟、混合深度蒙特卡洛、多目标优化和混合强化学习与生成模型。表<a href="RLreinsurance.html#tab:rlretab3">9.3</a>总结了结果。</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="RLreinsurance.html#cb8-1" tabindex="-1"></a><span class="co"># | echo = False</span></span>
-<span id="cb8-2"><a href="RLreinsurance.html#cb8-2" tabindex="-1"></a><span class="co"># 创建表格的数据</span></span>
-<span id="cb8-3"><a href="RLreinsurance.html#cb8-3" tabindex="-1"></a>benchmark_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb8-4"><a href="RLreinsurance.html#cb8-4" tabindex="-1"></a>  <span class="at">Method =</span> <span class="fu">c</span>(<span class="st">&quot;Dynamic Programming&quot;</span>, <span class="st">&quot;Monte Carlo Simulation&quot;</span>, <span class="st">&quot;Hybrid Deep Monte Carlo&quot;</span>, </span>
-<span id="cb8-5"><a href="RLreinsurance.html#cb8-5" tabindex="-1"></a>             <span class="st">&quot;Multi-Objective Optimization&quot;</span>, <span class="st">&quot;Hybrid RL with Generative Models&quot;</span>),</span>
-<span id="cb8-6"><a href="RLreinsurance.html#cb8-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">Final Surplus ($)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">12487.71</span>, <span class="fl">12803.21</span>, <span class="fl">12973.67</span>, <span class="fl">12467.12</span>, <span class="fl">14280.64</span>),</span>
-<span id="cb8-7"><a href="RLreinsurance.html#cb8-7" tabindex="-1"></a>  <span class="st">`</span><span class="at">Ruin Probability</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>),</span>
-<span id="cb8-8"><a href="RLreinsurance.html#cb8-8" tabindex="-1"></a>  <span class="st">`</span><span class="at">Time (s)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">7.96</span>, <span class="fl">414.27</span>, <span class="fl">411.29</span>, <span class="fl">8.52</span>, <span class="fl">7.92</span>),</span>
-<span id="cb8-9"><a href="RLreinsurance.html#cb8-9" tabindex="-1"></a>  <span class="st">`</span><span class="at">Budget Utilization ($)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">259.99</span>),</span>
-<span id="cb8-10"><a href="RLreinsurance.html#cb8-10" tabindex="-1"></a>  <span class="st">`</span><span class="at">Efficiency</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1568.63</span>, <span class="fl">30.91</span>, <span class="fl">31.54</span>, <span class="fl">1462.96</span>, <span class="fl">1802.60</span>)</span>
-<span id="cb8-11"><a href="RLreinsurance.html#cb8-11" tabindex="-1"></a>)</span>
-<span id="cb8-12"><a href="RLreinsurance.html#cb8-12" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="RLreinsurance.html#cb8-13" tabindex="-1"></a><span class="co"># 使用 knitr::kable 创建表格</span></span>
-<span id="cb8-14"><a href="RLreinsurance.html#cb8-14" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb8-15"><a href="RLreinsurance.html#cb8-15" tabindex="-1"></a>  benchmark_data, </span>
-<span id="cb8-16"><a href="RLreinsurance.html#cb8-16" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb8-17"><a href="RLreinsurance.html#cb8-17" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;各再保险优化方法基准表现&quot;</span></span>
-<span id="cb8-18"><a href="RLreinsurance.html#cb8-18" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="RLreinsurance.html#cb12-1" tabindex="-1"></a><span class="co"># | echo = False</span></span>
+<span id="cb12-2"><a href="RLreinsurance.html#cb12-2" tabindex="-1"></a><span class="co"># 创建表格的数据</span></span>
+<span id="cb12-3"><a href="RLreinsurance.html#cb12-3" tabindex="-1"></a>benchmark_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-4"><a href="RLreinsurance.html#cb12-4" tabindex="-1"></a>  <span class="at">Method =</span> <span class="fu">c</span>(<span class="st">&quot;Dynamic Programming&quot;</span>, <span class="st">&quot;Monte Carlo Simulation&quot;</span>, <span class="st">&quot;Hybrid Deep Monte Carlo&quot;</span>, </span>
+<span id="cb12-5"><a href="RLreinsurance.html#cb12-5" tabindex="-1"></a>             <span class="st">&quot;Multi-Objective Optimization&quot;</span>, <span class="st">&quot;Hybrid RL with Generative Models&quot;</span>),</span>
+<span id="cb12-6"><a href="RLreinsurance.html#cb12-6" tabindex="-1"></a>  <span class="st">`</span><span class="at">Final Surplus ($)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">12487.71</span>, <span class="fl">12803.21</span>, <span class="fl">12973.67</span>, <span class="fl">12467.12</span>, <span class="fl">14280.64</span>),</span>
+<span id="cb12-7"><a href="RLreinsurance.html#cb12-7" tabindex="-1"></a>  <span class="st">`</span><span class="at">Ruin Probability</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>),</span>
+<span id="cb12-8"><a href="RLreinsurance.html#cb12-8" tabindex="-1"></a>  <span class="st">`</span><span class="at">Time (s)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">7.96</span>, <span class="fl">414.27</span>, <span class="fl">411.29</span>, <span class="fl">8.52</span>, <span class="fl">7.92</span>),</span>
+<span id="cb12-9"><a href="RLreinsurance.html#cb12-9" tabindex="-1"></a>  <span class="st">`</span><span class="at">Budget Utilization ($)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">259.99</span>),</span>
+<span id="cb12-10"><a href="RLreinsurance.html#cb12-10" tabindex="-1"></a>  <span class="st">`</span><span class="at">Efficiency</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1568.63</span>, <span class="fl">30.91</span>, <span class="fl">31.54</span>, <span class="fl">1462.96</span>, <span class="fl">1802.60</span>)</span>
+<span id="cb12-11"><a href="RLreinsurance.html#cb12-11" tabindex="-1"></a>)</span>
+<span id="cb12-12"><a href="RLreinsurance.html#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="RLreinsurance.html#cb12-13" tabindex="-1"></a><span class="co"># 使用 knitr::kable 创建表格</span></span>
+<span id="cb12-14"><a href="RLreinsurance.html#cb12-14" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb12-15"><a href="RLreinsurance.html#cb12-15" tabindex="-1"></a>  benchmark_data, </span>
+<span id="cb12-16"><a href="RLreinsurance.html#cb12-16" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb12-17"><a href="RLreinsurance.html#cb12-17" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;各再保险优化方法基准表现&quot;</span></span>
+<span id="cb12-18"><a href="RLreinsurance.html#cb12-18" tabindex="-1"></a>)</span></code></pre></div>
 </details>
 <table>
 <caption><span id="tab:rlretab3">表9.3: </span>各再保险优化方法基准表现</caption>

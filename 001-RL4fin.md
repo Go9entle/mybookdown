@@ -916,11 +916,7 @@ GPI 的关键在于，策略评估和策略改进不需要完全达到它们各�
 
 **值迭代作为GPI的实例**
 
-值迭代是 GPI 的一个具体实例。在值迭代中，每次迭代只应用一次贝尔曼策略算子，然后进行策略改进。其二维布局如下：
-
-$$
-
-$$
+值迭代是 GPI 的一个具体实例。在值迭代中，每次迭代只应用一次贝尔曼策略算子，然后进行策略改进。
 
 在值迭代中，策略改进步骤保持不变，但策略评估简化为仅应用一次贝尔曼策略算子。
 
@@ -940,6 +936,324 @@ $$
 
 - GPI 统一了动态规划和强化学习的各种算法，是理解强化学习控制问题的基础。
 
+### 异步动态规划
+
+我们在本章中描述的经典动态规划算法被称为同步动态规划算法。同步一词指的是两个方面：
+
+- 在每次迭代中所有状态的值都会被更新；
+
+- 算法的数学描述中，所有状态的值更新是同时发生的。然而，在实际编码时（比如在`Python` 中，计算是串行的而非并行的），这种“同时更新”将通过创建一个新的值函数向量，并通过遍历所有状态将旧值向量中的值赋给新向量来实现。
+
+实际上，动态规划算法通常实现为异步（Asynchronous）算法，其中上述两个约束（所有状态同时更新）被放宽。异步一词赋予了极大的灵活性——我们可以在每次迭代中更新一个子集的状态，且可以按任意顺序更新状态。
+
+这种放宽同步约束的自然结果是，我们可以仅维护一个值函数向量，并就地更新这些值。这带来了显著的好处——状态的更新值可以立即用于更新其他状态（注意：在同步情况下，由于需要旧值向量和新值向量，在整个状态遍历完成之前不能用更新后的状态值来更新其他状态）。实际上，在实际的 MDP 控制问题求解算法中，值函数的就地更新是常见的做法。
+
+另一个异步算法的特点是，我们可以优先更新某些状态值的顺序。有多种方法可以对算法进行优先级排序，这里我们仅突出一种简单但有效的状态值更新优先级排序方法——优先级遍历（Prioritized Sweeping）。我们维护一个按照“值函数间隙”（value function gaps）$g:\mathcal{N}\rightarrow\mathbb{R}$排序的状态队列（下面的例子展示了值迭代的情况）：
+
+$$
+g(s)=\left \vert V(s)-\max_{a\in\mathcal{A}}\left\{ \mathcal{R}(s,a)+\gamma\cdot\sum_{s'\in\mathcal{N}}\mathcal{P}(s,a,s')\cdot V(s') \right\}\right \vert\text{ for all }s\in\mathcal{N}
+$$
+在每次状态值更新后，我们更新所有由该状态值更新而导致值函数间隙变化的状态的值函数间隙。那些状态是从中有概率转移到更新后的状态的状态。这个过程意味着我们需要在数据结构中维护反向转移动态。因此，每次状态值更新后，队列会根据值函数间隙重新排序。我们总是从队列顶部取出值函数间隙最大的状态，并更新该状态的值函数。这样，我们就优先更新值函数间隙较大的状态，并确保我们很快会达到一个所有值函数间隙都足够小的状态。
+
+另一种值得提到的异步动态规划形式是实时动态规划（Real Time Dynamic Programming, RTDP）。RTDP 是指在 AI 代理与环境实时交互的过程中运行动态规划算法。当一个状态在实时交互过程中被访问时，我们更新该状态的值。然后，在由于实时交互而转移到另一个状态时，我们更新新状态的值，以此类推。请注意，在 RTDP 中，动作选择是由 AI 代理执行的实时动作，环境根据该动作做出反应。这个动作选择由遇到状态时，值函数隐含的策略决定。
+
+最后，我们需要强调的是，通常 MDP 的某些特殊结构可以通过特定定制的动态规划算法（通常是异步的）获得更好的效果。一个这样的特殊化是，当每个状态在 AI 代理执行 MDP 时，每个随机状态序列中最多仅被遇到一次，且所有随机序列都终止时。这种结构可以被概念化为一个有向无环图（Directed Acylic Graph, DAG），其中每个非终结节点表示一个非终结状态和动作对，而每个终结节点表示一个终结状态（图的边表示 MDP 的概率转移）。在这种特殊化中，MDP 的预测和控制问题可以通过简单的方式解决——通过从终结节点向后遍历 DAG，使用贝尔曼最优性方程（对于控制）或贝尔曼策略方程（对于预测）设置经过的状态的值函数。在这里，我们不需要像策略评估、策略迭代或值迭代那样的“迭代到收敛”方法。相反，所有这些动态规划算法本质上都简化为在 DAG 上 的值函数反向传播。这意味着，状态按照 DAG 上拓扑排序的逆序被访问（并设置其值函数）。我们将在下一个章节中详细讲解这种 DAG 反向传播动态规划算法——有限时域 MDP——在该类型的 MDP 中，所有的随机序列都将在固定的时间步内终止，每个时间步都有一个独立的状态集。这个有限时域 MDP 的特殊情况在金融应用中相当常见，因此我们将在下一节详细讨论。
+
+### 有限时域的动态规划：反向推导
+
+本节中我们讨论上一节提到的DAG结构化马尔可夫决策过程的一个特化版本——我们称之为有限时域的MDP，其中每个序列在固定的有限时间步$T$内终止，并且每个时间步都有一组独立于其他时间步的可数状态。因此$T$时刻的所有状态都是终止状态，且某些$T$之前的状态也可能是终止状态。对于所有的$t=0,1,...,T,$定义在$t$时刻的状态集为$\mathcal{S}_t,$第$t$时刻的终止状态集$\mathcal{T}_t,$非终止状态集为$\mathcal{N}_t=\mathcal{S}_t-\mathcal{T}_t$(注意$\mathcal{N}_T=\emptyset$).如前所述，当MDP不是时间齐次时，我们将每个状态扩展为包括时间步的索引，因此在时间步$t$的扩展状态为$(t,s_t),$其中$s_t\in\mathcal{S}_t.$整个MDP的扩展的状态空间$S$为
+
+$$
+\{(t,s_t)\mid t=0,1,...,T,s_t\in\mathcal{S}_t\}
+$$
+终止状态集$\mathcal{T}$为
+
+$$
+\{(t,s_t)\mid t=0,1,...,T,s_t\in\mathcal{T}_t\}
+$$
+在时间步$t$时，AI代理可获得的奖励集合记为$\mathcal{D}_t$($\mathbb{R}$中的可数子集)，而在非终止状态的可选动作记为$\mathcal{A}_t.$在更一般的设置中，我们将在代码中表示每个非终止状态$(t,s_t)$有自己独立的可选动作集$\mathcal{A}(s_t)$,然而为了简化讨论，这里我们假设所有时间步下的所有非终止状态具有相同的动作集$\mathcal{A}_t,$我们将整个动作空间$\mathcal{A}$表示为所有时间步$t=0,1,...,T-1$下的$\mathcal{A}_t$的并集。
+
+状态-奖励转移概率函数
+
+$$
+\mathcal{P}_R:\mathcal{N\times A\times D\times S}\rightarrow [0,1]
+$$
+由下面的式子给出
+
+
+\begin{align}
+\mathcal{P}_R((t,s_t),a_t,r_{t'},(t',s_{t'}))=
+\begin{cases}
+(\mathcal{P}_R)_t(s_t,a_t,r_{t'},s_{t'})&\text{ if }t'=t+1\text{ and } s_t\in\mathcal{S}_{t'} \text{ and }r_{t'}\in\mathcal{D}_{t'}\\
+0&\text{ otherwise}
+\end{cases}
+\end{align}
+
+对于所有$t=0,1,...,T-1,s_t\in \mathcal{N}_t,a_t\in\mathcal{A}_t,t'=0,1,...,T$其中
+
+$$
+(\mathcal{P}_R)_t:\mathcal{N_t\times A_t\times }\mathcal{D}_{t+1}\times \mathcal{S}_{t+1}\rightarrow [0,1]
+$$
+是每个时间步$t$的独立状态-奖励转移概率函数，满足
+
+$$
+\sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})=1
+$$
+对于所有$t=0,1,...,T-1,s_t\in \mathcal{N}_t,a_t\in\mathcal{A}_t.$
+
+因此，使用每个时间步$t$的独立转移概率函数表示有限时域MDP是很方便的。同样地，MDP的任何策略$\pi:\mathcal{N\times A}\rightarrow[0,1]$
+
+$$
+\pi((t,s_t),a_t)=\pi_t(s_t,a_t)
+$$
+也可以很方便地表示为每个时间步$t$的独立策略,其中
+
+$$
+\pi_t:\mathcal{N_t\times A_t}\rightarrow [0,1]
+$$
+因此我们可以将$\pi$解释为由序列$(\pi_0,...,\pi_{T-1})$组成。
+
+因此对于给定的策略$\pi,$值函数$V^\pi:\mathcal{N}\rightarrow \mathbb{R}$可以方便地表示为每个时间步$t$的值函数
+
+$$
+V^\pi_t:\mathcal{N_t}\rightarrow \mathbb{R}
+$$
+对于每一个时间步$t=0,1,...,T-1$,定义为
+
+$$
+V^\pi((t,s_t))=V_t^\pi(s_t)\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t
+$$
+
+然后贝尔曼策略方程可以写为
+
+$$
+V_t^\pi(s_t)=\sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R^{\pi_t})_t(s_t,r_{t+1},s_{t+1})\cdot (r_{t+1}+\gamma\cdot W_{t+1}^\pi(s_{t+1}))\\
+\text{ for all }t=0,1,...,T-1,s_T\in\mathcal{N_t} (\#eq:5-8)
+$$
+其中
+
+
+\begin{align}
+W_t^\pi(s_t)=
+\begin{cases}
+V_t^\pi(s_t)&\text{ if }s_t\in\mathcal{N}_t\\
+0&\text{ if }s_t\in\mathcal{T}_t
+\end{cases}
+\text{ for all }t=1,2,...,T
+\end{align}
+
+其中$(\mathcal{P}_R^{\pi_t})_t:\mathcal{N}_t\times\mathcal{D}_{t+1}\times\mathcal{S}_{t+1}$对所有$t=0,1,...,T-1$表示$\pi$隐含的MRP状态-奖励转移概率函数，定义为
+
+$$
+(\mathcal{P}_R^{\pi_t})_t(s_t,r_{t+1},s_{t+1})=\sum_{a_t\in\mathcal{A}_t}\pi_t(s_t,a_t)\cdot (\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})\text{ for all }t=0,1,...,T-1
+$$
+
+所以对于有限时域的MDP，这提供了一个简单的算法，通过从$t=T-1$向$t=0$倒推，使用方程\@ref(eq:5-8)计算$V_t^\pi$,并从已知的$W_{t+1}^\pi$计算出所有的$t=0,1,...,T-1$的$V^\pi_t.$由于我们是倒推时间索引$t.$这就是已知的向后推到（Backward Induction）方法。
+
+接下来，我们转向控制问题——计算最优值函数和最优策略。类似之前的模式，最优值函数$V^*:\mathcal{N}\rightarrow \mathbb{R}$可以方便地表示为每个时间步$t$的值函数$V_t^*:\mathcal{N}_t\rightarrow \mathbb{R}$的序列，定义为
+
+$$
+V^*((t,s_t))=V_t^*(s_t)\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t
+$$
+
+因此，MDP状态-价值函数的贝尔曼最优性方程可以写成
+
+$$
+V_t^*(s_t)=\max_{a_t\in\mathcal{A}_t}\left\{ \sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})\cdot (r_{t+1}+\gamma\cdot W_{t+1}^*(s_{t+1})) \right\}\\
+\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t (\#eq:5-9)
+$$
+其中
+
+\begin{align}
+W_t^*(s_t)=
+\begin{cases}
+V_t^*(s_t)&\text{ if }s_t\in\mathcal{N}_t\\
+0&\text{ if }s_t\in\mathcal{T}_t
+\end{cases}
+\text{ for all }t=1,2,...,T
+\end{align}
+
+相关的最优（确定性）策略$(\pi^*_D)_t:\mathcal{N}_t\rightarrow \mathcal{A}_t$
+定义为
+
+$$
+(\pi^*_D)_t(s_t)=\mathop{\arg\max}_{a_t\in\mathcal{A}_t}\left\{ \sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})\cdot (r_{t+1}+\gamma\cdot W_{t+1}^*(s_{t+1}) \right\}\\
+\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t (\#eq:5-10)
+$$
+
+因此，对于有限MDP，通过从$t=T-1$倒推到$t=0,$使用方程\@ref(eq:5-9)计算$V^*_t,$并使用方程\@ref(eq:5-10)计算$(\pi^*_D)_t$的最优策略，对于所有的$t=0,1,...,T-1,$从已知的$W_{t+1}^*$值可以计算出最优值函数和最优策略。这个算法是将值迭代方法应用到有限时域情况下的“向后推导”技术。
+
+请注意，这些有限视界有限 MDP 算法不需要像常规策略评估和值迭代那样进行任何“迭代收敛”。相反，在这些算法中，我们只是回顾过去，并立即从下一个时间步骤的值函数（由于我们回顾过去，因此已经知道）获得每个时间步骤的值函数。这种“值函数反向传播”技术被称为后向归纳算法，在许多金融应用中非常常见（我们将在本书后面看到）。
+
+### 产品停产/停季时的动态定价
+
+现在我们考虑一个相当重要的商业应用——动态定价。我们考虑一个问题，即在产品接近生命周期末期或季节结束时，如何进行动态定价，此时我们不再希望继续销售该产品。我们需要根据产品库存量、距离生命周期结束/季节结束还有多少天以及预期的客户需求（作为价格调整的函数）动态地调整价格。为了让问题更具体，假设你经营一个超市，距离万圣节还有$T$天。你刚从供应商那里收到了$M$个万圣节面具，并且在这$T$天内将不会再收到任何库存。你希望在每天开始时动态地设定万圣节面具的销售价格，以最大化从今天到万圣节的预期总销售收入（假设万圣节之后没有人再购买面具）。
+
+假设在$T$天中的每一天，当天开始时需要从$N$个价格$P_1,...,P_N$中选择一个价格$P_i,$该价格将作为当天所有面具的销售价格。假设当天客户需求量服从一个Poisson分布，如果选择了$P_i$作为当天价格那么需求的平均值为$\lambda_i.$注意，在任何给定的日子，需求可能会超过你店里拥有的面具数量，这时当天的销售数量将等于当天开始时你店里拥有的面具数量。
+
+这个MDP的状态由一对$(t,I_t)$组成，其中$t\in\{0,1,...,T\}$表示时间索引，$I_t\in\{0,1,...,M\}$表示时间$t$时的库存。使用前面章节的记号$\mathcal{S}_t=\{0,1,...,M\},I_t\in \mathcal{S}_t.$当$t=0,1,...,T-1$时$ \mathcal{N}_t=\mathcal{S}_t,\mathcal{N}_T=\emptyset.$在时间$t$时的动作选择可以通过从$1\sim N$的整数选择来表示，因此$\mathcal{A}_t=\{1,2,...,N\}.$
+
+注意$I_0=M,I_{t+1}=\max(0,I_t-d_t),0\leq t\leq T.$其中$d_t$是第$t$天的随机需求，服从Poisson分布均值为$\lambda_i,$如果第$t$天的动作选择$i\in\mathcal{A}_t.$另外请注意，第$t$天的销售收入等于$\min(I_t,d_t)\cdot P_i.$因此，时间$t$的状态-奖励转移概率函数$(\mathcal{P}_R)_t:\mathcal{N}_t\times\mathcal{A}_t\times\mathcal{D}_{t+1}\times\mathcal{S}_{t+1}\rightarrow [0,1]$
+定义为
+
+$$
+(\mathcal{P}_R)_t(I_t,i,r_{t+1},I_t-k)=
+\begin{cases}
+\frac{e^{-\lambda_i}\lambda_i^k}{k!}&\text{ for }k<I_t\text{ and } r_{t+1}=k\cdot P_i\\
+\sum_{j=I_t}^\infty\frac{e^{-\lambda_i}\lambda_i^j}{j!}&\text{ for }k=I_t\text{ and } r_{t+1}=k\cdot P_i\\
+0&\text{ otherwise}
+\end{cases}
+$$
+对于所有的$0\leq t<T$.
+
+利用$(\mathcal{P}_R)_t$的定义和边界条件$W_T^*(I_T)=0$,我们可以执行逆向推导算法来计算$V_t^*$及其相应的最优确定性策略$(\pi^*_D)_t,0\leq t<T.$
+
+现在让我们编写代码来表示这个动态规划问题，作为一个有限MDP过程，确定其最优策略，即在任意库存水平$I_t$下时间步$t$的最优动态价格。
+
+下面介绍如何用Colab和Github不配置环境即可复现书里的代码。
+
+首先在Colab里面新建一个笔记本，在代码块里输入
+
+
+``` python
+from google.colab import drive
+drive.mount('/content/drive')
+```
+
+上述已经挂载到我们的Google Drive上了，随后git clone本书仓库
+
+``` python
+!git clone https://github.com/TikhonJelvis/RL-book.git
+```
+当然也不要忘记更改工作目录！
+
+``` python
+import sys
+sys.path.append('/content/RL-book')
+```
+然后可以写书中的例子了！相关的函数在书的仓库中可以找到。
+
+``` python
+from rl.markov_decision_process import (
+    FiniteMarkovDecisionProcess, FiniteMarkovRewardProcess)
+from rl.policy import FiniteDeterministicPolicy, FinitePolicy
+from rl.finite_horizon import WithTime
+from typing import Sequence, Tuple, Iterator
+from scipy.stats import poisson
+from rl.distribution import Categorical
+from rl.finite_horizon import (
+    finite_horizon_MRP, unwrap_finite_horizon_MRP, evaluate,
+    finite_horizon_MDP, unwrap_finite_horizon_MDP, optimal_vf_and_policy)
+from rl.dynamic_programming import V
+
+
+class ClearancePricingMDP:
+
+    initial_inventory: int
+    time_steps: int
+    price_lambda_pairs: Sequence[Tuple[float, float]]
+    single_step_mdp: FiniteMarkovDecisionProcess[int, int]
+    mdp: FiniteMarkovDecisionProcess[WithTime[int], int]
+
+    def __init__(
+        self,
+        initial_inventory: int,
+        time_steps: int,
+        price_lambda_pairs: Sequence[Tuple[float, float]]
+    ):
+        self.initial_inventory = initial_inventory
+        self.time_steps = time_steps
+        self.price_lambda_pairs = price_lambda_pairs
+        distrs = [poisson(l) for _, l in price_lambda_pairs]
+        prices = [p for p, _ in price_lambda_pairs]
+        self.single_step_mdp: FiniteMarkovDecisionProcess[int, int] =\
+            FiniteMarkovDecisionProcess({
+                s: {i: Categorical(
+                    {(s - k, prices[i] * k):
+                     (distrs[i].pmf(k) if k < s else 1 - distrs[i].cdf(s - 1))
+                     for k in range(s + 1)})
+                    for i in range(len(prices))}
+                for s in range(initial_inventory + 1)
+            })
+        self.mdp = finite_horizon_MDP(self.single_step_mdp, time_steps)
+
+    def get_vf_for_policy(
+        self,
+        policy: FinitePolicy[WithTime[int], int]
+    ) -> Iterator[V[int]]:
+        mrp: FiniteMarkovRewardProcess[WithTime[int]] \
+            = self.mdp.apply_finite_policy(policy)
+        return evaluate(unwrap_finite_horizon_MRP(mrp), 1.)
+
+    def get_optimal_vf_and_policy(self)\
+            -> Iterator[Tuple[V[int], FiniteDeterministicPolicy[int, int]]]:
+        return optimal_vf_and_policy(unwrap_finite_horizon_MDP(self.mdp), 1.)
+
+
+if __name__ == '__main__':
+    from pprint import pprint
+    ii = 12
+    steps = 8
+    pairs = [(1.0, 0.5), (0.7, 1.0), (0.5, 1.5), (0.3, 2.5)]
+    cp: ClearancePricingMDP = ClearancePricingMDP(
+        initial_inventory=ii,
+        time_steps=steps,
+        price_lambda_pairs=pairs
+    )
+    print("Clearance Pricing MDP")
+    print("---------------------")
+    print(cp.mdp)
+
+    def policy_func(x: int) -> int:
+        return 0 if x < 2 else (1 if x < 5 else (2 if x < 8 else 3))
+
+    stationary_policy: FiniteDeterministicPolicy[int, int] = \
+        FiniteDeterministicPolicy({s: policy_func(s) for s in range(ii + 1)})
+
+    single_step_mrp: FiniteMarkovRewardProcess[int] = \
+        cp.single_step_mdp.apply_finite_policy(stationary_policy)
+
+    vf_for_policy: Iterator[V[int]] = evaluate(
+        unwrap_finite_horizon_MRP(finite_horizon_MRP(single_step_mrp, steps)),
+        1.
+    )
+
+    print("Value Function for Stationary Policy")
+    print("------------------------------------")
+    for t, vf in enumerate(vf_for_policy):
+        print(f"Time Step {t:d}")
+        print("---------------")
+        pprint(vf)
+
+    print("Optimal Value Function and Optimal Policy")
+    print("------------------------------------")
+    prices = []
+    for t, (vf, policy) in enumerate(cp.get_optimal_vf_and_policy()):
+        print(f"Time Step {t:d}")
+        print("---------------")
+        pprint(vf)
+        print(policy)
+        prices.append(
+            [pairs[policy.action_for[s]][0]
+             for s in range(ii + 1)])
+
+    import matplotlib.pyplot as plt
+    from matplotlib import cm
+    import numpy as np
+    heatmap = plt.imshow(np.array(prices).T, origin='lower')
+    plt.colorbar(heatmap, shrink=0.5, aspect=5)
+    plt.xlabel("Time Steps")
+    plt.ylabel("Inventory")
+    plt.show()
+```
+
+以下是输出的可视化结果
+![](https://Go9entle.github.io/picx-images-hosting/image.58hirk8d2t.webp)<!-- -->
+
+
+### 推广至非表格算法
+
+本章中介绍的有限马尔可夫决策过程（MDP）算法被称为“表格”算法。这里的“表格”指的是MDP被指定为一个有限的数据结构，值函数也被表示为一个包含非终止状态和值的有限“表格”。这些表格算法通常在每次迭代中遍历所有非终止状态，更新值函数。但对于大状态空间或无限状态空间，无法使用这种方法，我们需要使用函数逼近来表示值函数。好消息是，我们可以修改每个表格算法，使得在每一步中，不是遍历所有非终止状态，而是仅从一个合适的非终止状态子集进行采样，使用适当的贝尔曼计算（就像在表格算法中一样）来计算这些采样状态的值，然后通过这些采样状态的计算值来创建/更新值函数的函数逼近。重要的一点是，从这些表格算法到基于函数逼近的算法，我们的算法基本结构和基本原理（固定点和贝尔曼算子）仍然保持不变。在下一章中，我们将讨论如何将这些动态规划算法从表格方法推广到函数逼近方法。我们称这些算法为“近似动态规划”。
 
 ## 动态资产配置和消费 {#dynassall}  
 ### 个人财务的优化  

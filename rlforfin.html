@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-09" />
+<meta name="date" content="2025-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -212,6 +212,10 @@ div.csl-indent {
 <li class="chapter" data-level="1.3.7" data-path="rlforfin.html"><a href="rlforfin.html#贝尔曼最优性算子与值迭代算法"><i class="fa fa-check"></i><b>1.3.7</b> 贝尔曼最优性算子与值迭代算法</a></li>
 <li class="chapter" data-level="1.3.8" data-path="rlforfin.html"><a href="rlforfin.html#从最优值函数到最优策略"><i class="fa fa-check"></i><b>1.3.8</b> 从最优值函数到最优策略</a></li>
 <li class="chapter" data-level="1.3.9" data-path="rlforfin.html"><a href="rlforfin.html#广义策略迭代"><i class="fa fa-check"></i><b>1.3.9</b> 广义策略迭代</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rlforfin.html"><a href="rlforfin.html#异步动态规划"><i class="fa fa-check"></i><b>1.3.10</b> 异步动态规划</a></li>
+<li class="chapter" data-level="1.3.11" data-path="rlforfin.html"><a href="rlforfin.html#有限时域的动态规划反向推导"><i class="fa fa-check"></i><b>1.3.11</b> 有限时域的动态规划：反向推导</a></li>
+<li class="chapter" data-level="1.3.12" data-path="rlforfin.html"><a href="rlforfin.html#产品停产停季时的动态定价"><i class="fa fa-check"></i><b>1.3.12</b> 产品停产/停季时的动态定价</a></li>
+<li class="chapter" data-level="1.3.13" data-path="rlforfin.html"><a href="rlforfin.html#推广至非表格算法"><i class="fa fa-check"></i><b>1.3.13</b> 推广至非表格算法</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="rlforfin.html"><a href="rlforfin.html#dynassall"><i class="fa fa-check"></i><b>1.4</b> 动态资产配置和消费</a>
 <ul>
@@ -1135,9 +1139,7 @@ $$
 <li><p>策略改进：可以只更新部分状态的策略，而不是所有状态。</p></li>
 </ul>
 <p><strong>值迭代作为GPI的实例</strong></p>
-<p>值迭代是 GPI 的一个具体实例。在值迭代中，每次迭代只应用一次贝尔曼策略算子，然后进行策略改进。其二维布局如下：</p>
-<p>$$</p>
-<p>$$</p>
+<p>值迭代是 GPI 的一个具体实例。在值迭代中，每次迭代只应用一次贝尔曼策略算子，然后进行策略改进。</p>
 <p>在值迭代中，策略改进步骤保持不变，但策略评估简化为仅应用一次贝尔曼策略算子。</p>
 <p>广义策略迭代是强化学习中最核心的概念之一。几乎所有强化学习控制算法都可以视为 GPI 的特例。例如，在某些简单的强化学习控制算法中：</p>
 <ul>
@@ -1151,6 +1153,272 @@ $$
 <li><p>GPI 的核心思想是交替进行某种形式的策略评估和策略改进。</p></li>
 <li><p>GPI 统一了动态规划和强化学习的各种算法，是理解强化学习控制问题的基础。</p></li>
 </ul>
+</div>
+<div id="异步动态规划" class="section level3 hasAnchor" number="1.3.10">
+<h3><span class="header-section-number">1.3.10</span> 异步动态规划<a href="rlforfin.html#异步动态规划" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>我们在本章中描述的经典动态规划算法被称为同步动态规划算法。同步一词指的是两个方面：</p>
+<ul>
+<li><p>在每次迭代中所有状态的值都会被更新；</p></li>
+<li><p>算法的数学描述中，所有状态的值更新是同时发生的。然而，在实际编码时（比如在<code>Python</code> 中，计算是串行的而非并行的），这种“同时更新”将通过创建一个新的值函数向量，并通过遍历所有状态将旧值向量中的值赋给新向量来实现。</p></li>
+</ul>
+<p>实际上，动态规划算法通常实现为异步（Asynchronous）算法，其中上述两个约束（所有状态同时更新）被放宽。异步一词赋予了极大的灵活性——我们可以在每次迭代中更新一个子集的状态，且可以按任意顺序更新状态。</p>
+<p>这种放宽同步约束的自然结果是，我们可以仅维护一个值函数向量，并就地更新这些值。这带来了显著的好处——状态的更新值可以立即用于更新其他状态（注意：在同步情况下，由于需要旧值向量和新值向量，在整个状态遍历完成之前不能用更新后的状态值来更新其他状态）。实际上，在实际的 MDP 控制问题求解算法中，值函数的就地更新是常见的做法。</p>
+<p>另一个异步算法的特点是，我们可以优先更新某些状态值的顺序。有多种方法可以对算法进行优先级排序，这里我们仅突出一种简单但有效的状态值更新优先级排序方法——优先级遍历（Prioritized Sweeping）。我们维护一个按照“值函数间隙”（value function gaps）<span class="math inline">\(g:\mathcal{N}\rightarrow\mathbb{R}\)</span>排序的状态队列（下面的例子展示了值迭代的情况）：</p>
+<p><span class="math display">\[
+g(s)=\left \vert V(s)-\max_{a\in\mathcal{A}}\left\{ \mathcal{R}(s,a)+\gamma\cdot\sum_{s&#39;\in\mathcal{N}}\mathcal{P}(s,a,s&#39;)\cdot V(s&#39;) \right\}\right \vert\text{ for all }s\in\mathcal{N}
+\]</span>
+在每次状态值更新后，我们更新所有由该状态值更新而导致值函数间隙变化的状态的值函数间隙。那些状态是从中有概率转移到更新后的状态的状态。这个过程意味着我们需要在数据结构中维护反向转移动态。因此，每次状态值更新后，队列会根据值函数间隙重新排序。我们总是从队列顶部取出值函数间隙最大的状态，并更新该状态的值函数。这样，我们就优先更新值函数间隙较大的状态，并确保我们很快会达到一个所有值函数间隙都足够小的状态。</p>
+<p>另一种值得提到的异步动态规划形式是实时动态规划（Real Time Dynamic Programming, RTDP）。RTDP 是指在 AI 代理与环境实时交互的过程中运行动态规划算法。当一个状态在实时交互过程中被访问时，我们更新该状态的值。然后，在由于实时交互而转移到另一个状态时，我们更新新状态的值，以此类推。请注意，在 RTDP 中，动作选择是由 AI 代理执行的实时动作，环境根据该动作做出反应。这个动作选择由遇到状态时，值函数隐含的策略决定。</p>
+<p>最后，我们需要强调的是，通常 MDP 的某些特殊结构可以通过特定定制的动态规划算法（通常是异步的）获得更好的效果。一个这样的特殊化是，当每个状态在 AI 代理执行 MDP 时，每个随机状态序列中最多仅被遇到一次，且所有随机序列都终止时。这种结构可以被概念化为一个有向无环图（Directed Acylic Graph, DAG），其中每个非终结节点表示一个非终结状态和动作对，而每个终结节点表示一个终结状态（图的边表示 MDP 的概率转移）。在这种特殊化中，MDP 的预测和控制问题可以通过简单的方式解决——通过从终结节点向后遍历 DAG，使用贝尔曼最优性方程（对于控制）或贝尔曼策略方程（对于预测）设置经过的状态的值函数。在这里，我们不需要像策略评估、策略迭代或值迭代那样的“迭代到收敛”方法。相反，所有这些动态规划算法本质上都简化为在 DAG 上 的值函数反向传播。这意味着，状态按照 DAG 上拓扑排序的逆序被访问（并设置其值函数）。我们将在下一个章节中详细讲解这种 DAG 反向传播动态规划算法——有限时域 MDP——在该类型的 MDP 中，所有的随机序列都将在固定的时间步内终止，每个时间步都有一个独立的状态集。这个有限时域 MDP 的特殊情况在金融应用中相当常见，因此我们将在下一节详细讨论。</p>
+</div>
+<div id="有限时域的动态规划反向推导" class="section level3 hasAnchor" number="1.3.11">
+<h3><span class="header-section-number">1.3.11</span> 有限时域的动态规划：反向推导<a href="rlforfin.html#有限时域的动态规划反向推导" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>本节中我们讨论上一节提到的DAG结构化马尔可夫决策过程的一个特化版本——我们称之为有限时域的MDP，其中每个序列在固定的有限时间步<span class="math inline">\(T\)</span>内终止，并且每个时间步都有一组独立于其他时间步的可数状态。因此<span class="math inline">\(T\)</span>时刻的所有状态都是终止状态，且某些<span class="math inline">\(T\)</span>之前的状态也可能是终止状态。对于所有的<span class="math inline">\(t=0,1,...,T,\)</span>定义在<span class="math inline">\(t\)</span>时刻的状态集为<span class="math inline">\(\mathcal{S}_t,\)</span>第<span class="math inline">\(t\)</span>时刻的终止状态集<span class="math inline">\(\mathcal{T}_t,\)</span>非终止状态集为<span class="math inline">\(\mathcal{N}_t=\mathcal{S}_t-\mathcal{T}_t\)</span>(注意<span class="math inline">\(\mathcal{N}_T=\emptyset\)</span>).如前所述，当MDP不是时间齐次时，我们将每个状态扩展为包括时间步的索引，因此在时间步<span class="math inline">\(t\)</span>的扩展状态为<span class="math inline">\((t,s_t),\)</span>其中<span class="math inline">\(s_t\in\mathcal{S}_t.\)</span>整个MDP的扩展的状态空间<span class="math inline">\(S\)</span>为</p>
+<p><span class="math display">\[
+\{(t,s_t)\mid t=0,1,...,T,s_t\in\mathcal{S}_t\}
+\]</span>
+终止状态集<span class="math inline">\(\mathcal{T}\)</span>为</p>
+<p><span class="math display">\[
+\{(t,s_t)\mid t=0,1,...,T,s_t\in\mathcal{T}_t\}
+\]</span>
+在时间步<span class="math inline">\(t\)</span>时，AI代理可获得的奖励集合记为<span class="math inline">\(\mathcal{D}_t\)</span>(<span class="math inline">\(\mathbb{R}\)</span>中的可数子集)，而在非终止状态的可选动作记为<span class="math inline">\(\mathcal{A}_t.\)</span>在更一般的设置中，我们将在代码中表示每个非终止状态<span class="math inline">\((t,s_t)\)</span>有自己独立的可选动作集<span class="math inline">\(\mathcal{A}(s_t)\)</span>,然而为了简化讨论，这里我们假设所有时间步下的所有非终止状态具有相同的动作集<span class="math inline">\(\mathcal{A}_t,\)</span>我们将整个动作空间<span class="math inline">\(\mathcal{A}\)</span>表示为所有时间步<span class="math inline">\(t=0,1,...,T-1\)</span>下的<span class="math inline">\(\mathcal{A}_t\)</span>的并集。</p>
+<p>状态-奖励转移概率函数</p>
+<p><span class="math display">\[
+\mathcal{P}_R:\mathcal{N\times A\times D\times S}\rightarrow [0,1]
+\]</span>
+由下面的式子给出</p>
+<p><span class="math display">\[\begin{align}
+\mathcal{P}_R((t,s_t),a_t,r_{t&#39;},(t&#39;,s_{t&#39;}))=
+\begin{cases}
+(\mathcal{P}_R)_t(s_t,a_t,r_{t&#39;},s_{t&#39;})&amp;\text{ if }t&#39;=t+1\text{ and } s_t\in\mathcal{S}_{t&#39;} \text{ and }r_{t&#39;}\in\mathcal{D}_{t&#39;}\\
+0&amp;\text{ otherwise}
+\end{cases}
+\end{align}\]</span></p>
+<p>对于所有<span class="math inline">\(t=0,1,...,T-1,s_t\in \mathcal{N}_t,a_t\in\mathcal{A}_t,t&#39;=0,1,...,T\)</span>其中</p>
+<p><span class="math display">\[
+(\mathcal{P}_R)_t:\mathcal{N_t\times A_t\times }\mathcal{D}_{t+1}\times \mathcal{S}_{t+1}\rightarrow [0,1]
+\]</span>
+是每个时间步<span class="math inline">\(t\)</span>的独立状态-奖励转移概率函数，满足</p>
+<p><span class="math display">\[
+\sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})=1
+\]</span>
+对于所有<span class="math inline">\(t=0,1,...,T-1,s_t\in \mathcal{N}_t,a_t\in\mathcal{A}_t.\)</span></p>
+<p>因此，使用每个时间步<span class="math inline">\(t\)</span>的独立转移概率函数表示有限时域MDP是很方便的。同样地，MDP的任何策略<span class="math inline">\(\pi:\mathcal{N\times A}\rightarrow[0,1]\)</span></p>
+<p><span class="math display">\[
+\pi((t,s_t),a_t)=\pi_t(s_t,a_t)
+\]</span>
+也可以很方便地表示为每个时间步<span class="math inline">\(t\)</span>的独立策略,其中</p>
+<p><span class="math display">\[
+\pi_t:\mathcal{N_t\times A_t}\rightarrow [0,1]
+\]</span>
+因此我们可以将<span class="math inline">\(\pi\)</span>解释为由序列<span class="math inline">\((\pi_0,...,\pi_{T-1})\)</span>组成。</p>
+<p>因此对于给定的策略<span class="math inline">\(\pi,\)</span>值函数<span class="math inline">\(V^\pi:\mathcal{N}\rightarrow \mathbb{R}\)</span>可以方便地表示为每个时间步<span class="math inline">\(t\)</span>的值函数</p>
+<p><span class="math display">\[
+V^\pi_t:\mathcal{N_t}\rightarrow \mathbb{R}
+\]</span>
+对于每一个时间步<span class="math inline">\(t=0,1,...,T-1\)</span>,定义为</p>
+<p><span class="math display">\[
+V^\pi((t,s_t))=V_t^\pi(s_t)\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t
+\]</span></p>
+<p>然后贝尔曼策略方程可以写为</p>
+<p><span class="math display" id="eq:5-8">\[
+V_t^\pi(s_t)=\sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R^{\pi_t})_t(s_t,r_{t+1},s_{t+1})\cdot (r_{t+1}+\gamma\cdot W_{t+1}^\pi(s_{t+1}))\\
+\text{ for all }t=0,1,...,T-1,s_T\in\mathcal{N_t} \tag{1.18}
+\]</span>
+其中</p>
+<p><span class="math display">\[\begin{align}
+W_t^\pi(s_t)=
+\begin{cases}
+V_t^\pi(s_t)&amp;\text{ if }s_t\in\mathcal{N}_t\\
+0&amp;\text{ if }s_t\in\mathcal{T}_t
+\end{cases}
+\text{ for all }t=1,2,...,T
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\((\mathcal{P}_R^{\pi_t})_t:\mathcal{N}_t\times\mathcal{D}_{t+1}\times\mathcal{S}_{t+1}\)</span>对所有<span class="math inline">\(t=0,1,...,T-1\)</span>表示<span class="math inline">\(\pi\)</span>隐含的MRP状态-奖励转移概率函数，定义为</p>
+<p><span class="math display">\[
+(\mathcal{P}_R^{\pi_t})_t(s_t,r_{t+1},s_{t+1})=\sum_{a_t\in\mathcal{A}_t}\pi_t(s_t,a_t)\cdot (\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})\text{ for all }t=0,1,...,T-1
+\]</span></p>
+<p>所以对于有限时域的MDP，这提供了一个简单的算法，通过从<span class="math inline">\(t=T-1\)</span>向<span class="math inline">\(t=0\)</span>倒推，使用方程<a href="rlforfin.html#eq:5-8">(1.18)</a>计算<span class="math inline">\(V_t^\pi\)</span>,并从已知的<span class="math inline">\(W_{t+1}^\pi\)</span>计算出所有的<span class="math inline">\(t=0,1,...,T-1\)</span>的<span class="math inline">\(V^\pi_t.\)</span>由于我们是倒推时间索引<span class="math inline">\(t.\)</span>这就是已知的向后推到（Backward Induction）方法。</p>
+<p>接下来，我们转向控制问题——计算最优值函数和最优策略。类似之前的模式，最优值函数<span class="math inline">\(V^*:\mathcal{N}\rightarrow \mathbb{R}\)</span>可以方便地表示为每个时间步<span class="math inline">\(t\)</span>的值函数<span class="math inline">\(V_t^*:\mathcal{N}_t\rightarrow \mathbb{R}\)</span>的序列，定义为</p>
+<p><span class="math display">\[
+V^*((t,s_t))=V_t^*(s_t)\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t
+\]</span></p>
+<p>因此，MDP状态-价值函数的贝尔曼最优性方程可以写成</p>
+<p><span class="math display" id="eq:5-9">\[
+V_t^*(s_t)=\max_{a_t\in\mathcal{A}_t}\left\{ \sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})\cdot (r_{t+1}+\gamma\cdot W_{t+1}^*(s_{t+1})) \right\}\\
+\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t \tag{1.19}
+\]</span>
+其中</p>
+<p><span class="math display">\[\begin{align}
+W_t^*(s_t)=
+\begin{cases}
+V_t^*(s_t)&amp;\text{ if }s_t\in\mathcal{N}_t\\
+0&amp;\text{ if }s_t\in\mathcal{T}_t
+\end{cases}
+\text{ for all }t=1,2,...,T
+\end{align}\]</span></p>
+<p>相关的最优（确定性）策略<span class="math inline">\((\pi^*_D)_t:\mathcal{N}_t\rightarrow \mathcal{A}_t\)</span>
+定义为</p>
+<p><span class="math display" id="eq:5-10">\[
+(\pi^*_D)_t(s_t)=\mathop{\arg\max}_{a_t\in\mathcal{A}_t}\left\{ \sum_{s_{t+1}\in\mathcal{S}_{t+1}}\sum_{r_{t+1}\in\mathcal{D}_{t+1}}(\mathcal{P}_R)_t(s_t,a_t,r_{t+1},s_{t+1})\cdot (r_{t+1}+\gamma\cdot W_{t+1}^*(s_{t+1}) \right\}\\
+\text{ for all }t=0,1,...,T-1,s_t\in\mathcal{N}_t \tag{1.20}
+\]</span></p>
+<p>因此，对于有限MDP，通过从<span class="math inline">\(t=T-1\)</span>倒推到<span class="math inline">\(t=0,\)</span>使用方程<a href="rlforfin.html#eq:5-9">(1.19)</a>计算<span class="math inline">\(V^*_t,\)</span>并使用方程<a href="rlforfin.html#eq:5-10">(1.20)</a>计算<span class="math inline">\((\pi^*_D)_t\)</span>的最优策略，对于所有的<span class="math inline">\(t=0,1,...,T-1,\)</span>从已知的<span class="math inline">\(W_{t+1}^*\)</span>值可以计算出最优值函数和最优策略。这个算法是将值迭代方法应用到有限时域情况下的“向后推导”技术。</p>
+<p>请注意，这些有限视界有限 MDP 算法不需要像常规策略评估和值迭代那样进行任何“迭代收敛”。相反，在这些算法中，我们只是回顾过去，并立即从下一个时间步骤的值函数（由于我们回顾过去，因此已经知道）获得每个时间步骤的值函数。这种“值函数反向传播”技术被称为后向归纳算法，在许多金融应用中非常常见（我们将在本书后面看到）。</p>
+</div>
+<div id="产品停产停季时的动态定价" class="section level3 hasAnchor" number="1.3.12">
+<h3><span class="header-section-number">1.3.12</span> 产品停产/停季时的动态定价<a href="rlforfin.html#产品停产停季时的动态定价" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>现在我们考虑一个相当重要的商业应用——动态定价。我们考虑一个问题，即在产品接近生命周期末期或季节结束时，如何进行动态定价，此时我们不再希望继续销售该产品。我们需要根据产品库存量、距离生命周期结束/季节结束还有多少天以及预期的客户需求（作为价格调整的函数）动态地调整价格。为了让问题更具体，假设你经营一个超市，距离万圣节还有<span class="math inline">\(T\)</span>天。你刚从供应商那里收到了<span class="math inline">\(M\)</span>个万圣节面具，并且在这<span class="math inline">\(T\)</span>天内将不会再收到任何库存。你希望在每天开始时动态地设定万圣节面具的销售价格，以最大化从今天到万圣节的预期总销售收入（假设万圣节之后没有人再购买面具）。</p>
+<p>假设在<span class="math inline">\(T\)</span>天中的每一天，当天开始时需要从<span class="math inline">\(N\)</span>个价格<span class="math inline">\(P_1,...,P_N\)</span>中选择一个价格<span class="math inline">\(P_i,\)</span>该价格将作为当天所有面具的销售价格。假设当天客户需求量服从一个Poisson分布，如果选择了<span class="math inline">\(P_i\)</span>作为当天价格那么需求的平均值为<span class="math inline">\(\lambda_i.\)</span>注意，在任何给定的日子，需求可能会超过你店里拥有的面具数量，这时当天的销售数量将等于当天开始时你店里拥有的面具数量。</p>
+<p>这个MDP的状态由一对<span class="math inline">\((t,I_t)\)</span>组成，其中<span class="math inline">\(t\in\{0,1,...,T\}\)</span>表示时间索引，<span class="math inline">\(I_t\in\{0,1,...,M\}\)</span>表示时间<span class="math inline">\(t\)</span>时的库存。使用前面章节的记号<span class="math inline">\(\mathcal{S}_t=\{0,1,...,M\},I_t\in \mathcal{S}_t.\)</span>当<span class="math inline">\(t=0,1,...,T-1\)</span>时$ _t=_t,_T=.<span class="math inline">\(在时间\)</span>t$时的动作选择可以通过从<span class="math inline">\(1\sim N\)</span>的整数选择来表示，因此<span class="math inline">\(\mathcal{A}_t=\{1,2,...,N\}.\)</span></p>
+<p>注意<span class="math inline">\(I_0=M,I_{t+1}=\max(0,I_t-d_t),0\leq t\leq T.\)</span>其中<span class="math inline">\(d_t\)</span>是第<span class="math inline">\(t\)</span>天的随机需求，服从Poisson分布均值为<span class="math inline">\(\lambda_i,\)</span>如果第<span class="math inline">\(t\)</span>天的动作选择<span class="math inline">\(i\in\mathcal{A}_t.\)</span>另外请注意，第<span class="math inline">\(t\)</span>天的销售收入等于<span class="math inline">\(\min(I_t,d_t)\cdot P_i.\)</span>因此，时间<span class="math inline">\(t\)</span>的状态-奖励转移概率函数<span class="math inline">\((\mathcal{P}_R)_t:\mathcal{N}_t\times\mathcal{A}_t\times\mathcal{D}_{t+1}\times\mathcal{S}_{t+1}\rightarrow [0,1]\)</span>
+定义为</p>
+<p><span class="math display">\[
+(\mathcal{P}_R)_t(I_t,i,r_{t+1},I_t-k)=
+\begin{cases}
+\frac{e^{-\lambda_i}\lambda_i^k}{k!}&amp;\text{ for }k&lt;I_t\text{ and } r_{t+1}=k\cdot P_i\\
+\sum_{j=I_t}^\infty\frac{e^{-\lambda_i}\lambda_i^j}{j!}&amp;\text{ for }k=I_t\text{ and } r_{t+1}=k\cdot P_i\\
+0&amp;\text{ otherwise}
+\end{cases}
+\]</span>
+对于所有的<span class="math inline">\(0\leq t&lt;T\)</span>.</p>
+<p>利用<span class="math inline">\((\mathcal{P}_R)_t\)</span>的定义和边界条件<span class="math inline">\(W_T^*(I_T)=0\)</span>,我们可以执行逆向推导算法来计算<span class="math inline">\(V_t^*\)</span>及其相应的最优确定性策略<span class="math inline">\((\pi^*_D)_t,0\leq t&lt;T.\)</span></p>
+<p>现在让我们编写代码来表示这个动态规划问题，作为一个有限MDP过程，确定其最优策略，即在任意库存水平<span class="math inline">\(I_t\)</span>下时间步<span class="math inline">\(t\)</span>的最优动态价格。</p>
+<p>下面介绍如何用Colab和Github不配置环境即可复现书里的代码。</p>
+<p>首先在Colab里面新建一个笔记本，在代码块里输入</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="rlforfin.html#cb7-1" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
+<span id="cb7-2"><a href="rlforfin.html#cb7-2" tabindex="-1"></a>drive.mount(<span class="st">&#39;/content/drive&#39;</span>)</span></code></pre></div>
+</details>
+<p>上述已经挂载到我们的Google Drive上了，随后git clone本书仓库</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="rlforfin.html#cb8-1" tabindex="-1"></a><span class="op">!</span>git clone https:<span class="op">//</span>github.com<span class="op">/</span>TikhonJelvis<span class="op">/</span>RL<span class="op">-</span>book.git</span></code></pre></div>
+</details>
+<p>当然也不要忘记更改工作目录！</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="rlforfin.html#cb9-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb9-2"><a href="rlforfin.html#cb9-2" tabindex="-1"></a>sys.path.append(<span class="st">&#39;/content/RL-book&#39;</span>)</span></code></pre></div>
+</details>
+<p>然后可以写书中的例子了！相关的函数在书的仓库中可以找到。</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="rlforfin.html#cb10-1" tabindex="-1"></a><span class="im">from</span> rl.markov_decision_process <span class="im">import</span> (</span>
+<span id="cb10-2"><a href="rlforfin.html#cb10-2" tabindex="-1"></a>    FiniteMarkovDecisionProcess, FiniteMarkovRewardProcess)</span>
+<span id="cb10-3"><a href="rlforfin.html#cb10-3" tabindex="-1"></a><span class="im">from</span> rl.policy <span class="im">import</span> FiniteDeterministicPolicy, FinitePolicy</span>
+<span id="cb10-4"><a href="rlforfin.html#cb10-4" tabindex="-1"></a><span class="im">from</span> rl.finite_horizon <span class="im">import</span> WithTime</span>
+<span id="cb10-5"><a href="rlforfin.html#cb10-5" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Sequence, Tuple, Iterator</span>
+<span id="cb10-6"><a href="rlforfin.html#cb10-6" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> poisson</span>
+<span id="cb10-7"><a href="rlforfin.html#cb10-7" tabindex="-1"></a><span class="im">from</span> rl.distribution <span class="im">import</span> Categorical</span>
+<span id="cb10-8"><a href="rlforfin.html#cb10-8" tabindex="-1"></a><span class="im">from</span> rl.finite_horizon <span class="im">import</span> (</span>
+<span id="cb10-9"><a href="rlforfin.html#cb10-9" tabindex="-1"></a>    finite_horizon_MRP, unwrap_finite_horizon_MRP, evaluate,</span>
+<span id="cb10-10"><a href="rlforfin.html#cb10-10" tabindex="-1"></a>    finite_horizon_MDP, unwrap_finite_horizon_MDP, optimal_vf_and_policy)</span>
+<span id="cb10-11"><a href="rlforfin.html#cb10-11" tabindex="-1"></a><span class="im">from</span> rl.dynamic_programming <span class="im">import</span> V</span>
+<span id="cb10-12"><a href="rlforfin.html#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="rlforfin.html#cb10-13" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="rlforfin.html#cb10-14" tabindex="-1"></a><span class="kw">class</span> ClearancePricingMDP:</span>
+<span id="cb10-15"><a href="rlforfin.html#cb10-15" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="rlforfin.html#cb10-16" tabindex="-1"></a>    initial_inventory: <span class="bu">int</span></span>
+<span id="cb10-17"><a href="rlforfin.html#cb10-17" tabindex="-1"></a>    time_steps: <span class="bu">int</span></span>
+<span id="cb10-18"><a href="rlforfin.html#cb10-18" tabindex="-1"></a>    price_lambda_pairs: Sequence[Tuple[<span class="bu">float</span>, <span class="bu">float</span>]]</span>
+<span id="cb10-19"><a href="rlforfin.html#cb10-19" tabindex="-1"></a>    single_step_mdp: FiniteMarkovDecisionProcess[<span class="bu">int</span>, <span class="bu">int</span>]</span>
+<span id="cb10-20"><a href="rlforfin.html#cb10-20" tabindex="-1"></a>    mdp: FiniteMarkovDecisionProcess[WithTime[<span class="bu">int</span>], <span class="bu">int</span>]</span>
+<span id="cb10-21"><a href="rlforfin.html#cb10-21" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="rlforfin.html#cb10-22" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(</span>
+<span id="cb10-23"><a href="rlforfin.html#cb10-23" tabindex="-1"></a>        <span class="va">self</span>,</span>
+<span id="cb10-24"><a href="rlforfin.html#cb10-24" tabindex="-1"></a>        initial_inventory: <span class="bu">int</span>,</span>
+<span id="cb10-25"><a href="rlforfin.html#cb10-25" tabindex="-1"></a>        time_steps: <span class="bu">int</span>,</span>
+<span id="cb10-26"><a href="rlforfin.html#cb10-26" tabindex="-1"></a>        price_lambda_pairs: Sequence[Tuple[<span class="bu">float</span>, <span class="bu">float</span>]]</span>
+<span id="cb10-27"><a href="rlforfin.html#cb10-27" tabindex="-1"></a>    ):</span>
+<span id="cb10-28"><a href="rlforfin.html#cb10-28" tabindex="-1"></a>        <span class="va">self</span>.initial_inventory <span class="op">=</span> initial_inventory</span>
+<span id="cb10-29"><a href="rlforfin.html#cb10-29" tabindex="-1"></a>        <span class="va">self</span>.time_steps <span class="op">=</span> time_steps</span>
+<span id="cb10-30"><a href="rlforfin.html#cb10-30" tabindex="-1"></a>        <span class="va">self</span>.price_lambda_pairs <span class="op">=</span> price_lambda_pairs</span>
+<span id="cb10-31"><a href="rlforfin.html#cb10-31" tabindex="-1"></a>        distrs <span class="op">=</span> [poisson(l) <span class="cf">for</span> _, l <span class="kw">in</span> price_lambda_pairs]</span>
+<span id="cb10-32"><a href="rlforfin.html#cb10-32" tabindex="-1"></a>        prices <span class="op">=</span> [p <span class="cf">for</span> p, _ <span class="kw">in</span> price_lambda_pairs]</span>
+<span id="cb10-33"><a href="rlforfin.html#cb10-33" tabindex="-1"></a>        <span class="va">self</span>.single_step_mdp: FiniteMarkovDecisionProcess[<span class="bu">int</span>, <span class="bu">int</span>] <span class="op">=\</span></span>
+<span id="cb10-34"><a href="rlforfin.html#cb10-34" tabindex="-1"></a>            FiniteMarkovDecisionProcess({</span>
+<span id="cb10-35"><a href="rlforfin.html#cb10-35" tabindex="-1"></a>                s: {i: Categorical(</span>
+<span id="cb10-36"><a href="rlforfin.html#cb10-36" tabindex="-1"></a>                    {(s <span class="op">-</span> k, prices[i] <span class="op">*</span> k):</span>
+<span id="cb10-37"><a href="rlforfin.html#cb10-37" tabindex="-1"></a>                     (distrs[i].pmf(k) <span class="cf">if</span> k <span class="op">&lt;</span> s <span class="cf">else</span> <span class="dv">1</span> <span class="op">-</span> distrs[i].cdf(s <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb10-38"><a href="rlforfin.html#cb10-38" tabindex="-1"></a>                     <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(s <span class="op">+</span> <span class="dv">1</span>)})</span>
+<span id="cb10-39"><a href="rlforfin.html#cb10-39" tabindex="-1"></a>                    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(prices))}</span>
+<span id="cb10-40"><a href="rlforfin.html#cb10-40" tabindex="-1"></a>                <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(initial_inventory <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb10-41"><a href="rlforfin.html#cb10-41" tabindex="-1"></a>            })</span>
+<span id="cb10-42"><a href="rlforfin.html#cb10-42" tabindex="-1"></a>        <span class="va">self</span>.mdp <span class="op">=</span> finite_horizon_MDP(<span class="va">self</span>.single_step_mdp, time_steps)</span>
+<span id="cb10-43"><a href="rlforfin.html#cb10-43" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="rlforfin.html#cb10-44" tabindex="-1"></a>    <span class="kw">def</span> get_vf_for_policy(</span>
+<span id="cb10-45"><a href="rlforfin.html#cb10-45" tabindex="-1"></a>        <span class="va">self</span>,</span>
+<span id="cb10-46"><a href="rlforfin.html#cb10-46" tabindex="-1"></a>        policy: FinitePolicy[WithTime[<span class="bu">int</span>], <span class="bu">int</span>]</span>
+<span id="cb10-47"><a href="rlforfin.html#cb10-47" tabindex="-1"></a>    ) <span class="op">-&gt;</span> Iterator[V[<span class="bu">int</span>]]:</span>
+<span id="cb10-48"><a href="rlforfin.html#cb10-48" tabindex="-1"></a>        mrp: FiniteMarkovRewardProcess[WithTime[<span class="bu">int</span>]] <span class="op">\</span></span>
+<span id="cb10-49"><a href="rlforfin.html#cb10-49" tabindex="-1"></a>            <span class="op">=</span> <span class="va">self</span>.mdp.apply_finite_policy(policy)</span>
+<span id="cb10-50"><a href="rlforfin.html#cb10-50" tabindex="-1"></a>        <span class="cf">return</span> evaluate(unwrap_finite_horizon_MRP(mrp), <span class="fl">1.</span>)</span>
+<span id="cb10-51"><a href="rlforfin.html#cb10-51" tabindex="-1"></a></span>
+<span id="cb10-52"><a href="rlforfin.html#cb10-52" tabindex="-1"></a>    <span class="kw">def</span> get_optimal_vf_and_policy(<span class="va">self</span>)<span class="op">\</span></span>
+<span id="cb10-53"><a href="rlforfin.html#cb10-53" tabindex="-1"></a>            <span class="op">-&gt;</span> Iterator[Tuple[V[<span class="bu">int</span>], FiniteDeterministicPolicy[<span class="bu">int</span>, <span class="bu">int</span>]]]:</span>
+<span id="cb10-54"><a href="rlforfin.html#cb10-54" tabindex="-1"></a>        <span class="cf">return</span> optimal_vf_and_policy(unwrap_finite_horizon_MDP(<span class="va">self</span>.mdp), <span class="fl">1.</span>)</span>
+<span id="cb10-55"><a href="rlforfin.html#cb10-55" tabindex="-1"></a></span>
+<span id="cb10-56"><a href="rlforfin.html#cb10-56" tabindex="-1"></a></span>
+<span id="cb10-57"><a href="rlforfin.html#cb10-57" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb10-58"><a href="rlforfin.html#cb10-58" tabindex="-1"></a>    <span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb10-59"><a href="rlforfin.html#cb10-59" tabindex="-1"></a>    ii <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb10-60"><a href="rlforfin.html#cb10-60" tabindex="-1"></a>    steps <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb10-61"><a href="rlforfin.html#cb10-61" tabindex="-1"></a>    pairs <span class="op">=</span> [(<span class="fl">1.0</span>, <span class="fl">0.5</span>), (<span class="fl">0.7</span>, <span class="fl">1.0</span>), (<span class="fl">0.5</span>, <span class="fl">1.5</span>), (<span class="fl">0.3</span>, <span class="fl">2.5</span>)]</span>
+<span id="cb10-62"><a href="rlforfin.html#cb10-62" tabindex="-1"></a>    cp: ClearancePricingMDP <span class="op">=</span> ClearancePricingMDP(</span>
+<span id="cb10-63"><a href="rlforfin.html#cb10-63" tabindex="-1"></a>        initial_inventory<span class="op">=</span>ii,</span>
+<span id="cb10-64"><a href="rlforfin.html#cb10-64" tabindex="-1"></a>        time_steps<span class="op">=</span>steps,</span>
+<span id="cb10-65"><a href="rlforfin.html#cb10-65" tabindex="-1"></a>        price_lambda_pairs<span class="op">=</span>pairs</span>
+<span id="cb10-66"><a href="rlforfin.html#cb10-66" tabindex="-1"></a>    )</span>
+<span id="cb10-67"><a href="rlforfin.html#cb10-67" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Clearance Pricing MDP&quot;</span>)</span>
+<span id="cb10-68"><a href="rlforfin.html#cb10-68" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;---------------------&quot;</span>)</span>
+<span id="cb10-69"><a href="rlforfin.html#cb10-69" tabindex="-1"></a>    <span class="bu">print</span>(cp.mdp)</span>
+<span id="cb10-70"><a href="rlforfin.html#cb10-70" tabindex="-1"></a></span>
+<span id="cb10-71"><a href="rlforfin.html#cb10-71" tabindex="-1"></a>    <span class="kw">def</span> policy_func(x: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb10-72"><a href="rlforfin.html#cb10-72" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span> <span class="cf">if</span> x <span class="op">&lt;</span> <span class="dv">2</span> <span class="cf">else</span> (<span class="dv">1</span> <span class="cf">if</span> x <span class="op">&lt;</span> <span class="dv">5</span> <span class="cf">else</span> (<span class="dv">2</span> <span class="cf">if</span> x <span class="op">&lt;</span> <span class="dv">8</span> <span class="cf">else</span> <span class="dv">3</span>))</span>
+<span id="cb10-73"><a href="rlforfin.html#cb10-73" tabindex="-1"></a></span>
+<span id="cb10-74"><a href="rlforfin.html#cb10-74" tabindex="-1"></a>    stationary_policy: FiniteDeterministicPolicy[<span class="bu">int</span>, <span class="bu">int</span>] <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb10-75"><a href="rlforfin.html#cb10-75" tabindex="-1"></a>        FiniteDeterministicPolicy({s: policy_func(s) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(ii <span class="op">+</span> <span class="dv">1</span>)})</span>
+<span id="cb10-76"><a href="rlforfin.html#cb10-76" tabindex="-1"></a></span>
+<span id="cb10-77"><a href="rlforfin.html#cb10-77" tabindex="-1"></a>    single_step_mrp: FiniteMarkovRewardProcess[<span class="bu">int</span>] <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb10-78"><a href="rlforfin.html#cb10-78" tabindex="-1"></a>        cp.single_step_mdp.apply_finite_policy(stationary_policy)</span>
+<span id="cb10-79"><a href="rlforfin.html#cb10-79" tabindex="-1"></a></span>
+<span id="cb10-80"><a href="rlforfin.html#cb10-80" tabindex="-1"></a>    vf_for_policy: Iterator[V[<span class="bu">int</span>]] <span class="op">=</span> evaluate(</span>
+<span id="cb10-81"><a href="rlforfin.html#cb10-81" tabindex="-1"></a>        unwrap_finite_horizon_MRP(finite_horizon_MRP(single_step_mrp, steps)),</span>
+<span id="cb10-82"><a href="rlforfin.html#cb10-82" tabindex="-1"></a>        <span class="fl">1.</span></span>
+<span id="cb10-83"><a href="rlforfin.html#cb10-83" tabindex="-1"></a>    )</span>
+<span id="cb10-84"><a href="rlforfin.html#cb10-84" tabindex="-1"></a></span>
+<span id="cb10-85"><a href="rlforfin.html#cb10-85" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Value Function for Stationary Policy&quot;</span>)</span>
+<span id="cb10-86"><a href="rlforfin.html#cb10-86" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;------------------------------------&quot;</span>)</span>
+<span id="cb10-87"><a href="rlforfin.html#cb10-87" tabindex="-1"></a>    <span class="cf">for</span> t, vf <span class="kw">in</span> <span class="bu">enumerate</span>(vf_for_policy):</span>
+<span id="cb10-88"><a href="rlforfin.html#cb10-88" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Time Step </span><span class="sc">{</span>t<span class="sc">:d}</span><span class="ss">&quot;</span>)</span>
+<span id="cb10-89"><a href="rlforfin.html#cb10-89" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;---------------&quot;</span>)</span>
+<span id="cb10-90"><a href="rlforfin.html#cb10-90" tabindex="-1"></a>        pprint(vf)</span>
+<span id="cb10-91"><a href="rlforfin.html#cb10-91" tabindex="-1"></a></span>
+<span id="cb10-92"><a href="rlforfin.html#cb10-92" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Optimal Value Function and Optimal Policy&quot;</span>)</span>
+<span id="cb10-93"><a href="rlforfin.html#cb10-93" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;------------------------------------&quot;</span>)</span>
+<span id="cb10-94"><a href="rlforfin.html#cb10-94" tabindex="-1"></a>    prices <span class="op">=</span> []</span>
+<span id="cb10-95"><a href="rlforfin.html#cb10-95" tabindex="-1"></a>    <span class="cf">for</span> t, (vf, policy) <span class="kw">in</span> <span class="bu">enumerate</span>(cp.get_optimal_vf_and_policy()):</span>
+<span id="cb10-96"><a href="rlforfin.html#cb10-96" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Time Step </span><span class="sc">{</span>t<span class="sc">:d}</span><span class="ss">&quot;</span>)</span>
+<span id="cb10-97"><a href="rlforfin.html#cb10-97" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;---------------&quot;</span>)</span>
+<span id="cb10-98"><a href="rlforfin.html#cb10-98" tabindex="-1"></a>        pprint(vf)</span>
+<span id="cb10-99"><a href="rlforfin.html#cb10-99" tabindex="-1"></a>        <span class="bu">print</span>(policy)</span>
+<span id="cb10-100"><a href="rlforfin.html#cb10-100" tabindex="-1"></a>        prices.append(</span>
+<span id="cb10-101"><a href="rlforfin.html#cb10-101" tabindex="-1"></a>            [pairs[policy.action_for[s]][<span class="dv">0</span>]</span>
+<span id="cb10-102"><a href="rlforfin.html#cb10-102" tabindex="-1"></a>             <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(ii <span class="op">+</span> <span class="dv">1</span>)])</span>
+<span id="cb10-103"><a href="rlforfin.html#cb10-103" tabindex="-1"></a></span>
+<span id="cb10-104"><a href="rlforfin.html#cb10-104" tabindex="-1"></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-105"><a href="rlforfin.html#cb10-105" tabindex="-1"></a>    <span class="im">from</span> matplotlib <span class="im">import</span> cm</span>
+<span id="cb10-106"><a href="rlforfin.html#cb10-106" tabindex="-1"></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-107"><a href="rlforfin.html#cb10-107" tabindex="-1"></a>    heatmap <span class="op">=</span> plt.imshow(np.array(prices).T, origin<span class="op">=</span><span class="st">&#39;lower&#39;</span>)</span>
+<span id="cb10-108"><a href="rlforfin.html#cb10-108" tabindex="-1"></a>    plt.colorbar(heatmap, shrink<span class="op">=</span><span class="fl">0.5</span>, aspect<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb10-109"><a href="rlforfin.html#cb10-109" tabindex="-1"></a>    plt.xlabel(<span class="st">&quot;Time Steps&quot;</span>)</span>
+<span id="cb10-110"><a href="rlforfin.html#cb10-110" tabindex="-1"></a>    plt.ylabel(<span class="st">&quot;Inventory&quot;</span>)</span>
+<span id="cb10-111"><a href="rlforfin.html#cb10-111" tabindex="-1"></a>    plt.show()</span></code></pre></div>
+</details>
+<p>以下是输出的可视化结果
+<img src="https://Go9entle.github.io/picx-images-hosting/image.58hirk8d2t.webp" /><!-- --></p>
+</div>
+<div id="推广至非表格算法" class="section level3 hasAnchor" number="1.3.13">
+<h3><span class="header-section-number">1.3.13</span> 推广至非表格算法<a href="rlforfin.html#推广至非表格算法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>本章中介绍的有限马尔可夫决策过程（MDP）算法被称为“表格”算法。这里的“表格”指的是MDP被指定为一个有限的数据结构，值函数也被表示为一个包含非终止状态和值的有限“表格”。这些表格算法通常在每次迭代中遍历所有非终止状态，更新值函数。但对于大状态空间或无限状态空间，无法使用这种方法，我们需要使用函数逼近来表示值函数。好消息是，我们可以修改每个表格算法，使得在每一步中，不是遍历所有非终止状态，而是仅从一个合适的非终止状态子集进行采样，使用适当的贝尔曼计算（就像在表格算法中一样）来计算这些采样状态的值，然后通过这些采样状态的计算值来创建/更新值函数的函数逼近。重要的一点是，从这些表格算法到基于函数逼近的算法，我们的算法基本结构和基本原理（固定点和贝尔曼算子）仍然保持不变。在下一章中，我们将讨论如何将这些动态规划算法从表格方法推广到函数逼近方法。我们称这些算法为“近似动态规划”。</p>
 </div>
 </div>
 <div id="dynassall" class="section level2 hasAnchor" number="1.4">
@@ -1195,7 +1463,7 @@ U(x)=\frac{x^{1-\gamma}}{1-\gamma},
 其中风险厌恶参数<span class="math inline">\(\gamma\neq1\)</span>.<span class="math inline">\(\gamma\)</span>是CRRA系数，等于<span class="math inline">\(\frac{-xU&#39;&#39;(x)}{U&#39;(x)}.\)</span>我们不会讨论<span class="math inline">\(\gamma=1\)</span>时的CRRA效用函数即<span class="math inline">\(U(x)=\log x\)</span>.<br />
 由于我们假设没有向投资组合中添加资金，且没有买卖任何分数量的风险和无风险资产的交易成本，财富的时间演化应被概念化为分配比例<span class="math inline">\(\pi_t\)</span>的连续调整和从投资组合中的连续提取（等于连续消费<span class="math inline">\(c_t\)</span>）.因此从时间<span class="math inline">\(t\)</span>到<span class="math inline">\(t+dt\)</span>的财富变化<span class="math inline">\(dW_t\)</span>由下式给出：</p>
 <p><span class="math display" id="eq:8-1">\[\begin{equation}
-dW_t=((r+\pi_t\cdot (\mu-r))\cdot W_t-c_t)dt+\pi_t\sigma W_t dZ_t. \tag{1.18}
+dW_t=((r+\pi_t\cdot (\mu-r))\cdot W_t-c_t)dt+\pi_t\sigma W_t dZ_t. \tag{1.21}
 \end{equation}\]</span></p>
 <p>这是一个确定财富随机演化的伊藤过程。<br />
 我们的目标是确定在任何时间<span class="math inline">\(t\)</span>时的最优<span class="math inline">\((\pi(t,W_t),c(t,W_t))\)</span>,以最大化</p>
@@ -1223,36 +1491,36 @@ B(T)\cdot U(W_T)=\epsilon^\gamma\cdot \frac{W_T^{1-\gamma}}{1-\gamma}
 <p>我们的目标是找到策略：<span class="math inline">\((t,W_t)\rightarrow (\pi_t,c_t)\)</span>,以最大化期望汇报。<br />
 我们第一步是写出Hamilton-Jacobi-Bellman(HJB)方程，这是连续时间中的Bellman最优性方程的类比。我们将最优的价值函数记为<span class="math inline">\(V^*\)</span>,使得时间<span class="math inline">\(t\)</span>时财富<span class="math inline">\(W_t\)</span>的最优价值为<span class="math inline">\(V^*(t,W_t).\)</span>这里的HJB方程可以特化为下面的式子</p>
 <p><span class="math display" id="eq:8-2">\[\begin{equation}
-\max_{\pi_t,c_t}\left\{\mathbb{E}_t[dV^*(t,W_t)+\frac{c_t^{1-\gamma}}{1-\gamma}] dt\right\}=\rho V^*(t,W_t)dt \tag{1.19}
+\max_{\pi_t,c_t}\left\{\mathbb{E}_t[dV^*(t,W_t)+\frac{c_t^{1-\gamma}}{1-\gamma}] dt\right\}=\rho V^*(t,W_t)dt \tag{1.22}
 \end{equation}\]</span></p>
 <p>现在对于<span class="math inline">\(dV^*\)</span>使用伊藤引理，移走<span class="math inline">\(dZ_t\)</span>的部分因为这是一个鞅，并且将等式两边都除以<span class="math inline">\(dt\)</span>,以产生任意<span class="math inline">\(0\leq t&lt;T\)</span>的HJB方程的偏微分形式</p>
 <p><span class="math display" id="eq:8-3">\[
-\max_{\pi_t,c_t}\left\{ \frac{\partial V^*}{\partial t}+\frac{\partial V^*}{\partial W_t} \cdot ((\pi_t(\mu-r)+r)W_t-c_t)+\frac{\partial^2 V^*}{\partial W_t^2}\cdot \frac{\pi_t^2\sigma^2W_t^2}{2}+\frac{c_t^{1-\gamma}}{1-\gamma}\right\}=\rho\cdot V^*(t,W_t)  \tag{1.20}
+\max_{\pi_t,c_t}\left\{ \frac{\partial V^*}{\partial t}+\frac{\partial V^*}{\partial W_t} \cdot ((\pi_t(\mu-r)+r)W_t-c_t)+\frac{\partial^2 V^*}{\partial W_t^2}\cdot \frac{\pi_t^2\sigma^2W_t^2}{2}+\frac{c_t^{1-\gamma}}{1-\gamma}\right\}=\rho\cdot V^*(t,W_t)  \tag{1.23}
 \]</span>
 这个HJB方程由下面的终端条件</p>
 <p><span class="math display">\[
 V^*(T,W_T)=\epsilon^\gamma \cdot\frac{W_T^{1-\gamma}}{1-\gamma}
 \]</span></p>
-<p>可以将<a href="rlforfin.html#eq:8-3">(1.20)</a>写得更简洁一些：</p>
+<p>可以将<a href="rlforfin.html#eq:8-3">(1.23)</a>写得更简洁一些：</p>
 <p><span class="math display" id="eq:8-4">\[
-\max_{\pi_t,c_t} \Phi(t,W_t;\pi_t,c_t)=\rho\cdot V^*(t,W_t) \tag{1.21}
+\max_{\pi_t,c_t} \Phi(t,W_t;\pi_t,c_t)=\rho\cdot V^*(t,W_t) \tag{1.24}
 \]</span>
 需要强调的是，我们处理的约束条件是<span class="math inline">\(W_t&gt;0,c_t\geq0,0\leq t&lt;T.\)</span><br />
 为了找到最优的<span class="math inline">\(\pi_t^*,c_t^*\)</span>，我们求得<span class="math inline">\(\Phi\)</span>的一阶条件得</p>
 <p><span class="math display" id="eq:8-6" id="eq:8-5">\[\begin{align}
-\pi_t^*&amp;=\frac{-\frac{\partial V^*}{\partial W_t}\cdot (\mu-r)}{\frac{\partial^2 V^*}{\partial W_t^*}\cdot\sigma^2\cdot W_t} \tag{1.22}\\
-c_t^*&amp;=\left( \frac{\partial V^*}{\partial W_t} \right)^{-\frac{1}{\gamma}} \tag{1.23}
+\pi_t^*&amp;=\frac{-\frac{\partial V^*}{\partial W_t}\cdot (\mu-r)}{\frac{\partial^2 V^*}{\partial W_t^*}\cdot\sigma^2\cdot W_t} \tag{1.25}\\
+c_t^*&amp;=\left( \frac{\partial V^*}{\partial W_t} \right)^{-\frac{1}{\gamma}} \tag{1.26}
 \end{align}\]</span></p>
-<p>下面将<a href="rlforfin.html#eq:8-5">(1.22)</a>和<a href="rlforfin.html#eq:8-6">(1.23)</a>代入到<a href="rlforfin.html#eq:8-3">(1.20)</a>中得到下面的式子，这就给了我们最优价值函数的PDE(显然下面的<span class="math inline">\(w\)</span>应为<span class="math inline">\(W_t\)</span>)：</p>
+<p>下面将<a href="rlforfin.html#eq:8-5">(1.25)</a>和<a href="rlforfin.html#eq:8-6">(1.26)</a>代入到<a href="rlforfin.html#eq:8-3">(1.23)</a>中得到下面的式子，这就给了我们最优价值函数的PDE(显然下面的<span class="math inline">\(w\)</span>应为<span class="math inline">\(W_t\)</span>)：</p>
 <p><span class="math display" id="eq:8-7">\[
-V^*_t-\frac{(\mu-r)^2}{2\sigma^2}\cdot\frac{(V^*_{w})^2}{V^*_{ww}}+V_w^*\cdot r\cdot w+\frac{\gamma}{1-\gamma}\cdot(V_w^*)^{\frac{\gamma-1}{\gamma}}=\rho\cdot V^* \tag{1.24}
+V^*_t-\frac{(\mu-r)^2}{2\sigma^2}\cdot\frac{(V^*_{w})^2}{V^*_{ww}}+V_w^*\cdot r\cdot w+\frac{\gamma}{1-\gamma}\cdot(V_w^*)^{\frac{\gamma-1}{\gamma}}=\rho\cdot V^* \tag{1.27}
 \]</span>
 终值条件仍是</p>
 <p><span class="math display">\[
 V^*(T,W_T)=\epsilon^\gamma \cdot\frac{W_T^{1-\gamma}}{1-\gamma}
 \]</span></p>
 <p><span class="math inline">\(\Phi\)</span>的二阶条件在以下假设下得以满足<span class="math inline">\(c^*_t&gt;0,W_t&gt;0,\frac{\partial^2V^*}{\partial W_t^2}&lt;0\)</span>对于所有的<span class="math inline">\(0\leq t&lt;T\)</span>,稍后将会证明这些条件在我们推导的解中得到满足，并且<span class="math inline">\(U(\cdot)\)</span>是凹函数，即<span class="math inline">\(\gamma&gt;0.\)</span></p>
-<p>接下来我们希望将PDE<a href="rlforfin.html#eq:8-7">(1.24)</a>简化为ODE，这样可以进行简单的求解。为此我们假设解的形式是一个关于时间的确定性函数<span class="math inline">\(f(t):\)</span></p>
+<p>接下来我们希望将PDE<a href="rlforfin.html#eq:8-7">(1.27)</a>简化为ODE，这样可以进行简单的求解。为此我们假设解的形式是一个关于时间的确定性函数<span class="math inline">\(f(t):\)</span></p>
 <p><span class="math display">\[
 V^*(t,W_t)=f(t)^\gamma\cdot\frac{W_t^{1-\gamma}}{1-\gamma}
 \]</span></p>
@@ -1271,13 +1539,13 @@ T-t+\epsilon&amp;\text{ for }\nu=0
 \end{equation}\]</span></p>
 <p>于是最优分配策略和消费策略如下</p>
 <p><span class="math display" id="eq:8-15" id="eq:8-14">\[\begin{align}
-\pi^*(t,W_t)&amp;=\frac{\mu-r}{\sigma^2\gamma} \tag{1.25}\\
+\pi^*(t,W_t)&amp;=\frac{\mu-r}{\sigma^2\gamma} \tag{1.28}\\
 c^*(t,W_t)&amp;=
 \begin{cases}
 \frac{\nu W_t}{1+(\nu\epsilon-1)e^{-\nu(T-t)}} &amp;\text{ for }\nu\neq0\\
 \frac{W_t}{T-t+\epsilon}&amp;\text{ for }\nu=0
 \end{cases}
-\tag{1.26}
+\tag{1.29}
 \end{align}\]</span></p>
 <p>同时有了<span class="math inline">\(f(t)\)</span>的表达式。<span class="math inline">\(V^*(t,W_t)\)</span>的表达式也就迎刃而解了。注意<span class="math inline">\(f(t)&gt;0\)</span>对于所有<span class="math inline">\(0\leq t&lt;T,\forall \nu,\)</span>确保了<span class="math inline">\(W_t&gt;0,c_t^*&gt;0,\frac{\partial^2V^*}{\partial W_t^2}&lt;0\)</span>.这确保了约束条件<span class="math inline">\(W_t&gt;0,c_t\geq0\)</span>得以满足，同时二阶条件得以满足。解决Merton的投资组合问题的一个非常重要的经验教训是HJB公式是关键，这种解法为类似的连续时间随机控制问题提供了模板。</p>
 </div>
@@ -1285,9 +1553,9 @@ c^*(t,W_t)&amp;=
 <h3><span class="header-section-number">1.4.3</span> Merton投资组合问题解的直觉<a href="rlforfin.html#merton投资组合问题解的直觉" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><span class="math inline">\(\pi^*\)</span>是个常数，代表无论财富如何年龄如何，都该将相同的财富比例投资于风险资产。
 而<span class="math inline">\(c^*\)</span>中风险资产的超额回报<span class="math inline">\((\mu-r)\)</span>出现在分子上，<span class="math inline">\(\sigma,\gamma\)</span>出现在坟墓上，波动率越大或者风险厌恶程度更高，自然会减少投资于风险资产，而当我们还年轻时我们希望消费的少一些，但是快死了的时候会增加消费（因为最优策略是死得一贫如洗，假设没有遗产）。</p>
-<p>将最优策略<a href="rlforfin.html#eq:8-14">(1.25)</a>和<a href="rlforfin.html#eq:8-15">(1.26)</a>代入财富过程<a href="rlforfin.html#eq:8-1">(1.18)</a>，可以得到进行最优资产配置和最优消费的时候，财富过程为</p>
+<p>将最优策略<a href="rlforfin.html#eq:8-14">(1.28)</a>和<a href="rlforfin.html#eq:8-15">(1.29)</a>代入财富过程<a href="rlforfin.html#eq:8-1">(1.21)</a>，可以得到进行最优资产配置和最优消费的时候，财富过程为</p>
 <p><span class="math display" id="eq:8-17">\[
-dW_t^*=(r+\frac{(\mu-r)^2}{\sigma^2\gamma}-\frac{1}{f(t)})\cdot W_t^* \cdot dt+\frac{\mu-r}{\sigma\gamma}\cdot W_t^* \cdot dZ_t \tag{1.27}
+dW_t^*=(r+\frac{(\mu-r)^2}{\sigma^2\gamma}-\frac{1}{f(t)})\cdot W_t^* \cdot dt+\frac{\mu-r}{\sigma\gamma}\cdot W_t^* \cdot dZ_t \tag{1.30}
 \]</span>
 是一个对数正态过程，对数正态波动率是常数，对数正态飘逸与财富无关但依赖于时间，我们可以解得</p>
 <p><span class="math display">\[
@@ -1307,15 +1575,15 @@ U(W_T)=\frac{1-e^{-aW_T}}{a}\text{ for some fixed } a\neq 0
 \]</span>
 等价于最大化</p>
 <p><span class="math display" id="eq:8-19">\[
-\mathbb{E} \left[-\frac{e^{-aW_T}}{a}\mid (t,W_t)\right] \tag{1.28}
+\mathbb{E} \left[-\frac{e^{-aW_T}}{a}\mid (t,W_t)\right] \tag{1.31}
 \]</span>
 我们将这个问题表述为一个连续状态和连续动作的离散时间有限时域MDP，并准确指定其转移状态、奖励和折现因子，然后我们的目标是求解MDP控制问题找到最优策略。</p>
 <p>有限时域MDP的终止时间为<span class="math inline">\(T\)</span>,因此所有时间<span class="math inline">\(t=T\)</span>的状态都是终止状态。时间步<span class="math inline">\(t=0,1,...,T\)</span>的状态<span class="math inline">\(s_t\in\mathcal{S}_t\)</span>包含财富<span class="math inline">\(W_t.\)</span>决策<span class="math inline">\(a_t\in\mathcal{A}_t\)</span>是对风险投资的投资量<span class="math inline">\(x_t,\)</span>因此每个时间步对无风险投资的投资量为<span class="math inline">\(W_t-x_t.\)</span>时间步<span class="math inline">\(t\)</span>的确定性策略<span class="math inline">\(\pi_t\)</span>记为<span class="math inline">\(\pi_t(W_t)=x_t,\)</span>同样，时间步<span class="math inline">\(t\)</span>时最优确定性策略<span class="math inline">\(\pi_t^*\)</span>记为<span class="math inline">\(\pi_t^*(W_t)=x^*_t.\)</span></p>
 <p>我们将<span class="math inline">\(t\)</span>到<span class="math inline">\(t+1\)</span>的风险资产单步回报的随机变量记为<span class="math inline">\(Y_t\sim N(\mu,\sigma^2)\)</span>对于所有的<span class="math inline">\(t=0,1,...,T-1.\)</span>因此</p>
 <p><span class="math display" id="eq:8-20">\[
-W_{t+1}=x_t\cdot(1+Y_t)+(W_t-x_t)\cdot (1+r)=x_t\cdot(Y_t-r)+W_t\cdot(1+r) \tag{1.29}
+W_{t+1}=x_t\cdot(1+Y_t)+(W_t-x_t)\cdot (1+r)=x_t\cdot(Y_t-r)+W_t\cdot(1+r) \tag{1.32}
 \]</span></p>
-<p>MDP的奖励在每个<span class="math inline">\(t=0,1,...,T-1\)</span>时为0，因此基于上述简化的目标<a href="rlforfin.html#eq:8-19">(1.28)</a>,MDP在<span class="math inline">\(t=T\)</span>时的奖励设置为随机量<span class="math inline">\(\frac{-e^{aW_T}}{a}.\)</span>我们将MDP的折现因子设置为<span class="math inline">\(\gamma=1,\)</span>在时间<span class="math inline">\(t\)</span>时的价值函数（给定策略<span class="math inline">\(\pi=(\pi_0,\pi_1,...,\pi_{T-1})\)</span>）记为</p>
+<p>MDP的奖励在每个<span class="math inline">\(t=0,1,...,T-1\)</span>时为0，因此基于上述简化的目标<a href="rlforfin.html#eq:8-19">(1.31)</a>,MDP在<span class="math inline">\(t=T\)</span>时的奖励设置为随机量<span class="math inline">\(\frac{-e^{aW_T}}{a}.\)</span>我们将MDP的折现因子设置为<span class="math inline">\(\gamma=1,\)</span>在时间<span class="math inline">\(t\)</span>时的价值函数（给定策略<span class="math inline">\(\pi=(\pi_0,\pi_1,...,\pi_{T-1})\)</span>）记为</p>
 <p><span class="math display">\[
 V_t^\pi(W_t)=\mathbb{E}_\pi\left[ -\frac{e^{-aW_T}}{a}\mid (t,W_t) \right]
 \]</span>
@@ -1334,33 +1602,33 @@ V_{T-1}^*(W_{T-1})=\max_{x_{T-1}}Q_{T-1}^*(W_{T-1},x_{T-1})=\max_{x_{T-1}}\left\
 <p>其中<span class="math inline">\(Q_t^*\)</span>是时间<span class="math inline">\(t\)</span>时的最优动作价值函数。</p>
 <p>我们通过对最优价值函数的形式进行合理猜测，得到</p>
 <p><span class="math display" id="eq:8-21">\[
-V_t^*(W_t)=-b_t e^{-c_tW_t} \tag{1.30}
+V_t^*(W_t)=-b_t e^{-c_tW_t} \tag{1.33}
 \]</span>
 其中<span class="math inline">\(b_t,c_t\)</span>与财富<span class="math inline">\(W_t\)</span>无关，接下来我们使用这个最优价值函数的形式来表达贝尔曼最优性方程</p>
 <p><span class="math display">\[
 V_t^*(W_t)=\max_{x_t}\left\{\mathbb{E}_{Y_t\sim N(\mu,\sigma^2)}\left[ -b_{t+1}e^{-c_{t+1}W_{t+1}} \right] \right\}
 \]</span>
-利用公式<a href="rlforfin.html#eq:8-20">(1.29)</a>可以将其改写为</p>
+利用公式<a href="rlforfin.html#eq:8-20">(1.32)</a>可以将其改写为</p>
 <p><span class="math display">\[
 V_t^*(W_t)=\max_{x_t}\left\{\mathbb{E}_{Y_t\sim N(\mu,\sigma^2)}\left[ -b_{t+1}e^{-c_{t+1}(x_t(Y_t-r)+W_t(1+r))} \right] \right\}
 \]</span></p>
 <p>这个指数形式的期望值在正态分布下计算结果为</p>
 <p><span class="math display" id="eq:8-22">\[
-V_t^*(W_t)=\max_{x_t}\left\{-b_{t+1}\exp\left\{-c_{t+1}(1+r)W_t-c_{t+1}(\mu-r)x_t+c_{t+1}^2 \frac{\sigma^2}{2} x_{t}^2\right\} \right\} \tag{1.31}
+V_t^*(W_t)=\max_{x_t}\left\{-b_{t+1}\exp\left\{-c_{t+1}(1+r)W_t-c_{t+1}(\mu-r)x_t+c_{t+1}^2 \frac{\sigma^2}{2} x_{t}^2\right\} \right\} \tag{1.34}
 \]</span></p>
 <p>又由于<span class="math inline">\(V_{t}^*(W_t)=\max_{x_t}Q^*_t(W_t,x_t),\)</span>从上面的公式中可以推断出最优动作价值函数<span class="math inline">\(Q^*_t(W_t,x_t)\)</span>的函数形式为</p>
 <p><span class="math display" id="eq:8-23">\[
-Q^*_t(W_t,x_t)=-b_{t+1}\exp\left\{-c_{t+1}(1+r)W_t-c_{t+1}(\mu-r)x_t+c_{t+1}^2 \frac{\sigma^2}{2} x_{t}^2\right\} \tag{1.32}
+Q^*_t(W_t,x_t)=-b_{t+1}\exp\left\{-c_{t+1}(1+r)W_t-c_{t+1}(\mu-r)x_t+c_{t+1}^2 \frac{\sigma^2}{2} x_{t}^2\right\} \tag{1.35}
 \]</span></p>
-<p>由于贝尔曼最优性方程<a href="rlforfin.html#eq:8-22">(1.31)</a>右侧涉及对<span class="math inline">\(x_t\)</span>的最大化操作，我们可以认为最大化操作内的项对于<span class="math inline">\(x_t\)</span>的偏导数是0，这使得我们能够将最优分配<span class="math inline">\(x_t^*\)</span>表示为<span class="math inline">\(c_{t+1}\)</span>的函数，如下所示</p>
+<p>由于贝尔曼最优性方程<a href="rlforfin.html#eq:8-22">(1.34)</a>右侧涉及对<span class="math inline">\(x_t\)</span>的最大化操作，我们可以认为最大化操作内的项对于<span class="math inline">\(x_t\)</span>的偏导数是0，这使得我们能够将最优分配<span class="math inline">\(x_t^*\)</span>表示为<span class="math inline">\(c_{t+1}\)</span>的函数，如下所示</p>
 <p><span class="math display">\[
 -c_{t+1}(\mu-r)+\sigma^2c_{t+1}^2x_t^*=0
 \]</span>
 即</p>
 <p><span class="math display" id="eq:8-24">\[
-x_t^*=\frac{\mu-r}{\sigma^2 c_{t+1}} \tag{1.33}
+x_t^*=\frac{\mu-r}{\sigma^2 c_{t+1}} \tag{1.36}
 \]</span>
-代入贝尔曼最优性方程<a href="rlforfin.html#eq:8-22">(1.31)</a>可得</p>
+代入贝尔曼最优性方程<a href="rlforfin.html#eq:8-22">(1.34)</a>可得</p>
 <p><span class="math display">\[
 V_{t}^*(W_t)=-b_{t+1}\exp\left\{ -c_{t+1}(1+r)W_t-\frac{(\mu-r)^2}{2\sigma^2}\right\}
 \]</span>
@@ -1377,7 +1645,7 @@ b_t=b_{t+1}\exp\left\{-\frac{(\mu-r)^2}{2\sigma^2}\right\},\quad  c_t=c_{t+1}(1+
 <p><span class="math display">\[
 V_{T-1}^*(W_{T-1})=\max_{x_{T-1}}\left\{\mathbb{E}_{Y_{T-1}\sim N(\mu,\sigma^2)}\left[ \frac{-e^{-aW_T}}{a} \right] \right\}
 \]</span>
-通过公式<a href="rlforfin.html#eq:8-20">(1.29)</a>可以写为</p>
+通过公式<a href="rlforfin.html#eq:8-20">(1.32)</a>可以写为</p>
 <p><span class="math display">\[
 V_{T-1}^*(W_{T-1})=\max_{x_{T-1}}\left\{\mathbb{E}_{Y_{T-1}\sim N(\mu,\sigma^2)}\left[ \frac{-\exp\{-a(x_{T-1}(Y_{T-1}-r)+W_{T-1}(1+r))\}}{a} \right] \right\}
 \]</span></p>
@@ -1393,16 +1661,16 @@ b_{T-1}=\frac{e^{-\frac{(\mu-r)^2}{2\sigma^2}}}{a},\quad c_{T-1}=a(1+r)
 <p><span class="math display">\[
 b_t=\frac{e^{-\frac{(\mu-r)^2(T-t)}{2\sigma^2}}}{a},\quad c_t=a(1+r)^{T-t}
 \]</span></p>
-<p>将<span class="math inline">\(c_{t+1}\)</span>带入到<a href="rlforfin.html#eq:8-24">(1.33)</a>即可得到最优策略的解</p>
+<p>将<span class="math inline">\(c_{t+1}\)</span>带入到<a href="rlforfin.html#eq:8-24">(1.36)</a>即可得到最优策略的解</p>
 <p><span class="math display" id="eq:8-25">\[
-\pi_t^*(W_t)=x_t^*=\frac{\mu-r}{\sigma^2a(1+r)^{T-t-1}},\text{ for all }t=0,1,...,T-1  \tag{1.34}
+\pi_t^*(W_t)=x_t^*=\frac{\mu-r}{\sigma^2a(1+r)^{T-t-1}},\text{ for all }t=0,1,...,T-1  \tag{1.37}
 \]</span>
 请注意最优策略在时间步<span class="math inline">\(t\)</span>时不依赖于状态<span class="math inline">\(W_t.\)</span>因此对于固定时间的最优策略<span class="math inline">\(\pi_t^*\)</span>是一个常数确定性的策略函数。</p>
-<p>将<span class="math inline">\(b_t,c_t\)</span>的解代入公式<a href="rlforfin.html#eq:8-21">(1.30)</a>即可得到最优价值函数的解：</p>
+<p>将<span class="math inline">\(b_t,c_t\)</span>的解代入公式<a href="rlforfin.html#eq:8-21">(1.33)</a>即可得到最优价值函数的解：</p>
 <p><span class="math display" id="eq:8-26">\[
-V_t^*(W_t)=\frac{-e^{-\frac{(\mu-r)^2(T-t)}{2\sigma^2}}}{a}\cdot e^{-a(1+r)^{T-t}W_t} \text{ for all }t=0,1,...,T-1 \tag{1.35}
+V_t^*(W_t)=\frac{-e^{-\frac{(\mu-r)^2(T-t)}{2\sigma^2}}}{a}\cdot e^{-a(1+r)^{T-t}W_t} \text{ for all }t=0,1,...,T-1 \tag{1.38}
 \]</span>
-将<span class="math inline">\(b_{t+1},c_{t+1}\)</span>代入到公式<a href="rlforfin.html#eq:8-23">(1.32)</a>可以得到最优动作价值函数的解（对于所有的<span class="math inline">\(t=0,1,...,T-1\)</span>）</p>
+将<span class="math inline">\(b_{t+1},c_{t+1}\)</span>代入到公式<a href="rlforfin.html#eq:8-23">(1.35)</a>可以得到最优动作价值函数的解（对于所有的<span class="math inline">\(t=0,1,...,T-1\)</span>）</p>
 <p><span class="math display">\[
 Q^*_t(W_t,x_t)=\\
 \frac{-e^{\frac{-(\mu-r)^2(T-t-1)}{2\sigma^2}}}{a}\exp\left\{-a(1+r)^{T-t}W_t-a(\mu-r)(1+r)^{T-t-1}x_t+\frac{(a\sigma(1+r)^{T-t-1})^2}{2}x_t^2  \right\}

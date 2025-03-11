@@ -23,7 +23,7 @@
 <meta name="author" content="gogentle" />
 
 
-<meta name="date" content="2025-03-09" />
+<meta name="date" content="2025-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -212,6 +212,10 @@ div.csl-indent {
 <li class="chapter" data-level="1.3.7" data-path="rlforfin.html"><a href="rlforfin.html#贝尔曼最优性算子与值迭代算法"><i class="fa fa-check"></i><b>1.3.7</b> 贝尔曼最优性算子与值迭代算法</a></li>
 <li class="chapter" data-level="1.3.8" data-path="rlforfin.html"><a href="rlforfin.html#从最优值函数到最优策略"><i class="fa fa-check"></i><b>1.3.8</b> 从最优值函数到最优策略</a></li>
 <li class="chapter" data-level="1.3.9" data-path="rlforfin.html"><a href="rlforfin.html#广义策略迭代"><i class="fa fa-check"></i><b>1.3.9</b> 广义策略迭代</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rlforfin.html"><a href="rlforfin.html#异步动态规划"><i class="fa fa-check"></i><b>1.3.10</b> 异步动态规划</a></li>
+<li class="chapter" data-level="1.3.11" data-path="rlforfin.html"><a href="rlforfin.html#有限时域的动态规划反向推导"><i class="fa fa-check"></i><b>1.3.11</b> 有限时域的动态规划：反向推导</a></li>
+<li class="chapter" data-level="1.3.12" data-path="rlforfin.html"><a href="rlforfin.html#产品停产停季时的动态定价"><i class="fa fa-check"></i><b>1.3.12</b> 产品停产/停季时的动态定价</a></li>
+<li class="chapter" data-level="1.3.13" data-path="rlforfin.html"><a href="rlforfin.html#推广至非表格算法"><i class="fa fa-check"></i><b>1.3.13</b> 推广至非表格算法</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="rlforfin.html"><a href="rlforfin.html#dynassall"><i class="fa fa-check"></i><b>1.4</b> 动态资产配置和消费</a>
 <ul>
@@ -854,30 +858,30 @@ F(t)=\int_{a_1}^{a_2}n(t-x+a_0)s(x)e^{-\eta_0(x-a_1)}dx,
 可以得出累积的福利因子<span class="math inline">\(F=188.8688\)</span>​​.</p>
 <p>用R语言程序计算如下</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="cdc.html#cb7-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fl">0.00022</span></span>
-<span id="cb7-2"><a href="cdc.html#cb7-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">2.7e-6</span></span>
-<span id="cb7-3"><a href="cdc.html#cb7-3" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">1.124</span></span>
-<span id="cb7-4"><a href="cdc.html#cb7-4" tabindex="-1"></a>a_0 <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb7-5"><a href="cdc.html#cb7-5" tabindex="-1"></a>a_1 <span class="ot">&lt;-</span> <span class="dv">65</span></span>
-<span id="cb7-6"><a href="cdc.html#cb7-6" tabindex="-1"></a>a_2 <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb7-7"><a href="cdc.html#cb7-7" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb7-8"><a href="cdc.html#cb7-8" tabindex="-1"></a>eta_0 <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
-<span id="cb7-9"><a href="cdc.html#cb7-9" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="cdc.html#cb7-10" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb7-11"><a href="cdc.html#cb7-11" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span>A <span class="sc">*</span> (x <span class="sc">-</span> a_0) <span class="sc">+</span> (B <span class="sc">/</span> <span class="fu">log</span>(c)) <span class="sc">*</span> (c<span class="sc">^</span>x <span class="sc">-</span> c<span class="sc">^</span>a_0))</span>
-<span id="cb7-12"><a href="cdc.html#cb7-12" tabindex="-1"></a>}</span>
-<span id="cb7-13"><a href="cdc.html#cb7-13" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="cdc.html#cb7-14" tabindex="-1"></a>integrand <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb7-15"><a href="cdc.html#cb7-15" tabindex="-1"></a>  n <span class="sc">*</span> <span class="fu">s</span>(x) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>eta_0 <span class="sc">*</span> (x <span class="sc">-</span> a_1))</span>
-<span id="cb7-16"><a href="cdc.html#cb7-16" tabindex="-1"></a>}</span>
-<span id="cb7-17"><a href="cdc.html#cb7-17" tabindex="-1"></a></span>
-<span id="cb7-18"><a href="cdc.html#cb7-18" tabindex="-1"></a><span class="co"># 计算积分 F</span></span>
-<span id="cb7-19"><a href="cdc.html#cb7-19" tabindex="-1"></a>F <span class="ot">&lt;-</span> <span class="fu">integrate</span>(integrand, <span class="at">lower =</span> a_1, <span class="at">upper =</span> a_2)</span>
-<span id="cb7-20"><a href="cdc.html#cb7-20" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="cdc.html#cb7-21" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;积分 F 的值为:&quot;</span>, F<span class="sc">$</span>value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb7-22"><a href="cdc.html#cb7-22" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="cdc.html#cb7-23" tabindex="-1"></a><span class="co"># 输出结果为</span></span>
-<span id="cb7-24"><a href="cdc.html#cb7-24" tabindex="-1"></a><span class="do">## 积分 F 的值为: 188.8688 </span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="cdc.html#cb11-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fl">0.00022</span></span>
+<span id="cb11-2"><a href="cdc.html#cb11-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">2.7e-6</span></span>
+<span id="cb11-3"><a href="cdc.html#cb11-3" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">1.124</span></span>
+<span id="cb11-4"><a href="cdc.html#cb11-4" tabindex="-1"></a>a_0 <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb11-5"><a href="cdc.html#cb11-5" tabindex="-1"></a>a_1 <span class="ot">&lt;-</span> <span class="dv">65</span></span>
+<span id="cb11-6"><a href="cdc.html#cb11-6" tabindex="-1"></a>a_2 <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb11-7"><a href="cdc.html#cb11-7" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb11-8"><a href="cdc.html#cb11-8" tabindex="-1"></a>eta_0 <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb11-9"><a href="cdc.html#cb11-9" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="cdc.html#cb11-10" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb11-11"><a href="cdc.html#cb11-11" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span>A <span class="sc">*</span> (x <span class="sc">-</span> a_0) <span class="sc">+</span> (B <span class="sc">/</span> <span class="fu">log</span>(c)) <span class="sc">*</span> (c<span class="sc">^</span>x <span class="sc">-</span> c<span class="sc">^</span>a_0))</span>
+<span id="cb11-12"><a href="cdc.html#cb11-12" tabindex="-1"></a>}</span>
+<span id="cb11-13"><a href="cdc.html#cb11-13" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="cdc.html#cb11-14" tabindex="-1"></a>integrand <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb11-15"><a href="cdc.html#cb11-15" tabindex="-1"></a>  n <span class="sc">*</span> <span class="fu">s</span>(x) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>eta_0 <span class="sc">*</span> (x <span class="sc">-</span> a_1))</span>
+<span id="cb11-16"><a href="cdc.html#cb11-16" tabindex="-1"></a>}</span>
+<span id="cb11-17"><a href="cdc.html#cb11-17" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="cdc.html#cb11-18" tabindex="-1"></a><span class="co"># 计算积分 F</span></span>
+<span id="cb11-19"><a href="cdc.html#cb11-19" tabindex="-1"></a>F <span class="ot">&lt;-</span> <span class="fu">integrate</span>(integrand, <span class="at">lower =</span> a_1, <span class="at">upper =</span> a_2)</span>
+<span id="cb11-20"><a href="cdc.html#cb11-20" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="cdc.html#cb11-21" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;积分 F 的值为:&quot;</span>, F<span class="sc">$</span>value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb11-22"><a href="cdc.html#cb11-22" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="cdc.html#cb11-23" tabindex="-1"></a><span class="co"># 输出结果为</span></span>
+<span id="cb11-24"><a href="cdc.html#cb11-24" tabindex="-1"></a><span class="do">## 积分 F 的值为: 188.8688 </span></span></code></pre></div>
 </details>
 <p>又有参数<span class="math inline">\(\eta_1=0.02,\lambda=0.3,g_D=0.01,w_0=150,y_0=0,\lambda_m=1,\lambda_1=0.3,\gamma=0.3,C_0=0.1\)</span>无风险利率<span class="math inline">\(r=0.01,\)</span>关键的协整系数的参数<span class="math inline">\(k=0.15,v_D=0.16,\sigma=0.16.\)</span></p>
 <p>:question:</p>
