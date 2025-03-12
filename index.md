@@ -1,7 +1,7 @@
 ---
 title: "GOGENTLE's NOTEBOOK"
 author: "gogentle"
-date: "2025-03-11"
+date: "2025-03-12"
 description: "这是用R的bookdown功能制作的课堂笔记。"
 documentclass: book
 classoption: oneside
@@ -30,7 +30,7 @@ Bookdown的详细用法参见<https://bookdown.org/yihui/bookdown/>，
 本笔记的部署参考了北京大学李东风老师的的[《统计软件教程》](http://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/index.html)，
 将bookdown部署到GitHub page上参考了[R沟通|部署 bookdown 文件到 GitHub 上](https://developer.aliyun.com/article/1227300)
 
-需要注意的是李老师文件中的日期为中文格式，在部署到GitHub Pages上会报错，建议改为"YYYY-MM-DD"形式或者2025-03-11。
+需要注意的是李老师文件中的日期为中文格式，在部署到GitHub Pages上会报错，建议改为"YYYY-MM-DD"形式或者2025-03-12。
 
 
 ``` r
